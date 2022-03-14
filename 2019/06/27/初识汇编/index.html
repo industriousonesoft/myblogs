@@ -1,0 +1,85 @@
+<!DOCTYPE html><html class="appearance-auto" lang="en"><head><meta charset="UTF-8"><title>初识汇编-知识点摘记</title><meta name="description" content="程序的世界让我着迷"><meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, initial-scale=1"><!-- Google Analytics --><!-- End Google Analytics -->
+<!-- Baidu Analytics --><!-- End Baidu Analytics --><link rel="icon" href="/images/favicon.png"><link rel="stylesheet" href="/style/common/bulma.css"><link rel="stylesheet" href="/style/base.css"><link rel="stylesheet" href="/style/common/helper.css"><script src="/js/common.js"></script><link rel="stylesheet" href="/style/post.css"><link rel="stylesheet" href="/style/themes/highlight-theme-light.css"><script src="/js/highlight.pack.js"></script><meta name="description" content="汇编语言的由来
+汇编语言是基于机器语言（由0或1组成）而产生的一种助记符
+汇编语言介于机器语言和高级语言之间
+汇编语言与机器语言是一一对应关系，每条机器指令都有对应的汇编指令
+汇编语言通过编译得到机器语言，反之机器语言也可通过反汇编得到汇编语言
+高级语言通过编译得到汇编语言，但是汇编语言不能反汇编成高级语言，因为高级语言与汇编之间是多对一的关系。
+
+汇编语言的特点优点
+
+汇编语言可直接访问或控制硬件：存储器、CPU，能最大限度的发挥硬件功能
+目标代码少，占位内存少，执行速度快
+不同厂商的CPU都有对应的机器指令集和汇编指令集合
+大小写不敏感
+
+缺点
+
+不易于编写、维护、调试
+
+寄存器
+CPU由寄存器、运算器和控制器组成，其中最主要部件是寄存器，通过改变寄存器的内容来实现对CPU的控制
+不同的CPU，寄存器个.."><meta name="generator" content="Hexo 6.0.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="MarkCao" type="application/atom+xml">
+</head><body class="is-flex is-flex-direction-column"><header class="header-widget is-flex-shrink-0 is-hidden-mobile"><div class="container is-fullhd is-flex is-justify-content-space-between is-align-items-center is-full-height"><section class="is-hidden-mobile is-flex-shrink-0"><h2><a href="/">MarkCao's blog</a></h2></section><h3 class="is-hidden-mobile is-family-serif is-full-height is-flex is-align-items-center is-flex-shrink-0"><div class="is-full-height" id="postTopic"><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">初识汇编-知识点摘记</p><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">Click back to the top</p></div></h3><aside class="is-flex-shrink-0"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/about">About</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></aside></div></header><header class="is-flex header-widget is-flex-shrink-0 is-align-items-center is-justify-content-center is-hidden-tablet"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/about">About</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></header><main><main class="container is-max-widescreen content section post-page pt-4 px-4"><div class="columns is-flex-desktop is-justify-content-center is-flex-direction-row-reverse"><div class="column is-3 is-hidden-mobile"><ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E7%9A%84%E7%94%B1%E6%9D%A5"><span class="toc-text">汇编语言的由来</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E7%9A%84%E7%89%B9%E7%82%B9"><span class="toc-text">汇编语言的特点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AF%84%E5%AD%98%E5%99%A8"><span class="toc-text">寄存器</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%80%9A%E7%94%A8%E5%AF%84%E5%AD%98%E5%99%A8"><span class="toc-text">通用寄存器</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#PC%E5%AF%84%E5%AD%98%E5%99%A8%EF%BC%9Aprogram-counter-register"><span class="toc-text">PC寄存器：program counter register</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#sp%E4%B8%8Efp%E5%AF%84%E5%AD%98%E5%99%A8"><span class="toc-text">sp与fp寄存器</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#lr%E5%AF%84%E5%AD%98%E5%99%A8"><span class="toc-text">lr寄存器</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B1%87%E7%BC%96%E6%8C%87%E4%BB%A4"><span class="toc-text">汇编指令</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E8%AF%BB%E5%86%99%E6%8C%87%E4%BB%A4"><span class="toc-text">内存读写指令</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#bl%E6%8C%87%E4%BB%A4"><span class="toc-text">bl指令</span></a></li></ol></li></ol></div><div class="column is-9"><header class="my-4"></header><h1 class="mt-0 mb-1 is-family-serif" id="postTitle">初识汇编-知识点摘记</h1><time class="has-text-grey" datetime="2019-06-27T13:34:07.000Z">2019-06-27</time><article class="mt-2 post-content"><h4 id="汇编语言的由来"><a href="#汇编语言的由来" class="headerlink" title="汇编语言的由来"></a>汇编语言的由来</h4><ul>
+<li>汇编语言是基于机器语言（由0或1组成）而产生的一种助记符</li>
+<li>汇编语言介于机器语言和高级语言之间</li>
+<li>汇编语言与机器语言是一一对应关系，每条机器指令都有对应的汇编指令</li>
+<li>汇编语言通过编译得到机器语言，反之机器语言也可通过反汇编得到汇编语言</li>
+<li>高级语言通过编译得到汇编语言，但是汇编语言不能反汇编成高级语言，因为高级语言与汇编之间是多对一的关系。</li>
+</ul>
+<h4 id="汇编语言的特点"><a href="#汇编语言的特点" class="headerlink" title="汇编语言的特点"></a>汇编语言的特点</h4><p><strong>优点</strong></p>
+<ul>
+<li>汇编语言可直接访问或控制硬件：存储器、CPU，能最大限度的发挥硬件功能</li>
+<li>目标代码少，占位内存少，执行速度快</li>
+<li>不同厂商的CPU都有对应的机器指令集和汇编指令集合</li>
+<li>大小写不敏感</li>
+</ul>
+<p><strong>缺点</strong></p>
+<ul>
+<li>不易于编写、维护、调试</li>
+</ul>
+<h4 id="寄存器"><a href="#寄存器" class="headerlink" title="寄存器"></a>寄存器</h4><ul>
+<li>CPU由寄存器、运算器和控制器组成，其中最主要部件是寄存器，通过改变寄存器的内容来实现对CPU的控制</li>
+<li>不同的CPU，寄存器个数和结构存在差异</li>
+</ul>
+<h5 id="通用寄存器"><a href="#通用寄存器" class="headerlink" title="通用寄存器"></a>通用寄存器</h5><ul>
+<li>arm64寄存器有31个64位的通用寄存器x0-x30，这些寄存器通常用来存放一般数据</li>
+<li>w0-w28是32位寄存器，是x0-x28寄存器的低32位，即64位的CPU是兼容32位的</li>
+<li>CPU会先将内存中的数据存储到通用寄存器中，然后在对通用寄存器中的数据进行运算，原因在于寄存器的执行速度比内存快</li>
+<li>arm64架构下，函数参数都是保存在x0-x7（32位下即w0-w7）这8个寄存器，超过8个参数入栈</li>
+<li>函数返回值是存放在x0寄存器中</li>
+<li>函数的局部变量都是保存在栈中</li>
+</ul>
+<h5 id="PC寄存器：program-counter-register"><a href="#PC寄存器：program-counter-register" class="headerlink" title="PC寄存器：program counter register"></a>PC寄存器：program counter register</h5><ul>
+<li>指令指针寄存器，指向CPU当前要执行的指令地址</li>
+<li>内存中指令和数据无区别，都是二进制数据。CPU将PC寄存器指向的内存单元的内容看作指令</li>
+</ul>
+<h5 id="sp与fp寄存器"><a href="#sp与fp寄存器" class="headerlink" title="sp与fp寄存器"></a>sp与fp寄存器</h5><ul>
+<li>sp寄存器会在任意时刻保存栈顶地址</li>
+<li>fp寄存器即为x29寄存器，有时也用于保存栈低的地址</li>
+</ul>
+<h5 id="lr寄存器"><a href="#lr寄存器" class="headerlink" title="lr寄存器"></a>lr寄存器</h5><ul>
+<li>lr寄存器就是0x30通用寄存器</li>
+<li>0x30寄存器存放函数返回地址，执行ret指令时会读取这个寄存器的值，实现函数返回</li>
+</ul>
+<h4 id="汇编指令"><a href="#汇编指令" class="headerlink" title="汇编指令"></a>汇编指令</h4><h5 id="内存读写指令"><a href="#内存读写指令" class="headerlink" title="内存读写指令"></a>内存读写指令</h5><blockquote>
+<p>arm64架构中取消了32位的LDM、STM、PUSH、POP指令，取而代之的是ldr/ldp、str/stp；ldp/stp是ldr/str的衍生，可同时读写两个寄存器，而ldr/str只能读写一个</p>
+</blockquote>
+<ul>
+<li>str指令：store register指令，将数据从寄存器中读出，写入内存</li>
+<li>ldr指令：load register指令，将数据从内存读出，存入寄存器</li>
+</ul>
+<p>eg：利用栈将x0和x1寄存器中的值互换</p>
+<blockquote>
+<p>arm64架构中，栈是16字节内存对齐的，即一次读写至少是16（0x10）个字节</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sub sp,sp,#0x10 ;栈顶指针下移0x10个字节，两个64位的寄存器共16个字节</span><br><span class="line">stp x0,x1,[sp,0x10] ;寄存器x0,x1先后的值入栈</span><br><span class="line">ldp x1,x0,[sp,0x10] ;出栈，先后写入x0,x1寄存器</span><br><span class="line">add sp,sp,0x10 ;栈还原，stp、ldp指令不会改变sp指针位置，且都是由高地址向低地址读写</span><br></pre></td></tr></tbody></table></figure>
+
+<h5 id="bl指令"><a href="#bl指令" class="headerlink" title="bl指令"></a>bl指令</h5><ul>
+<li>CPU执行的指令是由PC寄存器决定的，因此可以通过修改PC寄存器的内容来控制CPU的指令执行</li>
+<li>传送指令用于操作通用寄存器，比如mov指令；此外是转移指令，用于修改PC的值，最简单的就是bl指令</li>
+<li>bl指令跳转前将当前指令的下一条指令存放到lr(0x30)寄存器：链接寄存器</li>
+</ul>
+</article><section class="jump-container is-flex is-justify-content-space-between my-6"><!-- em is empty placeholder--><em></em><a class="button is-default" href="/2018/12/01/%E3%80%8A%E4%B8%89%E4%BD%93%E3%80%8B%E8%AF%BB%E5%90%8E%E6%84%9F%E4%B9%8B%E7%94%9F%E5%AD%98%E8%BF%98%E6%98%AF%E6%AD%BB%E4%BA%A1/" title="《三体》系列第一部读后感之生存还是死亡？"><span class="has-text-weight-semibold">Next: 《三体》系列第一部读后感之生存还是死亡？</span><i class="iconfont icon-next ml-2 has-text-grey"></i></a></section><article class="mt-6 comment-container"><script async repo="Haojen/Claudia-theme-blog" src="https://utteranc.es/client.js" issue-term="pathname" theme="preferred-color-scheme"></script></article></div></div></main></main><footer class="is-flex is-flex-direction-column is-align-items-center is-flex-shrink-0 is-family-serif"><section class="sns-container"><!-- Github--><a title="github" target="_blank" rel="noopener nofollow" href="//github.com/industriousonesoft"><i class="iconfont icon-github"></i></a><!-- Ins--><!-- RSS--><!-- 知乎--><!-- 领英--><!-- 脸书--></section><p><span>Copyright ©</span><span> MarkCao 2022</span></p><div class="is-flex is-justify-content-center is-flex-wrap-wrap"><p>Powered by Hexo &verbar;&nbsp;</p><p class="is-flex is-justify-content-center"><a title="Hexo theme author" target="_blank" rel="noopener" href="//github.com/haojen">Theme by Haojen&nbsp;</a></p><div style="margin-top: 2px"><a class="github-button" title="github-button" target="_blank" rel="noopener" href="https://github.com/haojen/hexo-theme-Claudia" data-color-scheme="no-preference: light; light: light; dark: dark;" data-show-count="true"></a></div></div><div><span>There is only one true heroism in the world, to see the world as it is, and to love it.</span></div></footer><script async defer src="https://buttons.github.io/buttons.js"></script><script src="/js/post.js"></script></body></html>

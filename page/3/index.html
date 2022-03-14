@@ -1,0 +1,185 @@
+<!DOCTYPE html><html class="appearance-auto" lang="en"><head><meta charset="UTF-8"><title>MarkCao's blog</title><meta name="description" content="程序的世界让我着迷"><meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, initial-scale=1"><!-- Google Analytics --><!-- End Google Analytics -->
+<!-- Baidu Analytics --><!-- End Baidu Analytics --><link rel="icon" href="/images/favicon.png"><link rel="stylesheet" href="/style/common/bulma.css"><link rel="stylesheet" href="/style/base.css"><link rel="stylesheet" href="/style/common/helper.css"><script src="/js/common.js"></script><link rel="stylesheet" href="/style/widget-post-list.css"><meta name="generator" content="Hexo 6.0.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="MarkCao" type="application/atom+xml">
+</head><body class="is-flex is-flex-direction-column"><header class="header-widget is-flex-shrink-0 is-hidden-mobile"><div class="container is-fullhd is-flex is-justify-content-space-between is-align-items-center is-full-height"><section class="is-hidden-mobile is-flex-shrink-0"><h2><a href="/">MarkCao's blog</a></h2></section><h3 class="is-hidden-mobile is-family-serif is-full-height is-flex is-align-items-center is-flex-shrink-0"></h3><aside class="is-flex-shrink-0"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/about">About</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></aside></div></header><header class="is-flex header-widget is-flex-shrink-0 is-align-items-center is-justify-content-center is-hidden-tablet"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/about">About</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></header><main><article class="post-container is-flex is-justify-content-center section container is-max-widescreen pt-4 px-2"><div class="columns is-variable is-1-tablet is-3-desktop-only is-2-widescreen is-full-width"><section class="column"><article class="post-item-card"><section class="content post-card-content p-4 pb-5"><header><a href="/tags/Objective-C"><i class="tag post-item-tag">Objective-C</i></a><a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0"><i class="tag post-item-tag">读书笔记</i></a></header><h2 class="mt-4 mb-0 is-family-serif"><a href="/2017/10/07/Effective%20Objective-C%202.0%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">Effective Objective-C 2.0读书笔记</a></h2><time class="has-text-grey" datetime="2017-10-07T15:06:07.000Z">2017-10-07</time><p class="is-flex-grow-2 mt-2">第1章 熟悉Objective-C1: 了解Objective-C语言的起源
+Objective-C语言是由Smalltalk演化而来，后者是消息型语言的鼻祖。
+消息机构的语言，不论是否多态，其运行时所执行的代码都由运行环境来决定；而使用函数调用的语言则由编译器决定，但调用函数是多态的，则是在运行时通过查询“虚方法表（virtual table）”决定具体执行函数。
+如果只需要保存int、flot、double、char等非对象类型，通常使用CGRect这种结构体，因为结构体可以使用栈空间，而不用分配和释放堆空间，避免额外开销。
+
+2: 在类的头文件中尽量少引用其他头文件
+除非确实有必要，否则不要引入头文件，尽量使用向前声明，这样不但可以缩短编译时间和降低类之间的耦合。
+如果无法使用向前声明，比如要声明某个..</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2017/10/07/Effective%20Objective-C%202.0%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">Read more</a></section></article><article class="post-item-card"><header class="is-relative is-flex"><div class="post-cover-backdrop is-hidden"><img src="https://raw.githubusercontent.com/icebergcwp1990/MarkDownPhotos/master/daily/ABriefHistoryOfHumankind-OnePart.png" alt="loading.."></div><a class="post-cover-link has-text-centered skeleton" href="/2017/08/03/%E4%BA%BA%E7%B1%BB%E7%AE%80%E5%8F%B2%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"><img class="post-cover-img js-img-fadeIn" src="https://raw.githubusercontent.com/icebergcwp1990/MarkDownPhotos/master/daily/ABriefHistoryOfHumankind-OnePart.png" alt="loading.." data-backdrop="true"></a></header><section class="content post-card-content p-4 pb-5"><header><a href="/tags/%E4%BA%BA%E7%B1%BB%E7%AE%80%E5%8F%B2"><i class="tag post-item-tag">人类简史</i></a></header><h2 class="mt-4 mb-0 is-family-serif"><a href="/2017/08/03/%E4%BA%BA%E7%B1%BB%E7%AE%80%E5%8F%B2%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">《人类简史》第一部分认知革命读书笔记</a></h2><time class="has-text-grey" datetime="2017-08-03T15:50:07.000Z">2017-08-03</time><p class="is-flex-grow-2 mt-2">人类：只是一种普通的动物一直以来，我和很多人一样以为地球同一时期只有一种人类且是独特于其他的物种之外的特殊物种，不然怎么会站在了食物链的顶端。现在我才知道这种想法是错误的，其实我们现代人即智人（human sepiens）只是人属的一种，就像豹属包括狮子，豹子等。人属也包括多个物种，只是现存的人种只有智人，就容易让人造成智人是唯一人种的假象。
+早在250万年前人类开始由猿属中的南方古猿开始演化，人类的足迹在200万年前开始从东非欧亚大陆扩散，结合当地的环境各自演化出不同的人种，有匠人、鲁道夫人、尼安德特人、直立人、梭罗人等等。这些人分别先后出现，并在某一段时间同时存在地球的不同地方。其中，直立人出现时间是200万年前到5万年前，存活了将近200万年，是目前所知存续时间最长的人类物种，目前地球上唯一的人种智人..</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2017/08/03/%E4%BA%BA%E7%B1%BB%E7%AE%80%E5%8F%B2%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">Read more</a></section></article><article class="post-item-card"><section class="content post-card-content p-4 pb-5"><header><a href="/tags/Objective-C"><i class="tag post-item-tag">Objective-C</i></a></header><h2 class="mt-4 mb-0 is-family-serif"><a href="/2017/06/11/%E5%89%96%E6%9E%90@synchronized%E5%BA%95%E5%B1%82%E5%AE%9E%E7%8E%B0/">剖析@synchronizd底层实现原理</a></h2><time class="has-text-grey" datetime="2017-06-11T14:28:07.000Z">2017-06-11</time><p class="is-flex-grow-2 mt-2">@synchronizd是Objective-C中的一个语法糖，用于给某个对象加锁，因为使用起来简单方便，所以使用频率很高。然而，滥用@synchronizd很容易导致代码效率低下。本篇博客旨在结合@synchronizd底层实现源码并剖析其实现原理，这样可以更好的让我们在适合的情景使用@synchronizd。
+@synchronizd本质上是一个编译器标识符，在Objective-C层面看不其任何信息。因此可以通过clang -rewrite-objc指令来获得@synchronizd的C++实现代码。示例代码如下：
+123456int main(int argc, const char * argv[]) {    NSString *obj = @&quot;Iceberg&quot;;    @synchronize..</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2017/06/11/%E5%89%96%E6%9E%90@synchronized%E5%BA%95%E5%B1%82%E5%AE%9E%E7%8E%B0/">Read more</a></section></article><article class="post-item-card"><section class="content post-card-content p-4 pb-5"><header><a href="/tags/JavaSctript"><i class="tag post-item-tag">JavaSctript</i></a></header><h2 class="mt-4 mb-0 is-family-serif"><a href="/2017/06/07/JavaScript%E7%9A%84this%E5%85%B3%E9%94%AE%E5%AD%97/">JavaScript的this关键字</a></h2><time class="has-text-grey" datetime="2017-06-07T15:33:07.000Z">2017-06-07</time><p class="is-flex-grow-2 mt-2">这是一篇翻译文章，原文地址*点击这里*。
+JavaScript中一个常用的语法特征就是this关键字，同时这也是JavaScript最容易被误解和造成困惑的特征。this关键字的含义是什么且决定其含义的依据是什么？
+这篇文章试着解开这个的疑惑并给出一个简单清晰的解释。
+对于有其他语言编程经验的人来说应该也使用过this关键字，且多数情况下this指向的是一个通过构造函数创建的新对象。举例来说，假设有一个Boat类，里面包含一个成员方法moveBoat()，我们可以在moveBoat()方法中通过this关键字访问当前的对象实例。
+在JavaSctript中，当使用new关键字创建一个新对象后，在构造函数中可以通过this关键字访问当前对象。然而，JavaScript中的this关键字指向的对象是随着函数调用..</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2017/06/07/JavaScript%E7%9A%84this%E5%85%B3%E9%94%AE%E5%AD%97/">Read more</a></section></article><article class="post-item-card"><section class="content post-card-content p-4 pb-5"><header><a href="/tags/Cocoa"><i class="tag post-item-tag">Cocoa</i></a></header><h2 class="mt-4 mb-0 is-family-serif"><a href="/2017/05/05/cocoa%E7%A8%8B%E5%BA%8F%E9%80%80%E5%87%BA%E5%89%8D%E5%8F%91%E9%80%81Request%E8%AF%B7%E6%B1%82/">Cocoa程序退出前发送HttpRequest请求</a></h2><time class="has-text-grey" datetime="2017-05-05T09:06:07.000Z">2017-05-05</time><p class="is-flex-grow-2 mt-2">最近在视频投送项目中遇到一个奇葩问题，花费了一整天时间才得以解决。这个问题比较隐晦，值得记录一下。
+根据功能需要，需要在cocoa程序退出前，发送一个关闭设备的指令，本质上就是post一个Http请求，用于中止当前出于投送状态的设备。
+具体代码如下：
+在回调函数- (void)applicationWillTerminate:中调用停止投送API
+123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566	- (void)applicationWillTerminate:(NSNotification *)aNotific..</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2017/05/05/cocoa%E7%A8%8B%E5%BA%8F%E9%80%80%E5%87%BA%E5%89%8D%E5%8F%91%E9%80%81Request%E8%AF%B7%E6%B1%82/">Read more</a></section></article><article class="post-item-card"><section class="content post-card-content p-4 pb-5"><h2 class="mt-4 mb-0 is-family-serif"><a href="/2017/04/14/%E5%85%B3%E4%BA%8E%E9%98%85%E8%AF%BB%E7%9A%84%E4%B8%80%E7%82%B9%E6%83%B3%E6%B3%95/">关于读书无用论的一些想法</a></h2><time class="has-text-grey" datetime="2017-04-14T14:30:07.000Z">2017-04-14</time><p class="is-flex-grow-2 mt-2">关于最近流行的“读书无用论”观点的一些个人看法
+通过反复揣摩这句话，大概可以总结为以下五点（如有歧义，欢迎指正）：
+一、在需要的时候，读技能书学习相应的技能即可二、选择什么样的生活，取决于性格，而非读书能够左右三、读书不能弥补先天的差距
+我觉得，所谓的读书无用，其中“读书”是指阅读，而非指代“寒窗苦读十余载，金榜题名望今朝”这样功利性的读书，另外“无用”是指阅读不会对一个人的生活带来太大的改变。所以，后面用“阅读”来取代“读书”。
+首先，我的立场是：“阅读很有用，不仅完善人格，还能深化思想，甚至可以改变一个人的命运。”书有好书和差书之分，一本好书是作者耗费了大量精力，基于自身知识底蕴，结合个人思想，经过岁月打磨出来的。从某个角度来说，读者只需要几十块钱就能获得作者几十年甚至一生的心血，实在是再廉价不过了。当..</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2017/04/14/%E5%85%B3%E4%BA%8E%E9%98%85%E8%AF%BB%E7%9A%84%E4%B8%80%E7%82%B9%E6%83%B3%E6%B3%95/">Read more</a></section></article><article class="post-item-card"><header class="is-relative is-flex"><div class="post-cover-backdrop is-hidden"><img src="https://raw.githubusercontent.com/icebergcwp1990/MarkDownPhotos/master/cocoa/originality/js-simulate-mouse-click-1.png" alt="loading.."></div><a class="post-cover-link has-text-centered skeleton" href="/2017/02/23/JS-%E6%A8%A1%E6%8B%9F%E9%BC%A0%E6%A0%87%E7%82%B9%E5%87%BB%E6%B6%88%E6%81%AF/"><img class="post-cover-img js-img-fadeIn" src="https://raw.githubusercontent.com/icebergcwp1990/MarkDownPhotos/master/cocoa/originality/js-simulate-mouse-click-1.png" alt="loading.." data-backdrop="true"></a></header><section class="content post-card-content p-4 pb-5"><header><a href="/tags/JS"><i class="tag post-item-tag">JS</i></a></header><h2 class="mt-4 mb-0 is-family-serif"><a href="/2017/02/23/JS-%E6%A8%A1%E6%8B%9F%E9%BC%A0%E6%A0%87%E7%82%B9%E5%87%BB%E6%B6%88%E6%81%AF/">原生JS代码模拟鼠标点击消息</a></h2><time class="has-text-grey" datetime="2017-02-22T17:58:07.000Z">2017-02-23</time><p class="is-flex-grow-2 mt-2">近两天都忙于更新之前做的一个关于国外某知名音乐网站项目，因为自己一直做iOS开发并没有系统的学习过JS，所以属于半吊子水平。
+由于该音乐网站对网页进行了全新的改版，导致之前注入的JS代码全部失效，且原网站中使用的第三方JQuery库也被去掉了。意味着只能使用原生JS重写注入代码。
+期间遇到了一个“棘手”的问题：使用原生JS代码模拟鼠标点击消息来改变音量，不同于普通的鼠标点击的是消息里面需要附带鼠标坐标。在各种尝试之后，耗费了大半天时间才得以解决，个人觉得有点价值，记录下解决思路以供参考。
+以下是解决思路流程：
+ps：以下调试和代码均在Chrome浏览器的控制台执行。
+分析DOM元素结构页面样式
+
+DOM结构
+
+由上图可知，DIV元素VolumeSlider作为父元素，其下有四个子元素，分,包括显示音量的sl..</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2017/02/23/JS-%E6%A8%A1%E6%8B%9F%E9%BC%A0%E6%A0%87%E7%82%B9%E5%87%BB%E6%B6%88%E6%81%AF/">Read more</a></section></article><article class="post-item-card"><section class="content post-card-content p-4 pb-5"><header><a href="/tags/Objective-C"><i class="tag post-item-tag">Objective-C</i></a></header><h2 class="mt-4 mb-0 is-family-serif"><a href="/2017/02/12/%E8%A7%A3%E9%99%A4NSTimer%E6%BD%9C%E5%9C%A8%E7%9A%84%E2%80%9C%E4%BF%9D%E7%95%99%E7%8E%AF%E2%80%9D%E9%97%AE%E9%A2%98/">解除NSTimer潜在的“保留环”问题</a></h2><time class="has-text-grey" datetime="2017-02-12T14:28:07.000Z">2017-02-12</time><p class="is-flex-grow-2 mt-2">NSTimer是Foundation框架中的一个使用频率很高的类，然而其调用过程中很容易引入潜在的“保留环“问题。可能是因为NSTimer的提供的API足够便利与顺手，以至于这个问题不容易被察觉到。这篇博客旨在阐述这个问题并提供解决方法。
+以下的NSTimer提供的三个常用的创建或者初始化的API：
+123456+ (NSTimer *)timerWithTimeInterval:(NSTimeInterval)ti target:(id)aTarget selector:(SEL)aSelector userInfo:(nullable id)userInfo repeats:(BOOL)yesOrNo;+ (NSTimer *)scheduledTimerWithTimeInterval:(NSTime..</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2017/02/12/%E8%A7%A3%E9%99%A4NSTimer%E6%BD%9C%E5%9C%A8%E7%9A%84%E2%80%9C%E4%BF%9D%E7%95%99%E7%8E%AF%E2%80%9D%E9%97%AE%E9%A2%98/">Read more</a></section></article><article class="post-item-card"><section class="content post-card-content p-4 pb-5"><header><a href="/tags/%E7%88%B1"><i class="tag post-item-tag">爱</i></a></header><h2 class="mt-4 mb-0 is-family-serif"><a href="/2017/01/08/%E4%BB%80%E4%B9%88%E6%98%AF%E7%88%B1/">关于爱的一点想法</a></h2><time class="has-text-grey" datetime="2017-01-08T09:58:07.000Z">2017-01-08</time><p class="is-flex-grow-2 mt-2">前言前不久又翻读了《少有人走得路》这本书，并将其置于枕边，每天晚上睡觉之前或是蹲马桶的时候看上几个章节，那种感觉妙不可言。这本书从来没有让我失望过，每看一次都收获不少，确实是一本值得读一辈子的好书。
+爱的定义这次的阅读有一个论点让我深以为然，就是关于爱的定义。作者斯科特·派克是这样定义的：“爱，是为了促进自我和他人心智成熟，而具有的一种自我完善的意愿。“ 爱，是一种神秘的现象，我个人觉得很难言明爱是什么，如何定义。如果有人问我：”你觉得爱是什么？“ 我很可能回答：”它是一个很奇妙的东西。“ 然而，当我在书中看到作者给出的定义时，觉得他完整的表达了我对于爱的理解。
+爱是长期的和渐进的过程。爱是自我完善，意味着心智不断成熟。当我在付出爱的努力，不仅能让他人的心智成熟，自己也同样获益。真正意义上的爱，既是爱自己，..</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2017/01/08/%E4%BB%80%E4%B9%88%E6%98%AF%E7%88%B1/">Read more</a></section></article><article class="post-item-card"><header class="is-relative is-flex"><div class="post-cover-backdrop is-hidden"><img src="https://raw.githubusercontent.com/icebergcwp1990/MarkDownPhotos/master/daily/coffee-0.jpg" alt="loading.."></div><a class="post-cover-link has-text-centered skeleton" href="/2016/11/23/StartFucks%20Coffee%20-%20%E6%93%8D%E8%9B%8B%E7%9A%84%E5%92%96%E5%95%A1/"><img class="post-cover-img js-img-fadeIn" src="https://raw.githubusercontent.com/icebergcwp1990/MarkDownPhotos/master/daily/coffee-0.jpg" alt="loading.." data-backdrop="true"></a></header><section class="content post-card-content p-4 pb-5"><header><a href="/tags/Coffee"><i class="tag post-item-tag">Coffee</i></a></header><h2 class="mt-4 mb-0 is-family-serif"><a href="/2016/11/23/StartFucks%20Coffee%20-%20%E6%93%8D%E8%9B%8B%E7%9A%84%E5%92%96%E5%95%A1/">StartFucks Coffee - 操蛋的咖啡</a></h2><time class="has-text-grey" datetime="2016-11-23T09:32:07.000Z">2016-11-23</time><p class="is-flex-grow-2 mt-2">
+写了一天的代码，看着桌上冒着热气的白开水，想到第一次去星巴克的情景：傻傻地在柜台面子，看着各种咖啡名词，踌躇许久，最终点了一份中杯柠檬茶。那位服务员小胖妞无语中掺杂点鄙视的眼神，至今记忆犹新…
+
+身边的朋友喝咖啡的不少，咖啡这个词汇也经常萦绕耳旁：美剧中，喝咖啡已是日常；朋友聚会，问及他（她）们最爱的饮料，也是拿铁和卡布奇诺居多；特别的大学期间的坐我对面的师姐，感觉她对于喝咖啡跟喝水已经没多大区别，每一次浓浓的咖啡香从她的书桌散发出来，很难说我没有一丝要来一杯的冲动，不过，最终还是忍住了。
+究其原因，一是我个人对咖啡的印象并不好，普遍观点认为长期喝咖啡对于身体健康和健身有不良影响，这种观点是否属实尚不能下定论。在此之前，我选择敬而远之。二是我狭隘的以为咖啡只有一种：苦咖啡，殊不知咖啡也是大有学问。其实我早..</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2016/11/23/StartFucks%20Coffee%20-%20%E6%93%8D%E8%9B%8B%E7%9A%84%E5%92%96%E5%95%A1/">Read more</a></section></article><section class="paginator is-flex is-justify-content-flex-end is-flex-wrap-wrap mt-5"><a class="extend prev" rel="prev" href="/page/2/"><i class="iconfont icon-prev has-text-grey"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/4/"><i class="iconfont icon-next has-text-grey"></i></a></section></section><aside class="column is-hidden-mobile is-4-tablet is-3-widescreen"><style>.search-widget .search-input {
+    border: none;
+    outline: none;
+    background: transparent;
+    color: var(--second-text-color);
+}
+.search-widget .search-content {
+    position: absolute;
+    left: 0;
+    top: calc(100% - 3px);
+    z-index: 2;
+
+    width: 100%;
+    height: 0;
+    max-height: 550px;
+
+    overflow: auto;
+    box-sizing: border-box;
+
+    background: var(--top-bar-bg-color);
+    backdrop-filter: blur(var(--backdropFilter));
+    -webkit-backdrop-filter: blur(var(--backdropFilter));
+
+    border-bottom-left-radius: var(--borderRadius);
+    border-bottom-right-radius: var(--borderRadius);
+    box-shadow: 0 12px 15px rgba(0, 0, 0, 0.08);
+}
+
+.search-widget .search-content a:hover h5 {
+    color: #3273dc!important;
+}
+</style><main class="aside-card-container search-widget is-relative"><label for="searchInput"><div class="is-flex px-4" id="searchButton"><i class="iconfont icon--search1 mr-1"></i><input class="search-input is-flex-grow-1" id="searchInput" placeholder="Search everything.."></div></label><section class="search-content content" id="searchContent"></section></main><script>var searchDatabase = []
+var searchInputEl = document.getElementById('searchInput')
+var searchButtonEl = document.getElementById('searchButton')
+var searchResultEl = document.getElementById('searchContent')
+
+searchInputEl.oninput = function (evt) {
+    var searchValue = evt.srcElement.value
+    var haveSearchValue = Boolean(searchValue.trim())
+    if (!haveSearchValue) {
+        searchResultEl.style.height = 0
+        searchResultEl.innerHTML = null
+        return
+    }
+
+    var searchResults = searching(searchValue)
+
+    if (searchResults.length > 0) {
+        renderSearchResults(searchResults)
+    }
+}
+
+function renderSearchResults(results) {
+    searchResultEl.innerHTML = null
+    var fragment = document.createDocumentFragment()
+
+    results.forEach(function (item) {
+        var link = document.createElement('a')
+        var title = document.createElement('h5')
+        var content = document.createElement('p')
+
+        title.className = 'mb-1'
+        title.innerText = item.title
+        content.innerText = item.content
+
+        link.href = item.link
+        link.appendChild(title)
+        link.appendChild(content)
+        link.className = 'p-4 is-block'
+
+        fragment.appendChild(link)
+    })
+
+    searchResultEl.appendChild(fragment)
+    searchResultEl.style.height = 'auto'
+}
+
+function searching(inputText) {
+    var inputTexts = inputText.split(' ')
+    var searchResults = []
+    inputTexts.forEach(function (searchKey) {
+        var haveSearchValue = Boolean(searchKey.trim())
+        if (!haveSearchValue) return
+
+        var key = searchKey.toLowerCase()
+
+        for (var entry of searchDatabase) {
+            var title = entry.getElementsByTagName('title')[0].textContent
+            var link = entry.getElementsByTagName('link')[0].getAttribute('href')
+            var contentWithTags = entry.getElementsByTagName('content')[0].textContent
+            var rawContent = contentWithTags.trim().replace(/<[^>]+>/g, '').toLowerCase()
+
+            var LENGTH = 80
+            var finalContent = ''
+            var contentLength = rawContent.length
+            var searchResultIdx = rawContent.indexOf(key)
+
+            var startIdx = searchResultIdx - 20,
+                endIdx = startIdx + LENGTH
+
+            if (startIdx < 0) {
+                startIdx = 0
+                endIdx = 100
+            }
+
+            endIdx > contentLength && (endIdx = contentLength)
+
+            finalContent = rawContent.substring(startIdx, endIdx)
+
+            if (title.indexOf(key) > -1 || searchResultIdx > -1) {
+                searchResults.push({
+                    link: link,
+                    title: title,
+                    content: finalContent
+                })
+            }
+        }
+    })
+    return searchResults
+}
+
+searchButtonEl.onclick = function () {
+    if (searchDatabase.length > 0) return;
+
+    fetch(window.location.href + '/search.xml').then(res => res.text()).then(res => {
+        var domparser = new DOMParser
+        var doc = domparser.parseFromString(res, 'application/xml')
+        searchDatabase = doc.getElementsByTagName('search')[0].children
+    })
+}</script><main class="aside-card-container profile-widget"><!-- todo: 使用取色工具动态阴影--><section class="is-flex is-flex-direction-column is-justify-content-center is-align-items-center"><section class="is-flex is-justify-content-center avatar is-clipped skeleton"><!-- debug images "https://api.ixiaowai.cn/gqapi/gqapi.php"--><img class="js-img-fadeIn" src="/images/avatar.jpg" alt="user avatar"></section><h3 class="user-name">MarkCao</h3><blockquote class="has-text-centered is-relative"><span style="margin-bottom: 5px;">程序的世界让我着迷</span></blockquote><address class="has-text-centered has-text-grey"><i class="iconfont icon-location" style="margin-right: 5px;"></i><span class="has-text-grey">ChangSha</span></address></section><section class="sns-container is-flex is-justify-content-center is-align-items-center"><!-- Github--><a title="github" target="_blank" rel="noopener nofollow" href="//github.com/industriousonesoft"><i class="iconfont icon-github"></i></a><!-- Ins--><!-- RSS--><!-- 知乎--><!-- 领英--><!-- 脸书--></section></main><main class="aside-card-container recent-widget"><h3>Recent</h3><ul><li class="is-flex"><!-- change to element replace image placeholder--><img class="js-img-fadeIn" src="https://ui-avatars.com/api/?background=f5f5f5&amp;name=Ef" alt="cover"><!--else--><!--    div.post-img-placeholder--><section class="is-flex-grow-2"><p class="has-text-weight-semibold" style="line-height: 20px; font-size: 14px"><a href="/2017/10/07/Effective%20Objective-C%202.0%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">Effective Objective-C 2.0读书笔记</a></p><time class="has-text-weight-semibold has-text-grey" datetime="2017-10-07T15:06:07.000Z">2017-10-07</time></section></li><li class="is-flex"><!-- change to element replace image placeholder--><img class="js-img-fadeIn" src="https://raw.githubusercontent.com/icebergcwp1990/MarkDownPhotos/master/daily/ABriefHistoryOfHumankind-OnePart.png" alt="cover"><!--else--><!--    div.post-img-placeholder--><section class="is-flex-grow-2"><p class="has-text-weight-semibold" style="line-height: 20px; font-size: 14px"><a href="/2017/08/03/%E4%BA%BA%E7%B1%BB%E7%AE%80%E5%8F%B2%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">《人类简史》第一部分认知革命读书笔记</a></p><time class="has-text-weight-semibold has-text-grey" datetime="2017-08-03T15:50:07.000Z">2017-08-03</time></section></li><li class="is-flex"><!-- change to element replace image placeholder--><img class="js-img-fadeIn" src="https://ui-avatars.com/api/?background=f5f5f5&amp;name=剖析" alt="cover"><!--else--><!--    div.post-img-placeholder--><section class="is-flex-grow-2"><p class="has-text-weight-semibold" style="line-height: 20px; font-size: 14px"><a href="/2017/06/11/%E5%89%96%E6%9E%90@synchronized%E5%BA%95%E5%B1%82%E5%AE%9E%E7%8E%B0/">剖析@synchronizd底层实现原理</a></p><time class="has-text-weight-semibold has-text-grey" datetime="2017-06-11T14:28:07.000Z">2017-06-11</time></section></li><li class="is-flex"><!-- change to element replace image placeholder--><img class="js-img-fadeIn" src="https://ui-avatars.com/api/?background=f5f5f5&amp;name=Ja" alt="cover"><!--else--><!--    div.post-img-placeholder--><section class="is-flex-grow-2"><p class="has-text-weight-semibold" style="line-height: 20px; font-size: 14px"><a href="/2017/06/07/JavaScript%E7%9A%84this%E5%85%B3%E9%94%AE%E5%AD%97/">JavaScript的this关键字</a></p><time class="has-text-weight-semibold has-text-grey" datetime="2017-06-07T15:33:07.000Z">2017-06-07</time></section></li><li class="is-flex"><!-- change to element replace image placeholder--><img class="js-img-fadeIn" src="https://ui-avatars.com/api/?background=f5f5f5&amp;name=Co" alt="cover"><!--else--><!--    div.post-img-placeholder--><section class="is-flex-grow-2"><p class="has-text-weight-semibold" style="line-height: 20px; font-size: 14px"><a href="/2017/05/05/cocoa%E7%A8%8B%E5%BA%8F%E9%80%80%E5%87%BA%E5%89%8D%E5%8F%91%E9%80%81Request%E8%AF%B7%E6%B1%82/">Cocoa程序退出前发送HttpRequest请求</a></p><time class="has-text-weight-semibold has-text-grey" datetime="2017-05-05T09:06:07.000Z">2017-05-05</time></section></li><li class="is-flex"><!-- change to element replace image placeholder--><img class="js-img-fadeIn" src="https://ui-avatars.com/api/?background=f5f5f5&amp;name=关于" alt="cover"><!--else--><!--    div.post-img-placeholder--><section class="is-flex-grow-2"><p class="has-text-weight-semibold" style="line-height: 20px; font-size: 14px"><a href="/2017/04/14/%E5%85%B3%E4%BA%8E%E9%98%85%E8%AF%BB%E7%9A%84%E4%B8%80%E7%82%B9%E6%83%B3%E6%B3%95/">关于读书无用论的一些想法</a></p><time class="has-text-weight-semibold has-text-grey" datetime="2017-04-14T14:30:07.000Z">2017-04-14</time></section></li></ul></main><main class="aside-card-container categories-widget category-page"><h3>Categories</h3><section><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Cocoa/">Cocoa</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/iOS/">iOS</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%93%E4%B8%9A/">专业</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B9%A6%E8%AF%84/">书评</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BD%B1%E8%AF%84/">影评</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B1%87%E7%BC%96/">汇编</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%8B%B1%E8%AF%AD/">英语</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%97%B2%E8%A8%80%E7%A2%8E%E8%AF%AD/">闲言碎语</a><span class="category-list-count">14</span></li></ul></section></main><main class="aside-card-container archives-widget"><h3>Archives</h3><section><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">May 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">April 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">March 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">February 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">January 2015</a><span class="archive-list-count">3</span></li></ul></section></main><main class="aside-card-container tag-widget"><h3>Tags</h3><section><a href="/tags/RunLoop"><span class="tag post-item-tag" style="margin-bottom: 5px;">RunLoop</span></a><a href="/tags/JS"><span class="tag post-item-tag" style="margin-bottom: 5px;">JS</span></a><a href="/tags/JavaSctript"><span class="tag post-item-tag" style="margin-bottom: 5px;">JavaSctript</span></a><a href="/tags/KVO"><span class="tag post-item-tag" style="margin-bottom: 5px;">KVO</span></a><a href="/tags/OSX"><span class="tag post-item-tag" style="margin-bottom: 5px;">OSX</span></a><a href="/tags/Category"><span class="tag post-item-tag" style="margin-bottom: 5px;">Category</span></a><a href="/tags/Objective-C"><span class="tag post-item-tag" style="margin-bottom: 5px;">Objective-C</span></a><a href="/tags/Coffee"><span class="tag post-item-tag" style="margin-bottom: 5px;">Coffee</span></a><a href="/tags/%E4%B8%89%E4%BD%93"><span class="tag post-item-tag" style="margin-bottom: 5px;">三体</span></a><a href="/tags/Cocoa"><span class="tag post-item-tag" style="margin-bottom: 5px;">Cocoa</span></a><a href="/tags/%E7%88%B1"><span class="tag post-item-tag" style="margin-bottom: 5px;">爱</span></a><a href="/tags/PlistBuddy"><span class="tag post-item-tag" style="margin-bottom: 5px;">PlistBuddy</span></a><a href="/tags/%E8%8B%B1%E8%AF%AD"><span class="tag post-item-tag" style="margin-bottom: 5px;">英语</span></a><a href="/tags/OpenCV"><span class="tag post-item-tag" style="margin-bottom: 5px;">OpenCV</span></a><a href="/tags/ARC"><span class="tag post-item-tag" style="margin-bottom: 5px;">ARC</span></a><a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0"><span class="tag post-item-tag" style="margin-bottom: 5px;">读书笔记</span></a><a href="/tags/Swift"><span class="tag post-item-tag" style="margin-bottom: 5px;">Swift</span></a><a href="/tags/Runtime"><span class="tag post-item-tag" style="margin-bottom: 5px;">Runtime</span></a><a href="/tags/%E4%BA%BA%E7%B1%BB%E7%AE%80%E5%8F%B2"><span class="tag post-item-tag" style="margin-bottom: 5px;">人类简史</span></a><a href="/tags/GCD"><span class="tag post-item-tag" style="margin-bottom: 5px;">GCD</span></a><a href="/tags/%E4%BA%BA%E7%89%A9%E4%BC%A0%E8%AE%B0"><span class="tag post-item-tag" style="margin-bottom: 5px;">人物传记</span></a></section></main></aside></div></article><script>$claudia.fadeInImage(null, $claudia.blurBackdropImg)
+
+window.addEventListener('resize', $claudia.throttle(function () {
+    var images = document.querySelectorAll('.js-img-fadeIn')
+
+    images.forEach($claudia.blurBackdropImg)
+}, 150))</script></main><footer class="is-flex is-flex-direction-column is-align-items-center is-flex-shrink-0 is-family-serif"><section class="sns-container"><!-- Github--><a title="github" target="_blank" rel="noopener nofollow" href="//github.com/industriousonesoft"><i class="iconfont icon-github"></i></a><!-- Ins--><!-- RSS--><!-- 知乎--><!-- 领英--><!-- 脸书--></section><p><span>Copyright ©</span><span> MarkCao 2022</span></p><div class="is-flex is-justify-content-center is-flex-wrap-wrap"><p>Powered by Hexo &verbar;&nbsp;</p><p class="is-flex is-justify-content-center"><a title="Hexo theme author" target="_blank" rel="noopener" href="//github.com/haojen">Theme by Haojen&nbsp;</a></p><div style="margin-top: 2px"><a class="github-button" title="github-button" target="_blank" rel="noopener" href="https://github.com/haojen/hexo-theme-Claudia" data-color-scheme="no-preference: light; light: light; dark: dark;" data-show-count="true"></a></div></div><div><span>There is only one true heroism in the world, to see the world as it is, and to love it.</span></div></footer><script async defer src="https://buttons.github.io/buttons.js"></script><script>$claudia.fadeInImage(null, $claudia.blurBackdropImg)
+
+window.addEventListener('resize', $claudia.throttle(function () {
+    var images = document.querySelectorAll('.js-img-fadeIn')
+
+    images.forEach($claudia.blurBackdropImg)
+}, 150))</script></body></html>

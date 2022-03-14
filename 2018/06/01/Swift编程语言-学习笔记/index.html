@@ -1,0 +1,203 @@
+<!DOCTYPE html><html class="appearance-auto" lang="en"><head><meta charset="UTF-8"><title>《swift编程语言中文版》学习笔记</title><meta name="description" content="程序的世界让我着迷"><meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, initial-scale=1"><!-- Google Analytics --><!-- End Google Analytics -->
+<!-- Baidu Analytics --><!-- End Baidu Analytics --><link rel="icon" href="/images/favicon.png"><link rel="stylesheet" href="/style/common/bulma.css"><link rel="stylesheet" href="/style/base.css"><link rel="stylesheet" href="/style/common/helper.css"><script src="/js/common.js"></script><link rel="stylesheet" href="/style/post.css"><link rel="stylesheet" href="/style/themes/highlight-theme-light.css"><script src="/js/highlight.pack.js"></script><meta name="description" content="2.9 类和结构体swift中类和结构体的关系比其他语言更加密切，二者主要的区别在于：
+
+类支持继承
+类支持运行时检测类实例类型
+类有deinit函数
+类是引用类型而结构体是值类型
+
+swift中类或结构体允许直接修改其属性（存在子属性的一般也就是类或结构体）的子属性，而在Objective-C不行  
+结构体有一个默认的成员逐一初始化器
+在Swift中，整数、浮点数、布尔值、字符串、数组、字典都是值类型，并且是以结构体的形式存在的，结构体和枚举也都是值类型，意味着赋值或参数传递过程都是属于值拷贝，而类是引用类型
+用于判定多个类引用是否指向同一个类实例的两个恒等运算符：等价于（===）和 不等价于（===）
+swift中同样存在指针，比如引用类型，但是其声明方式同值类型一样
+由于集合类型（数组和字典）都是以.."><meta name="generator" content="Hexo 6.0.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="MarkCao" type="application/atom+xml">
+</head><body class="is-flex is-flex-direction-column"><header class="header-widget is-flex-shrink-0 is-hidden-mobile"><div class="container is-fullhd is-flex is-justify-content-space-between is-align-items-center is-full-height"><section class="is-hidden-mobile is-flex-shrink-0"><h2><a href="/">MarkCao's blog</a></h2></section><h3 class="is-hidden-mobile is-family-serif is-full-height is-flex is-align-items-center is-flex-shrink-0"><div class="is-full-height" id="postTopic"><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">《swift编程语言中文版》学习笔记</p><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">Click back to the top</p></div></h3><aside class="is-flex-shrink-0"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/about">About</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></aside></div></header><header class="is-flex header-widget is-flex-shrink-0 is-align-items-center is-justify-content-center is-hidden-tablet"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/about">About</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></header><main><main class="container is-max-widescreen content section post-page pt-4 px-4"><div class="columns is-flex-desktop is-justify-content-center is-flex-direction-row-reverse"><div class="column is-3 is-hidden-mobile"><ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-9-%E7%B1%BB%E5%92%8C%E7%BB%93%E6%9E%84%E4%BD%93"><span class="toc-text">2.9 类和结构体</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-10-%E5%B1%9E%E6%80%A7"><span class="toc-text">2.10 属性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-11-%E6%96%B9%E6%B3%95"><span class="toc-text">2.11 方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-12-%E9%99%84%E5%B1%9E%E8%84%9A%E6%9C%AC"><span class="toc-text">2.12 附属脚本</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-13-%E7%BB%A7%E6%89%BF"><span class="toc-text">2.13 继承</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-14-%E6%9E%84%E9%80%A0%E8%BF%87%E7%A8%8B"><span class="toc-text">2.14 构造过程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-15-%E5%8F%8D%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-text">2.15 反初始化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-16-%E8%87%AA%E5%8A%A8%E5%BC%95%E7%94%A8%E8%AE%A1%E6%95%B0-ARC"><span class="toc-text">2.16 自动引用计数(ARC)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-17-%E8%87%AA%E5%88%A4%E6%96%AD%E9%93%BE%E6%8E%A5"><span class="toc-text">2.17 自判断链接</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-18-%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2"><span class="toc-text">2.18 类型转换</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-%E6%89%A9%E5%B1%95"><span class="toc-text">2.2 扩展</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-21-%E5%8D%8F%E8%AE%AE"><span class="toc-text">2.21 协议</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-22-%E6%B3%9B%E5%9E%8B"><span class="toc-text">2.22 泛型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-23-%E9%AB%98%E7%BA%A7%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-text">2.23 高级运算符</span></a></li></ol></div><div class="column is-9"><header class="my-4"><a href="/tags/Swift"><i class="tag post-item-tag">Swift</i></a></header><h1 class="mt-0 mb-1 is-family-serif" id="postTitle">《swift编程语言中文版》学习笔记</h1><time class="has-text-grey" datetime="2018-05-31T23:00:07.000Z">2018-06-01</time><article class="mt-2 post-content"><h4 id="2-9-类和结构体"><a href="#2-9-类和结构体" class="headerlink" title="2.9 类和结构体"></a>2.9 类和结构体</h4><p>swift中类和结构体的关系比其他语言更加密切，二者主要的区别在于：</p>
+<ul>
+<li>类支持继承</li>
+<li>类支持运行时检测类实例类型</li>
+<li>类有deinit函数</li>
+<li>类是引用类型而结构体是值类型</li>
+</ul>
+<p>swift中类或结构体允许直接修改其属性（存在子属性的一般也就是类或结构体）的子属性，而在Objective-C不行  </p>
+<p>结构体有一个默认的成员逐一初始化器</p>
+<p>在Swift中，整数、浮点数、布尔值、字符串、数组、字典都是值类型，并且是以结构体的形式存在的，结构体和枚举也都是值类型，意味着赋值或参数传递过程都是属于值拷贝，而类是引用类型</p>
+<p>用于判定多个类引用是否指向同一个类实例的两个恒等运算符：等价于（===）和 不等价于（===）</p>
+<p>swift中同样存在指针，比如引用类型，但是其声明方式同值类型一样</p>
+<p>由于集合类型（数组和字典）都是以结构体实现的值类型，因此在赋值或传参过程中会发生拷贝，但是swift只会在有必要拷贝的情况下（比如拷贝后的数组长度发生变化等）才会执行拷贝，因此不必顾虑集合类型拷贝带来的性能问题。</p>
+<p>字典类型的拷贝过程，如果键或值是值类型，则拷贝对应的值类型，如果是引用类型则拷贝的引用（其实就是指针）</p>
+<p>数组类型只有在操作困难修改数组长度时才会发生，即使是修改数组内的元素值也不会发生拷贝，而是引用。</p>
+<p>使用unshare函数可以确保数组的唯一性，但是并不意外这一定会发生拷贝，而是在有必要时才会拷贝。而copy函数属于强制拷贝数组。</p>
+<p><del>可以使用恒等运算符来判定两个数组是否共用了相同的元素</del></p>
+<p>数组只有在长度发生变化的操作中才会进行值拷贝，否则属于引用赋值</p>
+<h4 id="2-10-属性"><a href="#2-10-属性" class="headerlink" title="2.10 属性"></a>2.10 属性</h4><p>属性分为存储属性和计算属性，前者用于存储常或变量作为实例的一部分，只能用于类或结构体中，而后者用于计算一个值，可以理解成一种运算，可用于类、结构体和枚举中。</p>
+<p><strong>存储属性</strong></p>
+<p>当值类型的实例赋值给一个常量时，值类型的所有属性都会变成常量，即使是变量属性也不能再修改，而当引用类型的实例赋值给一个常量时，仍可以修改实例的变量属性。</p>
+<p>@lazy关键字用于声明延长存储属性：在第一次被调用时才会计算初始值的属性，类似懒加载。用前提包括必须是存储属性且是变量属性。因为常量属性在构造之前必须要有初始值，因此不能声明为延迟存储属性。</p>
+<p><strong>计算属性</strong></p>
+<p>计算属性必须声明为（var）变量属性，因为它的值是不固定的。计算属性不直接存储值，而是提供一对getter和setter用来获取和访问其他属性或者变量的值。</p>
+<p>如果计算属性的setter没有定义表示新值的参数名，则可以使用默认名称newValue。</p>
+<p>一个计算属性如果只有getter没有setter那就是只读类型，</p>
+<p><strong>属性监视器</strong></p>
+<p>作用类似于OC的KVO，可以为延迟存储属性之外的属性添加属性监视器，也可以通过重载的方式为父类的属性添加属性监视器。</p>
+<p>两种监视器：willSet和didSet，前者的参数是新属性值，缺省参数名为newValue。后者的参数是旧属性值，缺省值参数名为oldValue。监视器在属性初始化时不会被触发。</p>
+<p><strong>全局变量和局部变量</strong></p>
+<p>计算属性和属性监视器同样适用于全局和局部变量。全局的常量或变量默认就是延迟计算的且不需要标记@lazy关键字。</p>
+<p><strong>类型属性</strong></p>
+<p>存储属性和计算属性通常用于特定类型的实例，但是属性也可以直接用于类型本身，称之为类型属性</p>
+<p>类型属性类似于OC中声明在超类中的属性（swift没有超类的概念）。类型属性可以被所有实例访问。</p>
+<p>用关键字static定义值类型的类型属性，用class定义类的类型属性。</p>
+<p>值类型可以定义存储型和计算型的类型属性，而类只能定义计算型的类型属性。存储类型的类型属性必须在声明时指定默认值，因为类型本身没有构造器（只有为实例提供的初始化构造器）。</p>
+<p><em>为什么类不能定义存储型的类型属性？很可能与类是引用类型有关系？</em></p>
+<figure class="highlight swift"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//结构体类型</span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">SomeStructure</span> {</span><br><span class="line">	<span class="comment">//static关键字</span></span><br><span class="line">	<span class="comment">//存储型</span>
+	<span class="keyword">static</span> <span class="keyword">var</span> storedTypeProperty <span class="operator">=</span> <span class="string">"Some value."</span></span><br><span class="line">	<span class="comment">//计算型</span>
+	<span class="keyword">static</span> <span class="keyword">var</span> computedTypeProperty: <span class="type">Int</span> {
+			<span class="comment">//return a int value </span></span><br><span class="line">	}
+}</span><br><span class="line"><span class="comment">//枚举类型</span>
+<span class="keyword">enum</span> <span class="title class_">SomeEnumeration</span> {</span><br><span class="line">	<span class="comment">//存储型</span>
+	<span class="keyword">static</span> <span class="keyword">var</span> storedTypeProperty <span class="operator">=</span> <span class="string">"Some value."</span></span><br><span class="line">	<span class="comment">//计算型</span></span><br><span class="line">	<span class="keyword">static</span> <span class="keyword">var</span> computedTypeProperty: <span class="type">Int</span> {
+			<span class="comment">//return a int value </span>
+	}</span><br><span class="line">}</span><br><span class="line"><span class="comment">//类类型</span>
+<span class="keyword">class</span> <span class="title class_">SomeClass</span> {</span><br><span class="line">	<span class="comment">//class关键字</span></span><br><span class="line">	<span class="comment">//只能定义计算型属性</span>
+	<span class="keyword">class</span> <span class="title class_">var</span> <span class="title class_">computedTypeProperty</span>: <span class="title class_">Int</span> {
+			<span class="comment">//return a int value </span>
+	}
+}</span><br></pre></td></tr></tbody></table></figure>
+<h4 id="2-11-方法"><a href="#2-11-方法" class="headerlink" title="2.11 方法"></a>2.11 方法</h4><p>方法是与某些特定类型相关联的函数，方法分：实例方法和类型方法</p>
+<p><strong>实例方法</strong></p>
+<p>方法和函数的局部名称和外部名称的默认行为的区别：</p>
+<p>方法的第一个参数的外部参数可以省略，等价于在参数前加下划线（_），第二个及后面的参数名称可以同时作为局部和外部参数名称，等价于在参数前加#号。</p>
+<p><strong>self属性</strong></p>
+<p>self属性不需要显式调用，主要使用场景在于区分方法参数与实例属性，方法参数享有优先权，因此需要self指定实例属性消除歧义。</p>
+<p><strong>mutating关键字</strong></p>
+<p>类中的成员为引用类型，所以修改实例及其属性的值不会改变类型；而结构体和枚举中成员均为值类型，修改变量的值就是相当于修改变量的类型。Swift中默认不允许修改类型，因此需要前置mutaing关键字来表示该函数中能够修改类型。</p>
+<p>值类型中的一般的实例方法不能修改其实例属性，而使用mutating关键字声明实例方法可以修改属性，并且修改的状态保留在原始结构中。在此方法中还可以给self重新赋值一个全新的实例，并替换原有实例。</p>
+<p>枚举的mutating方法可以把self设置为枚举类型中不同的成员。</p>
+<p><strong>类型方法</strong></p>
+<p>类型方法的声明与类型属性声明类似，类的类型方法加关键字class，结构体和枚举的类型方法加static。</p>
+<p>在本类或结构体的范围内，类型方法可以相互调用，也可以直接调用类型属性，不需要显式类型名称做为前缀。</p>
+<h4 id="2-12-附属脚本"><a href="#2-12-附属脚本" class="headerlink" title="2.12 附属脚本"></a>2.12 附属脚本</h4><p>附属脚本本质上提供了一种访问对象、集合或序列的快捷方式，可以定义在类、结构体和枚举中。使用时配合”[]”语法糖直接对多个属性同时访问或赋值</p>
+<p>对于同一个目标可以定义多个附属脚本，通过索引值类型的不同进行重载，而且索引值得个数可以是多个。</p>
+<p>定义附属脚本使用subscript关键字，没有函数名，或者说subcript就是默认函数名称。附属脚本对于索引入参的数量和类型没有限制，返回值可以是任何类型，但是<em>不能使用in-out参数和对参数设置默认值。</em></p>
+<p>附属脚本在定义上与实例方法类似，区别在于使用时附属脚本不需要指定函数名，而是根据参数自动匹配对应的脚本函数。</p>
+<p>附属脚本与计算型属性类似，可以设定读写或者只读属性。区别在于附属脚本不是具体的属性，并且可以自定义参数和返回值类型和个数。而计算性属性的参数和返回值在定义时已经指定，可以理解为是对某一个具体属性的附属脚本，但是调用方式却没有附属脚本那么便捷，而是类似实例方法调用。</p>
+<h4 id="2-13-继承"><a href="#2-13-继承" class="headerlink" title="2.13 继承"></a>2.13 继承</h4><p>在swift中，继承是区分“类”和其他类型的一个基本特征。子类可以调用和访问超类的方法、属性和附属脚本，并且可以重载这些方法。</p>
+<p>不继承与其它类的类，称之为基类。不同于OC有一个共同的基类NSObject</p>
+<p>在swift中，初始化器默认是不继承的。</p>
+<p><strong>重写</strong></p>
+<p>子类可以重写类方法、实例方法和附属脚本，使用关键字override标明</p>
+<p>子类可以通过重写的方式将超类的存储型属性以计算型属性存在，但是该属性在超类还是存储型属性。</p>
+<p>使用关键字final来防止重写</p>
+<h4 id="2-14-构造过程"><a href="#2-14-构造过程" class="headerlink" title="2.14 构造过程"></a>2.14 构造过程</h4><p>与OC的构造器不同，Swift的构造器无返回值，主要任务是确保新实例在第一次使用之前完成正确的初始化。</p>
+<p>在构造器中给存储型属性赋值时不会触发任何属性观测器</p>
+<p>不同的构造器通过参数的不同进行区分，如果没有定义外部参数名，Swift会自动生成一个与内部参数名相同的外部名，等价于在内部名前添加#号。也可以使用下划线(_)来覆盖默认行为。</p>
+<p><strong>默认构造器</strong></p>
+<p>只有在所有成员变量都有默认值得时候，才能省略构造器，或者说Swift提供了一个默认的构造器。结构体的默认构造器是逐一成员构造器。</p>
+<p><strong>值类型的构造代理</strong></p>
+<p>构造器可以通过调用其他构造器完成部分构造过程，此过程称之为构造代理，且构造器代理的实现规则和形式在值类型和类类型有所不同。</p>
+<p>值类型不支持继承，构造器代理任务只能给本身提供的其他构造器。而类类型可以调用超类的构造器完成构造代理。</p>
+<p>值类型中一旦自定义了构造器后将无法访问到默认构造器，结构体则无法访问逐一成员构造器。如果定制的构造器是定义在扩张中，则不会覆盖默认构造器。</p>
+<p><strong>类的继承和构造过程</strong></p>
+<p>指定构造器是类中最主要的构造器：初始化类中所有的属性，并且根据父类链往上调用父类的构造器来实现父类初始化。每一个类至少拥有一个指定构造器，可继承自父类。</p>
+<p>便利构造器则通过调用指定构造器实现，并给部分参数提供默认值。</p>
+<p><strong>构造器的继承与重载</strong></p>
+<p>与OC不同，一般情况下，Swift不会默认继承父类构造器，即此时创建子类时不能调用父类的构造器。可通过重载的方式继承与父类相同的构造器，且不需要使用override关键字。</p>
+<p>两种特殊情况下，自动继承父类构造器：</p>
+<ul>
+<li>子类没有定义任何指定构造器，它将自动继承所有父类的指定构造器和便利构造器。</li>
+<li>子类提供了所有父类指定的构造器实现，将自动继承所有父类的便利构造器。</li>
+</ul>
+<p><strong>使用闭包或全局函数设置属性的默认值</strong></p>
+<p>如果某个存储型属性的默认值需要特别的定制，使用闭包或全局函数为其提供定制的默认值。赋值时执行闭包或调用函数，将返回值赋给该属性。</p>
+<p>使用闭包初始化属性时，不能在闭包中访问其它的属性，即便属性有默认值也不允许。同时，不能使用隐式的self属性或调用其它的实例方法。</p>
+<h4 id="2-15-反初始化"><a href="#2-15-反初始化" class="headerlink" title="2.15 反初始化"></a>2.15 反初始化</h4><p>反初始化函数使用关键字deint来标识，只适用于类类型，在实例释放前一步自动调用。</p>
+<p>反初始化函数调用链与初始化函数调用链相反，先完成子类的资源释放再执行父类的反初始化函数。与OC类似。</p>
+<h4 id="2-16-自动引用计数-ARC"><a href="#2-16-自动引用计数-ARC" class="headerlink" title="2.16 自动引用计数(ARC)"></a>2.16 自动引用计数(ARC)</h4><p>引用计数只用于类类型的实例，值类型不是以引用的方式存储和传递的。</p>
+<p><strong>循环引用</strong></p>
+<p>使用weak引用或者无主引用来解除循环引用，弱引用可以为nil，所以必须是可选类型的，指向的实例释放后ARC自动将weak指针置空。无主(unowned)引用默认始终有值，因此必须是非可选型。如果无主引用指向的实例已释放，再次通过无主引用访问该实例即为野指针错误，需要手动置空。</p>
+<p>weak指针适用情况：当两个对象AB之间均非一对一关系，即A对B或者B对A都是一个可选值，允许是nil</p>
+<p>unowned指针适用情况：当对象A必须引用对象B，而A之于B是一个可选项，允许为空</p>
+<p>unowned + 隐式展开可选项：对象AB属于一对一关系，且A对象是B的初始化参数之一，设置B为隐式展开的可选属性，此时B对象为赋值之前默认值为nil，不影响A的初始化操作，从而A初始化后可以作为参数完成B的初始化。</p>
+<p><em>下面代码思路正确，但是代码执行出错，隐式展开可选项似乎没起作用，待进一步研究！</em></p>
+<figure class="highlight objc"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Country与City属于一对一关系，且City的初始化依赖于Country</span></span><br><span class="line"><span class="number">1.</span> <span class="keyword">class</span> Country {
+<span class="number">2.</span> 		let name: String
+<span class="number">3.</span> 		let capitalCity: City! <span class="comment">//隐式展开可选项</span>
+<span class="number">4.</span> 		init(name: String, capitalName: String) {
+<span class="number">5.</span> 			<span class="keyword">self</span>.name = name
+<span class="number">6.</span> 			<span class="keyword">self</span>.capitalCity = City(name: capitalName, country: <span class="keyword">self</span>) <span class="number">7.</span> 		}
+<span class="number">8.</span> }
+<span class="number">9.</span>
+<span class="number">10.</span><span class="keyword">class</span> City {
+<span class="number">11.</span> 	let name: String
+<span class="number">12.</span> 	unowned let country: Country <span class="comment">//unowned指针</span>
+<span class="number">13.</span> 	init(name: String, country: Country) {
+<span class="number">14.</span> 		<span class="keyword">self</span>.name = name
+<span class="number">15.</span> 		<span class="keyword">self</span>.country = country </span><br><span class="line"><span class="number">16.</span> 	}
+<span class="number">17.</span> }</span><br></pre></td></tr></tbody></table></figure>
+
+<p><strong>闭包产生的循环引用</strong></p>
+<p>类似于OC中Block产生的循环引用。</p>
+<p><em>Swift中的约束：只要闭包内使用self的成员，就必须通过self指针调用，而不能直接调用，可提醒存在强引用的风险</em></p>
+<p>通过定义占有列表解除强循环引用，占有列表有关键字weak或unowned和实例的引用组成，包含在一个中括号中，有逗号隔开。eg: [(weak|unowned), self]</p>
+<p>占有列表放置在闭包参数和返回类型之前。如果没有指定参数或返回类型则放在关键字in前面。</p>
+<p>当闭包和占有实例总是互相引用并总是同时销毁时，使用unowned定义占有列表。当占有引用有可能为nil时，使用weak。</p>
+<h4 id="2-17-自判断链接"><a href="#2-17-自判断链接" class="headerlink" title="2.17 自判断链接"></a>2.17 自判断链接</h4><p>Swift的自判断链和OC中的消息为空类似，但是Swift可用于任意类型（值类型和类类型），并且一定会有返回值，返回值一定是可选项类型。</p>
+<p><strong>可使用自判断链代替强制拆包</strong><br>二者调用方式类似：自判断值后面使用？号，而强拆使用的是！号。当自判断值为空时，强拆会引发运行时错误，自判断链则会返回一个空值，表示自判断链调用失败。</p>
+<p>自判断链适用于调用属性、实例方法和附属脚本（子脚本）中，三者的任意组合成自判断链。</p>
+<h4 id="2-18-类型转换"><a href="#2-18-类型转换" class="headerlink" title="2.18 类型转换"></a>2.18 类型转换</h4><p>Swift中的is和as两个操作符分别用来做类型检测和类型转换。</p>
+<p>假如向下转换可能出现失败的情况，使用as?返回一个可选值，转换失败返回nil。假如确定一定能转换成功则使用as，有点类似强制解包。</p>
+<p>Swift为不确定类型提供了两种特殊类型别名：</p>
+<ul>
+<li>AnyObject可以代表任何class类型实例</li>
+<li>Any可以表示除了方法类型之外的任何类型</li>
+</ul>
+<h4 id="2-2-扩展"><a href="#2-2-扩展" class="headerlink" title="2.2 扩展"></a>2.2 扩展</h4><p>扩展是向一个已有的类、结构体或枚举类型添加新功能。与OC中的分类类似，但是Swift的扩展不需要知道名称，<em>可以理解成OC中的匿名分类？</em>。</p>
+<p>Swift中的扩展可以：</p>
+<ul>
+<li>添加计算型属性和计算静态属性</li>
+<li>定义实例方法和类型方法</li>
+<li>提供新的构造器</li>
+<li>定义下标</li>
+<li>定义和使用新的嵌套类型</li>
+<li>使一个已有类似符合某个接口</li>
+</ul>
+<p>Swift中扩展和OC中分类一样，扩展中的功能在该类型的所有实例都是可用的。</p>
+<p><em>注意：扩展可以添加新的计算型属性，但是不能添加存储属性，也不可以向已有属性添加属性观测器</em></p>
+<h4 id="2-21-协议"><a href="#2-21-协议" class="headerlink" title="2.21 协议"></a>2.21 协议</h4><p>类、结构体和枚举均可实现多个协议，中间用逗号分隔。</p>
+<p><strong>属性要求</strong></p>
+<p>协议能够要求遵循者包含一些特定名称和类型的实例属性或类属性，同时可以指定类型的读写权限，但是具体属性最终实现可以是存储型或者计算型属性。</p>
+<p><strong>方法要求</strong></p>
+<p>协议方法的声明和普通方法声明相似，但是不需要方法内容。</p>
+<p>class中实现协议中的mutating方法时，不用写mutating关键字，因为类为引用类型，可直接修改类的属性；用结构体和枚举实现协议中的mutating方法时，则必须写mutating。</p>
+<p><strong>协议类型</strong></p>
+<p>协议可当做一种满足一定要求的类型对待，可用于声明满足协议的变量。比如委托模式，声明一个满足委托协议的代理变量，然后通过代理变量调用委托协议中的方法。</p>
+<p><strong>在扩展中添加协议成员</strong></p>
+<p>通过扩展为已存在的类型遵循协议是，该类型的所有实例也会随之添加协议中的方法。</p>
+<p>当一个类型实现了某个协议中的所有要求却没有声明相应的协议时，可以通过扩展来补充协议声明。</p>
+<p><strong>集合中的协议类型</strong></p>
+<p>协议类型可以用来声明集合，表示集合中的元素均为协议类型。</p>
+<p><strong>协议的继承</strong></p>
+<p>协议能够继承一到多个其他协议。语法和类的继承相似。</p>
+<p><strong>协议合成</strong> </p>
+<p>一个协议可又多个协议采用protocol&lt;SomeProtocol, AnotherProtocol, ThirdProtocol&gt;这样的格式进行组合。</p>
+<p>协议合成不会生成一个新的协议类型，而是将多个协议合成为一个临时的协议，超出范围后立即失效。</p>
+<p><strong>检验协议的一致性</strong></p>
+<p>使用is检验协议的一致性，使用as将协议类型向下转换为其他的协议类型。</p>
+<ul>
+<li>is操作符用来检查实例是否遵循了某个协议</li>
+<li>as?返回一个可选值，当实例遵循协议时，返回该协议类型，否则返回为nil。</li>
+<li>as用以强制向下转换。</li>
+</ul>
+<p><strong>@objc</strong></p>
+<p>@objc表示协议的可选的，用可以用来表示暴露给Objective-C的代码。此外，@objc型协议只对类有效，因此只能在类中检查协议的一致性。</p>
+<p>在@objc声明的协议中，可以使用@optional关键字作为前缀定义可选的属性或者方法。</p>
+<p>调用可选方法是，在函数名和参数直接加上?来检查该方法是否被实现，当其不可访问时，？之后的语句不会执行，并且返回nil。</p>
+<h4 id="2-22-泛型"><a href="#2-22-泛型" class="headerlink" title="2.22 泛型"></a>2.22 泛型</h4><p>泛型是一种清晰和抽象的代码表达方式，可以根据自我需求定义、适用于任何类型的，灵活且可重用的函数和类型，从而避免了代码重复。</p>
+<p>泛型是Swift强大特征之一，许多Swift标准库是通过泛型代码构建的。</p>
+<p><strong>关联类型</strong></p>
+<p>定义协议时，通过associatedtype声明一个关联类型，不用具体指定实际类型。直到实现协议时，才给出关联类型的实际类型。</p>
+<p><strong>通过extension为已知类型添加协议的兼容性</strong></p>
+<p>如果某个类型已经覆盖了某个协议所包含的要求，那么可以通过拓展将已知类型和协议建立关联。有点像JS中的鸭子类型。</p>
+<h4 id="2-23-高级运算符"><a href="#2-23-高级运算符" class="headerlink" title="2.23 高级运算符"></a>2.23 高级运算符</h4></article><section class="jump-container is-flex is-justify-content-space-between my-6"><!-- em is empty placeholder--><a class="button is-default" href="/2018/07/19/%E5%85%B3%E4%BA%8E%E8%8B%B1%E8%AF%AD%E5%AD%A6%E4%B9%A0%E7%9A%84%E5%9B%B0%E6%83%91/" title="关于英语学习的困惑"><i class="iconfont icon-prev mr-2 has-text-grey"></i><span class="has-text-weight-semibold">Previous: 关于英语学习的困惑</span></a><a class="button is-default" href="/2018/05/16/%E6%9D%8E%E5%85%89%E8%80%80%E8%A7%82%E5%A4%A9%E4%B8%8B-%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" title="《李光耀观天下》读书笔记"><span class="has-text-weight-semibold">Next: 《李光耀观天下》读书笔记</span><i class="iconfont icon-next ml-2 has-text-grey"></i></a></section><article class="mt-6 comment-container"><script async repo="Haojen/Claudia-theme-blog" src="https://utteranc.es/client.js" issue-term="pathname" theme="preferred-color-scheme"></script></article></div></div></main></main><footer class="is-flex is-flex-direction-column is-align-items-center is-flex-shrink-0 is-family-serif"><section class="sns-container"><!-- Github--><a title="github" target="_blank" rel="noopener nofollow" href="//github.com/industriousonesoft"><i class="iconfont icon-github"></i></a><!-- Ins--><!-- RSS--><!-- 知乎--><!-- 领英--><!-- 脸书--></section><p><span>Copyright ©</span><span> MarkCao 2022</span></p><div class="is-flex is-justify-content-center is-flex-wrap-wrap"><p>Powered by Hexo &verbar;&nbsp;</p><p class="is-flex is-justify-content-center"><a title="Hexo theme author" target="_blank" rel="noopener" href="//github.com/haojen">Theme by Haojen&nbsp;</a></p><div style="margin-top: 2px"><a class="github-button" title="github-button" target="_blank" rel="noopener" href="https://github.com/haojen/hexo-theme-Claudia" data-color-scheme="no-preference: light; light: light; dark: dark;" data-show-count="true"></a></div></div><div><span>There is only one true heroism in the world, to see the world as it is, and to love it.</span></div></footer><script async defer src="https://buttons.github.io/buttons.js"></script><script src="/js/post.js"></script></body></html>
