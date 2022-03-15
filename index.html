@@ -1,223 +1,275 @@
-<!DOCTYPE html><html class="appearance-auto" lang="en"><head><meta charset="UTF-8"><title>MarkCao's blog</title><meta name="description" content="程序的世界让我着迷"><meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, initial-scale=1"><!-- Google Analytics --><!-- End Google Analytics -->
-<!-- Baidu Analytics --><!-- End Baidu Analytics --><link rel="icon" href="/images/favicon.png"><link rel="stylesheet" href="/style/common/bulma.css"><link rel="stylesheet" href="/style/base.css"><link rel="stylesheet" href="/style/common/helper.css"><script src="/js/common.js"></script><link rel="stylesheet" href="/style/widget-post-list.css"><meta name="generator" content="Hexo 6.0.0">
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>MarkCao</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="MarkCao"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="MarkCao"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta property="og:type" content="blog"><meta property="og:title" content="MarkCao"><meta property="og:url" content="http://naivertc.top/"><meta property="og:site_name" content="MarkCao"><meta property="og:locale" content="en_US"><meta property="og:image" content="http://naivertc.top/img/og_image.png"><meta property="article:author" content="Mark Cao"><meta property="article:tag" content="WebRTC, C++, iOS"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://naivertc.top"},"headline":"MarkCao","image":["http://naivertc.top/img/og_image.png"],"author":{"@type":"Person","name":"Mark Cao"},"publisher":{"@type":"Organization","name":"MarkCao","logo":{"@type":"ImageObject","url":"http://naivertc.top/img/logo.svg"}},"description":""}</script><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><meta name="generator" content="Hexo 6.1.0">
 <style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
 <link rel="alternate" href="/atom.xml" title="MarkCao" type="application/atom+xml">
-</head><body class="is-flex is-flex-direction-column"><header class="header-widget is-flex-shrink-0 is-hidden-mobile"><div class="container is-fullhd is-flex is-justify-content-space-between is-align-items-center is-full-height"><section class="is-hidden-mobile is-flex-shrink-0"><h2><a href="/">MarkCao's blog</a></h2></section><h3 class="is-hidden-mobile is-family-serif is-full-height is-flex is-align-items-center is-flex-shrink-0"></h3><aside class="is-flex-shrink-0"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/about">About</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></aside></div></header><header class="is-flex header-widget is-flex-shrink-0 is-align-items-center is-justify-content-center is-hidden-tablet"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/about">About</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></header><main><article class="post-container is-flex is-justify-content-center section container is-max-widescreen pt-4 px-2"><div class="columns is-variable is-1-tablet is-3-desktop-only is-2-widescreen is-full-width"><section class="column"><article class="post-item-card"><section class="content post-card-content p-4 pb-5"><h2 class="mt-4 mb-0 is-family-serif"><a href="/2019/06/27/%E5%88%9D%E8%AF%86%E6%B1%87%E7%BC%96/">初识汇编-知识点摘记</a></h2><time class="has-text-grey" datetime="2019-06-27T13:34:07.000Z">2019-06-27</time><p class="is-flex-grow-2 mt-2">汇编语言的由来
-汇编语言是基于机器语言（由0或1组成）而产生的一种助记符
-汇编语言介于机器语言和高级语言之间
-汇编语言与机器语言是一一对应关系，每条机器指令都有对应的汇编指令
-汇编语言通过编译得到机器语言，反之机器语言也可通过反汇编得到汇编语言
-高级语言通过编译得到汇编语言，但是汇编语言不能反汇编成高级语言，因为高级语言与汇编之间是多对一的关系。
+</head><body class="is-3-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.svg" alt="MarkCao" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item is-active" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item search" title="Search" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-6-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2019-06-27T13:34:07.000Z" title="6/27/2019, 9:34:07 PM">2019-06-27</time></span><span class="level-item"><a class="link-muted" href="/categories/%E6%B1%87%E7%BC%96/">汇编</a></span><span class="level-item">7 minutes read (About 1059 words)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2019/06/27/%E5%88%9D%E8%AF%86%E6%B1%87%E7%BC%96/">初识汇编-知识点摘记</a></h1><div class="content"><h4 id="汇编语言的由来"><a href="#汇编语言的由来" class="headerlink" title="汇编语言的由来"></a>汇编语言的由来</h4><ul>
+<li>汇编语言是基于机器语言（由0或1组成）而产生的一种助记符</li>
+<li>汇编语言介于机器语言和高级语言之间</li>
+<li>汇编语言与机器语言是一一对应关系，每条机器指令都有对应的汇编指令</li>
+<li>汇编语言通过编译得到机器语言，反之机器语言也可通过反汇编得到汇编语言</li>
+<li>高级语言通过编译得到汇编语言，但是汇编语言不能反汇编成高级语言，因为高级语言与汇编之间是多对一的关系。</li>
+</ul>
+<h4 id="汇编语言的特点"><a href="#汇编语言的特点" class="headerlink" title="汇编语言的特点"></a>汇编语言的特点</h4><p><strong>优点</strong></p>
+<ul>
+<li>汇编语言可直接访问或控制硬件：存储器、CPU，能最大限度的发挥硬件功能</li>
+<li>目标代码少，占位内存少，执行速度快</li>
+<li>不同厂商的CPU都有对应的机器指令集和汇编指令集合</li>
+<li>大小写不敏感</li>
+</ul>
+<p><strong>缺点</strong></p>
+<ul>
+<li>不易于编写、维护、调试</li>
+</ul>
+<h4 id="寄存器"><a href="#寄存器" class="headerlink" title="寄存器"></a>寄存器</h4><ul>
+<li>CPU由寄存器、运算器和控制器组成，其中最主要部件是寄存器，通过改变寄存器的内容来实现对CPU的控制</li>
+<li>不同的CPU，寄存器个数和结构存在差异</li>
+</ul>
+<h5 id="通用寄存器"><a href="#通用寄存器" class="headerlink" title="通用寄存器"></a>通用寄存器</h5><ul>
+<li>arm64寄存器有31个64位的通用寄存器x0-x30，这些寄存器通常用来存放一般数据</li>
+<li>w0-w28是32位寄存器，是x0-x28寄存器的低32位，即64位的CPU是兼容32位的</li>
+<li>CPU会先将内存中的数据存储到通用寄存器中，然后在对通用寄存器中的数据进行运算，原因在于寄存器的执行速度比内存快</li>
+<li>arm64架构下，函数参数都是保存在x0-x7（32位下即w0-w7）这8个寄存器，超过8个参数入栈</li>
+<li>函数返回值是存放在x0寄存器中</li>
+<li>函数的局部变量都是保存在栈中</li>
+</ul>
+<h5 id="PC寄存器：program-counter-register"><a href="#PC寄存器：program-counter-register" class="headerlink" title="PC寄存器：program counter register"></a>PC寄存器：program counter register</h5><ul>
+<li>指令指针寄存器，指向CPU当前要执行的指令地址</li>
+<li>内存中指令和数据无区别，都是二进制数据。CPU将PC寄存器指向的内存单元的内容看作指令</li>
+</ul>
+<h5 id="sp与fp寄存器"><a href="#sp与fp寄存器" class="headerlink" title="sp与fp寄存器"></a>sp与fp寄存器</h5><ul>
+<li>sp寄存器会在任意时刻保存栈顶地址</li>
+<li>fp寄存器即为x29寄存器，有时也用于保存栈低的地址</li>
+</ul>
+<h5 id="lr寄存器"><a href="#lr寄存器" class="headerlink" title="lr寄存器"></a>lr寄存器</h5><ul>
+<li>lr寄存器就是0x30通用寄存器</li>
+<li>0x30寄存器存放函数返回地址，执行ret指令时会读取这个寄存器的值，实现函数返回</li>
+</ul>
+<h4 id="汇编指令"><a href="#汇编指令" class="headerlink" title="汇编指令"></a>汇编指令</h4><h5 id="内存读写指令"><a href="#内存读写指令" class="headerlink" title="内存读写指令"></a>内存读写指令</h5><blockquote>
+<p>arm64架构中取消了32位的LDM、STM、PUSH、POP指令，取而代之的是ldr/ldp、str/stp；ldp/stp是ldr/str的衍生，可同时读写两个寄存器，而ldr/str只能读写一个</p>
+</blockquote>
+<ul>
+<li>str指令：store register指令，将数据从寄存器中读出，写入内存</li>
+<li>ldr指令：load register指令，将数据从内存读出，存入寄存器</li>
+</ul>
+<p>eg：利用栈将x0和x1寄存器中的值互换</p>
+<blockquote>
+<p>arm64架构中，栈是16字节内存对齐的，即一次读写至少是16（0x10）个字节</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sub sp,sp,#0x10 ;栈顶指针下移0x10个字节，两个64位的寄存器共16个字节</span><br><span class="line">stp x0,x1,[sp,0x10] ;寄存器x0,x1先后的值入栈</span><br><span class="line">ldp x1,x0,[sp,0x10] ;出栈，先后写入x0,x1寄存器</span><br><span class="line">add sp,sp,0x10 ;栈还原，stp、ldp指令不会改变sp指针位置，且都是由高地址向低地址读写</span><br></pre></td></tr></tbody></table></figure>
 
-汇编语言的特点优点
+<h5 id="bl指令"><a href="#bl指令" class="headerlink" title="bl指令"></a>bl指令</h5><ul>
+<li>CPU执行的指令是由PC寄存器决定的，因此可以通过修改PC寄存器的内容来控制CPU的指令执行</li>
+<li>传送指令用于操作通用寄存器，比如mov指令；此外是转移指令，用于修改PC的值，最简单的就是bl指令</li>
+<li>bl指令跳转前将当前指令的下一条指令存放到lr(0x30)寄存器：链接寄存器</li>
+</ul>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2018-12-01T03:33:07.000Z" title="12/1/2018, 11:33:07 AM">2018-12-01</time></span><span class="level-item"><a class="link-muted" href="/categories/%E4%B9%A6%E8%AF%84/">书评</a></span><span class="level-item">30 minutes read (About 4462 words)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2018/12/01/%E3%80%8A%E4%B8%89%E4%BD%93%E3%80%8B%E8%AF%BB%E5%90%8E%E6%84%9F%E4%B9%8B%E7%94%9F%E5%AD%98%E8%BF%98%E6%98%AF%E6%AD%BB%E4%BA%A1/">《三体》系列第一部读后感之生存还是死亡？</a></h1><div class="content"><p>《三体》是我看的第一本科幻小说，与很多在学生时期就接触了这本书的朋友比起来，即将三十而立的我觉得有点相见恨晚。书中涉及了天文学、物理学、计算机学等众多专业知识。在阅读这本书的过程中，总会时不时地感叹作者想象力之丰富，知识之渊博。与作者刘欣慈一样同为程序员的我读起来多了一丝亲切感。过去的自己对科幻小说存在一些误解，认为科幻小说无非只是天马行空的想象罢了，这类超现实的小说只适合用来消遣，并没有太多实用性。现在我为自己愚蠢的想法道歉：一本好的小说一定都蕴含着一个深刻的内核，或是对生命的思考，或是对人性的剖析等等。而小说的功能则是通过虚构一个故事或世界让读者更好的理解作者要表达的想法，并引导读者产生共鸣。《三体》这本书在我看来，它提出的是对人类的究极拷问：生存还是死亡？</p>
+<p>这本书采用的是倒叙和插叙的叙述方式，让读者在阅读的过程中不断地处于产生疑惑和解答悬念的循环中，也使整个阅读过程都充满紧张和刺激的感觉，直到最后一刻谜底揭开之时不自觉地陷入深思并自我审视：当自己面临同样的困境会如何抉择？是选择生存还是死亡？</p>
+<p>在给出自己的答案之前，我觉得很有必要按照时间顺序将整个故事的来龙去脉理一遍，这样可以更好地理解作者想要表达的想法。</p>
+<h5 id="起源：文化大革命"><a href="#起源：文化大革命" class="headerlink" title="起源：文化大革命"></a>起源：文化大革命</h5><p>这本书的主角无疑是叶文洁，整本书都是围绕着叶文洁坎坷悲催的成长历程展开，她的遭遇让她看清了人性的丑恶，对人类文明也逐渐失去了信心，而这一切的源头毫无疑问是文化大革命。文革大致可以分为三个阵营：坚守真理的知识分子，疯狂无知的红卫兵以及为求自保的利己主义者。而叶文洁的一家四口恰巧分属这三个阵营，也为这个不幸的家庭埋下了悲惨结局的注脚。</p>
+<p>叶文洁的父亲叶文泰，属于坚守真理的知识分子代表。在文革时期，作为物理学界的泰斗的他成为了众矢之的。但是，面对持续的残酷打击，他自始至终地捍卫着自己内心由知识和理性构筑的思想大厦，直到生命的最后一刻也不曾有一丝妥协。他内心其实早已看透：“在中国，任何超脱飞扬的思想都会怦然坠地，因为现实的引力太沉重了”，更何况是在这个疯狂的年代，坚守真理需要付出的是生命的代价。而作为红卫兵的叶文洁，站在台下红卫兵的队伍中目睹了父亲整个的批斗过程，除了强忍悲痛与泪水之外显得无能为力。那时候的她还是学生，同其他的红卫兵一样没有科学信仰，缺乏分辨是非的能力，并且对至高无上的权利都有着天生的崇拜。但她又不同于妹妹那样完全失去理智，六亲不认。这是因为她内心真正崇拜的人是自己的父亲，也意味着她和父亲有着同样的科学信仰。只是她那时候太年轻，很轻易地就被文革浪潮吞没，同时被吞没的还有个人的信仰。那时候的她本能地选择活下去，而加入红卫兵就是最好的选择。和叶文洁做出同样选择的还有父亲的两个研究生，我相信他们内心是崇尚科学的，这也让他们在批斗自己老师的时候尚且表露出一丝人性。但是他们内心又惧怕成为革命对象，为了生存只能将自己隐藏在红卫兵的外衣之下。但是当她在大兴安岭接受劳动改造时，面对他人的栽赃陷害以及上层对父亲的二次批斗，她选择了和父亲一样的斗争方式：以死捍卫自己的尊严和信仰。而与叶文洁及其父亲形成鲜明对比的是同为物理学教授的母亲，她则是一位精致的利己主义者，她既不像叶文泰那样甘愿为科学献身，也不像红卫兵那样愚昧无知，她所做的一切都是为了让自己活着，并且活得更好。早在文革初期她就嗅出了知识界的政治风向，做出很多超前的举动，试图告诉学生：所有的科学成果都是广大劳动人民的智慧结晶，而那些资本阶级的学术权威不过是窃取了这些智慧，试图得了文革主流的认可，从而使自己能在这场自己为革命对象的斗争中生存下来。为了达到这个目的，她不惜一切代价：在文革时期上台协助红卫兵批斗自己的丈夫；在文革后期眼光独到地嫁给了一位尚未平反的教育部高干，在文革结束后不久便再次回到上层阶层；为了与过去的历史旧账撇清关系而不惜与女儿决裂。为自己活着无可厚非，但是将自己的幸福建立在他人的痛苦之上就是可耻的。</p>
+<p>文革结束后，叶文洁找到了当年将自己父亲批斗致死的三个红卫兵，试图让她们为当年的罪行忏悔，哪怕是人性的一点点复归。然而得到的答复是：“她们也是受害者，文革剥夺了她们的青春和未来，历史已经将她们遗忘，她们内心只有怨狠没有忏悔”。那一刻起，叶文洁对于人类文明彻底失去了信心，期待宇宙间更高的文明来引导人类文明已然成为了她坚定不移的信念。</p>
+<h5 id="经过：寻找更高级的文明"><a href="#经过：寻找更高级的文明" class="headerlink" title="经过：寻找更高级的文明"></a>经过：寻找更高级的文明</h5><p>叶文洁因为自己大一的一篇名为《太阳辐射层内可能存在能量界面和其反射特性》的论文将她从文革二次迫害中拯救出来，进入了神秘的红岸基地。毫无疑问，红岸基地的出现不仅拯救了叶文洁的性命，也让早已心如死灰的叶文洁重新燃起了对生的欲望，因为在这里有了探索外星文明的可能性。</p>
+<p>在红岸基地，因为特殊身份和遭遇叶文洁被隐形地的隔离与疏远，而工作成为了她生活的全部。只有全身心地投入工作才能暂时忘记过去的痛苦，加上叶文洁夯实的学术研究功底，为后续叶文洁成为第一个发现“太阳是一个电波放大器”这一理论的人增加了可能性。苏联天体物理学家卡达谢夫曾建议，可以根据宇宙中不同文明用于通讯的能量，来对它们分级。他将想象中的文明分为Ⅰ、Ⅱ、Ⅲ三种类型；Ⅰ型文明能够调集与地球整个输出功率相当的能量用于通讯。当时他的估计，地球的功率输出约为1015～16瓦。Ⅱ型文明能够把相当于一颗典型恒星的输出功率，1026瓦用于通讯。Ⅲ型文明用于通讯的功率达1036瓦，约等于整个星系的功率输出。红岸基地所能发射的最大功率虽然连Ⅰ文明都达不到，但是它可以满足穿越太阳对流层到达反射层的阈值，经过太阳放大后的功率可达到Ⅱ型文明能量级，意味着地球文明找到了探索更高文明的钥匙。在接触《三体》这本书之前，我就一直存在一个疑问：长期以来人类以自己的认知方式去探索其他文明真的可以建立联系吗？这就好比有一条寄生虫无法感知人类存在一样。因此，如果有一个文明以人类无法感知的方式进行交流，即便真的存在我们周围我们也是无从得知的。在与三体文明取得联系之后，叶文洁向三体星球发出了“求救”信，期望着更高的文明降临拯救人类。这几乎成为了她那时唯一的信仰，为了捍卫这一信仰不惜以雷志成和丈夫杨卫宁的性命为代价。</p>
+<p>随着文革风波的平息，与文革同样疯狂的“红岸计划”也逐步停滞瓦解。因为与失去了与宇宙文明通讯的平台，重新回归正常生活的叶文洁本以将人类的命运寄托于自己的美好期望中，直到遇到了同样对人类文明失去信心的还有伊文斯。伊文斯是一位物种共产主义者，他的信仰是：地球上的所有物种生来平等。然而人类文明的首要规则是：“保证人类的生存和舒适的生活，其他都是第二位的”。与叶文洁不同的是伊文斯有更多的选择，以及继承了父亲巨额遗产，这让他可以根据自己的意愿去探索人性，证明自己的理论是否可行。可惜他的信仰与人类文明是背道而驰的，这注定了他在人类社会是一个失意者。叶文洁的出现为伊文斯指明了新的探索之路：借助更高的文明来引领地球文明。因此也有了第二红岸基地的诞生。</p>
+<p>如果说叶文洁是搭建与三体文明交流桥梁的先驱者，那么伊文斯则是在地球传播三体文明的领军人。尽管在他们的共同的努力下，三体文明的已经将地球锁定为他们希望的生存之地并开始向地球文明靠近，但是他们对于三体文明的降临地球后的期许却截然不同，因而三体叛军中产生了不同的派别，主要分为三派：</p>
+<p>降临派：这是三体叛军最本原最纯粹的一脉，主要由伊文斯物种共产主义的信奉者组成。他们对人类本性都已彻底绝望，这种绝望最初来源于现代文明导致的地球物种大灭绝。伊文斯的一句话已成为降临派的座右铭：我们不知道外星文明是什么样子，但知道人类。他们期望三体文明的彻底摧毁人类文明。</p>
+<p>拯救派：拯救派的成员大多都是通过《三体》游戏认识三体文明，以高级知识分子居多，并对于三体文明有着宗教般的崇拜。但是对于人类文明的态度远没有降临派那样极端。他们的终极理想是拯救主，也就是三体文明。为了达到这一目的可以一定程度上牺牲人类世界。</p>
+<p>幸存派：幸存派的成员都来自较低的社会阶层，他们期望自己和子孙成为三体文明和地球文明那场终极战争中的幸存者，他们认为现在就为三体服务更有利于实现这一目的。这一派的主张很符合中庸思想，因此也以中国人居多。</p>
+<p>这三个派别相互制约和对立，在三体文明降临之前他们有着共同的大目标，共同为三体服务。但是一旦三体文明降临，他们便会了各自的利益各自为战。就像当年文革时期，在“革命军”这一大群体中也有着很多的派系，他们借以文革的名义谋求着各自的利益，而最后沦为牺牲品的只有年幼无知的红卫兵和坚守真理的人。历史总是惊人的相似，因为人性如此，人类文明如此。</p>
+<h5 id="结果：三体文明降临"><a href="#结果：三体文明降临" class="headerlink" title="结果：三体文明降临"></a>结果：三体文明降临</h5><p>不同于地球得天独厚的的自然环境，可以让人类在登上食物链顶端之后不必再考虑如何生存下去，而是考虑如何生活地更好。人类的文明发展史从另一个角度来讲就是一部环境和资源的破坏史，为了短期的利益而忽视地球环境和人类未来至始至终贯穿人类史。每当出现能源危机时都有新的技术突破带领人类走出困境，这也让大部分人类可以更加肆意地追求物质上的享受，因为他们相信当人类出现危机时总会有新的技术出现将危机化解。曾几何时，三体世界也像地球一样，有民主自由的社会，有着丰富的文化遗产。然而在生存危机面前，文明则变成了最脆弱的环节，如同温室的花朵一般。如今三体人挣扎于自己的星球的三体困境中，为了生存而不断地寻求技术突破，包括寻找或者践踏其他星球的文明，甚至抹灭了三体人生而为人的尊严与自由，剥夺作为人的基本情感需求，没有财富没有地位没有爱情，也没有希望。三体世界里的人类大多数都像1379号监听员那样孤独的过完一生，要么工作至死，要么脱水封存。当他接受到来自地球的信息，得知宇宙的另一个角落存在一个星球，那里有着自己向往的生活。这对他而言这是人生中最有价值的时刻，然而第一时间想到的是对上级隐瞒消息，内心不忍地球文明被三体占有和摧毁。我想这不仅是因为对地球这颗美丽的星球心生怜悯，更多的是因为对三体世界的绝望。然而他却不知道此时地球上也有一群人像他一样对自己身处的世界和文明感到绝望，正期待着三体文明的降临。</p>
+<p>为了阻止人类文明与科技的发展，三体高层研发出了智子，试图对人类进行降维攻击。说起智子工程不得不再次感叹作者天马行空的想象，将整个人类世界想象成一个CPU，智子以接近光速的速度在地球穿梭，这让处于低速层面的地球人类感觉到智子无处不在。</p>
+<h5 id="抉择：生存还是死亡"><a href="#抉择：生存还是死亡" class="headerlink" title="抉择：生存还是死亡"></a>抉择：生存还是死亡</h5><p>面对更为高级文明的降临，地球人面临着前所未有的抉择：生存还是死亡？</p>
+<p>相较于普通百姓，高级知识分子显得更为悲观，而这些高级知识分子中又以科学家最为悲观。因为他们更接近真相，更清楚事情的严重性。与此同时，他们作为三体文明首要的攻击对象，当理性和科学的大厦被击溃时，活着似乎显得毫无意义，这也是杨冬自杀的原因所在。</p>
+<p>作为大多数存在的普通人，对于科学没有那么虔诚的信仰，出于生存的本能而选择自救。尽管在三体人看来地球人就像虫子一样卑贱。但是就像人类和蝗虫之间的战争一样，人类用尽各种方法试图消灭蝗虫，最终却不得不承认一个事实：虫子从未被真正意义上战胜过，</p>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2018-11-14T14:37:07.000Z" title="11/14/2018, 10:37:07 PM">2018-11-14</time></span><span class="level-item"><a class="link-muted" href="/categories/%E9%97%B2%E8%A8%80%E7%A2%8E%E8%AF%AD/">闲言碎语</a></span><span class="level-item">2 minutes read (About 319 words)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2018/11/14/%E9%9C%80%E6%B1%82%E7%AC%AC%E4%B8%89%E5%AE%9A%E5%BE%8B/">需求第三定律</a></h1><div class="content"><p>需求第三定律的含义：每当消费者必须支付一笔附近费时，高品质的产品相对低品质的产品就变得便宜了。这笔附加费越高，高品质产品相对就越便宜。因此，这个定律又叫“好东西运到远方去定律”。</p>
+<p><strong>附加成本大，精选品才值得</strong></p>
+<p>当人们不得不支付一笔巨大的附加费时，就只有精选品才值得人们去运送、去提供，才值得人们享受。</p>
+<p><strong>附加成本上升并非好事</strong></p>
+<p>当附加成本上升，精选品就显得便宜，那么是否附加成本越高越好？</p>
+<p>以中国出口香烟为例，如果进口国家对香烟实施配额制，每包香烟多付5元的附加费。那么这时只有较贵的香烟才值得出口。这样出口的香烟种类就减少了，国外消费者的选择也相应的少了。因此，虽然出口商品的平均质量提高了，但是出口商品的品种少了。国外的消费者和出口国生产商都蒙受了损失。</p>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2018-11-13T14:13:07.000Z" title="11/13/2018, 10:13:07 PM">2018-11-13</time></span><span class="level-item"><a class="link-muted" href="/categories/%E9%97%B2%E8%A8%80%E7%A2%8E%E8%AF%AD/">闲言碎语</a></span><span class="level-item">7 minutes read (About 1095 words)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2018/11/13/%E9%9C%80%E6%B1%82%E7%AC%AC%E4%BA%8C%E5%AE%9A%E5%BE%8B/">需求第二定律</a></h1><div class="content"><blockquote>
+<p>理解了需求第二定律，就可以更懂人与人之间互相作用、互相博弈的规律</p>
+</blockquote>
+<p>需求第二定律的定义：需求对价格的弹性，和价格变化之后流逝的时间长度成正比。换言之，随着时间的推移，需求对价格的弹性会增加。</p>
+<p><strong>需求对价格的弹性</strong></p>
+<p>需求对价格的弹性，就是需求量随着价格变动而变动的程度。它等于需求量的变化比例除以价格的变化比例。<br>注：由于需求曲线是减函数，所以弹性永远都是负数。一般讲弹性都是指绝对值。</p>
+<div align="center">
+<img src="https://raw.githubusercontent.com/industriousonesoft/iSoft_ImageBed/master/blog/xueqiudinglv-02/1.png" width="300" hegiht="200">
+</div>
 
-汇编语言可直接访问或控制硬件：存储器、CPU，能最大限度的发挥硬件功能
-目标代码少，占位内存少，执行速度快
-不同厂商的CPU都有对应的机器指令集和汇编指令集合
-大小写不敏感
+<p>奢侈品：弹性&gt;1.0，需求量的变化幅度大于价格的变化幅度的物品属于奢侈品<br>必需品：弹性&lt;1.0，需求量的变化幅度小于价格的变化幅度的物品属于必需品</p>
+<p>弹性不等同于斜率，其他条件不变的前提下，需求函数的斜率为1。而弹性是渐变的。</p>
+<div align="center">
+<img src="https://raw.githubusercontent.com/industriousonesoft/iSoft_ImageBed/master/blog/xueqiudinglv-02/2.png" width="300" hegiht="200">
+</div>
 
-缺点
+<p>由于需求曲线中，价格是自变量，因此一件商品是奢侈品还是必需品完全取决于价格。</p>
+<p><strong>寻找替代方案</strong></p>
+<p>现实生活中是否存在一种商品，无论价格多高，它的需求量都是不变的。那么这种商品的需求曲线是一条垂直于需求量的直线。</p>
+<div align="center">
+<img src="https://raw.githubusercontent.com/industriousonesoft/iSoft_ImageBed/master/blog/xueqiudinglv-02/3.png" width="300" hegiht="200">
+</div>
 
-不易于编写、维护、调试
+<p>但是实际情况下是不存在的，人们一定会找到替代方案，整个人类历史就是一个不断寻找替代方案的历史。以食用盐为例，当盐的价格高到一定程度，人们就会想办法寻找替代方案，包括最终生病或死亡都属于替代方案。</p>
+<p>正如需求第二定律所说，随着时间推移，需求对价格的弹性就越大，也就是寻找到的替代方案就越多，应变的空间也越来越大。</p>
+<p><strong>商品的税负问题</strong></p>
+<p>一件商品的税负由用买卖双方共同承担的，正确的答案由两句话组成：税负是双方共同承担的；双方各付多少，取决于需求者和供应者双方的相对弹性，谁的弹性低，谁对这份交易的需求更迫切，谁就付得多一点。</p>
+<p><em>注：买家对应于需求曲线，而卖家对应于供应曲线。</em></p>
+<p>情况一：在买卖双方对商品的弹性是一致的时候，各自均摊税负。如下图所示：</p>
+<div align="center">
+<img src="https://raw.githubusercontent.com/industriousonesoft/iSoft_ImageBed/master/blog/xueqiudinglv-02/4.png" width="300" hegiht="200">
+</div>
 
-寄存器
-CPU由寄存器、运算器和控制器组成，其中最主要部件是寄存器，通过改变寄存器的内容来实现对CPU的控制
-不同的CPU，寄存器个..</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2019/06/27/%E5%88%9D%E8%AF%86%E6%B1%87%E7%BC%96/">Read more</a></section></article><article class="post-item-card"><section class="content post-card-content p-4 pb-5"><header><a href="/tags/%E4%B8%89%E4%BD%93"><i class="tag post-item-tag">三体</i></a></header><h2 class="mt-4 mb-0 is-family-serif"><a href="/2018/12/01/%E3%80%8A%E4%B8%89%E4%BD%93%E3%80%8B%E8%AF%BB%E5%90%8E%E6%84%9F%E4%B9%8B%E7%94%9F%E5%AD%98%E8%BF%98%E6%98%AF%E6%AD%BB%E4%BA%A1/">《三体》系列第一部读后感之生存还是死亡？</a></h2><time class="has-text-grey" datetime="2018-12-01T03:33:07.000Z">2018-12-01</time><p class="is-flex-grow-2 mt-2">《三体》是我看的第一本科幻小说，与很多在学生时期就接触了这本书的朋友比起来，即将三十而立的我觉得有点相见恨晚。书中涉及了天文学、物理学、计算机学等众多专业知识。在阅读这本书的过程中，总会时不时地感叹作者想象力之丰富，知识之渊博。与作者刘欣慈一样同为程序员的我读起来多了一丝亲切感。过去的自己对科幻小说存在一些误解，认为科幻小说无非只是天马行空的想象罢了，这类超现实的小说只适合用来消遣，并没有太多实用性。现在我为自己愚蠢的想法道歉：一本好的小说一定都蕴含着一个深刻的内核，或是对生命的思考，或是对人性的剖析等等。而小说的功能则是通过虚构一个故事或世界让读者更好的理解作者要表达的想法，并引导读者产生共鸣。《三体》这本书在我看来，它提出的是对人类的究极拷问：生存还是死亡？
-这本书采用的是倒叙和插叙的叙述方式，让读者在..</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2018/12/01/%E3%80%8A%E4%B8%89%E4%BD%93%E3%80%8B%E8%AF%BB%E5%90%8E%E6%84%9F%E4%B9%8B%E7%94%9F%E5%AD%98%E8%BF%98%E6%98%AF%E6%AD%BB%E4%BA%A1/">Read more</a></section></article><article class="post-item-card"><section class="content post-card-content p-4 pb-5"><h2 class="mt-4 mb-0 is-family-serif"><a href="/2018/11/14/%E9%9C%80%E6%B1%82%E7%AC%AC%E4%B8%89%E5%AE%9A%E5%BE%8B/">需求第三定律</a></h2><time class="has-text-grey" datetime="2018-11-14T14:37:07.000Z">2018-11-14</time><p class="is-flex-grow-2 mt-2">需求第三定律的含义：每当消费者必须支付一笔附近费时，高品质的产品相对低品质的产品就变得便宜了。这笔附加费越高，高品质产品相对就越便宜。因此，这个定律又叫“好东西运到远方去定律”。
-附加成本大，精选品才值得
-当人们不得不支付一笔巨大的附加费时，就只有精选品才值得人们去运送、去提供，才值得人们享受。
-附加成本上升并非好事
-当附加成本上升，精选品就显得便宜，那么是否附加成本越高越好？
-以中国出口香烟为例，如果进口国家对香烟实施配额制，每包香烟多付5元的附加费。那么这时只有较贵的香烟才值得出口。这样出口的香烟种类就减少了，国外消费者的选择也相应的少了。因此，虽然出口商品的平均质量提高了，但是出口商品的品种少了。国外的消费者和出口国生产商都蒙受了损失。
-</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2018/11/14/%E9%9C%80%E6%B1%82%E7%AC%AC%E4%B8%89%E5%AE%9A%E5%BE%8B/">Read more</a></section></article><article class="post-item-card"><header class="is-relative is-flex"><div class="post-cover-backdrop is-hidden"><img src="https://raw.githubusercontent.com/industriousonesoft/iSoft_ImageBed/master/blog/xueqiudinglv-02/1.png" alt="loading.."></div><a class="post-cover-link has-text-centered skeleton" href="/2018/11/13/%E9%9C%80%E6%B1%82%E7%AC%AC%E4%BA%8C%E5%AE%9A%E5%BE%8B/"><img class="post-cover-img js-img-fadeIn" src="https://raw.githubusercontent.com/industriousonesoft/iSoft_ImageBed/master/blog/xueqiudinglv-02/1.png" alt="loading.." data-backdrop="true"></a></header><section class="content post-card-content p-4 pb-5"><h2 class="mt-4 mb-0 is-family-serif"><a href="/2018/11/13/%E9%9C%80%E6%B1%82%E7%AC%AC%E4%BA%8C%E5%AE%9A%E5%BE%8B/">需求第二定律</a></h2><time class="has-text-grey" datetime="2018-11-13T14:13:07.000Z">2018-11-13</time><p class="is-flex-grow-2 mt-2">
-理解了需求第二定律，就可以更懂人与人之间互相作用、互相博弈的规律
+<p>图中的平衡点N是需求曲线D与供应曲线S的相交点，表示在没有对商品征税的情况下，需求量和价格分别为q0、p0。对商品征税后，买家付出的价格从p0上涨到pd，卖家收到的价格从p0下降到ps，商品的需求量从q0下降到q1。面积A+B恰好等于税收。</p>
+<p>情况二：买家的对交易更为迫切，对商品的弹性较低，即需求曲线的较为陡峭，而供应曲线相对平缓。</p>
+<div align="center">
+<img src="https://raw.githubusercontent.com/industriousonesoft/iSoft_ImageBed/master/blog/xueqiudinglv-02/5.png" width="300" hegiht="200">
+</div>
 
-需求第二定律的定义：需求对价格的弹性，和价格变化之后流逝的时间长度成正比。换言之，随着时间的推移，需求对价格的弹性会增加。
-需求对价格的弹性
-需求对价格的弹性，就是需求量随着价格变动而变动的程度。它等于需求量的变化比例除以价格的变化比例。注：由于需求曲线是减函数，所以弹性永远都是负数。一般讲弹性都是指绝对值。
+<p>由图可知，这种情况下，买家承担的税负更高。</p>
+<p>情况三：卖的对交易更为迫切，对商品的弹性较低，即供应曲线的较为陡峭，而需求曲线相对平缓。</p>
+<div align="center">
+<img src="https://raw.githubusercontent.com/industriousonesoft/iSoft_ImageBed/master/blog/xueqiudinglv-02/6.png" width="300" hegiht="200">
+</div>
 
+<p>由图可知，这种情况下，卖家承担的税负更高。</p>
+<p>推广：</p>
+<p>1、有人说房价太高，建议政府通过收取很高的房产交易税来压低房价，这种想法完全是错误的。重税只会增加买卖双方的负担，而且如果是买房者是刚需，则会承担大部分的税负。</p>
+<p>2、不管是法律是否规定了雇主付养老保险还是雇员付养老保险，最后双方的分担都取决于雇主和雇员谁的弹性更大，谁的谈判能力就越高，承担的负担比例就相对小。</p>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2018-11-11T01:18:07.000Z" title="11/11/2018, 9:18:07 AM">2018-11-11</time></span><span class="level-item"><a class="link-muted" href="/categories/%E9%97%B2%E8%A8%80%E7%A2%8E%E8%AF%AD/">闲言碎语</a></span><span class="level-item">6 minutes read (About 928 words)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2018/11/11/%E9%9C%80%E6%B1%82%E7%AC%AC%E4%B8%80%E5%AE%9A%E5%BE%8B/">需求第一定律</a></h1><div class="content"><p><em>注：本文属于《薛兆丰经济学讲义》第28讲的读书笔记</em></p>
+<blockquote>
+<p>人总是善于根据代价的高低而灵活应变–对人性深刻而基本的刻画</p>
+</blockquote>
+<p>需求第一定律的定义是：当其他情况不变时，只要价格提高，商品的需求量就会减少；价格降到一定程度，需求量就会增加。</p>
+<p><strong>需求曲线</strong></p>
+<p>基于其他条件不变的前提，需求曲线是一条斜率不变的减函数，随着价格（自变量）的增大，需求量（因变量）递减。</p>
+<div align="center">
+<img src="https://raw.githubusercontent.com/industriousonesoft/iSoft_ImageBed/master/blog/xueqiudinglv-01/1.png" width="300" hegiht="200">
+</div>
 
+<p>当存在价格之外的其他任何因素发生变化时，整条需求曲线发生变动和转动，但是仍然是一个减函数。</p>
+<div align="center">
+<img src="https://raw.githubusercontent.com/industriousonesoft/iSoft_ImageBed/master/blog/xueqiudinglv-01/2.png" width="300" hegiht="200">
+</div>
 
+<p>很多时候我们容易被一些社会想象误导，误以为需求曲线在某些情况下是增函数的。比如股市出现追涨杀跌，其实是因为股票的盈利能力变了。存在这种误解是忽视了需求定律中“其他条件不变”的前提。在人性不变得前提下，价格越高，需求将越低。此外，需求不等同与需求量，一个人对某个商品的需求是不会随着价格变动而出现变化的。</p>
+<p><strong>供应曲线</strong></p>
+<p>在需求曲线中，当价格上升到一定程度会出现负需求，也就是供给。换言之，需求和供给完全取决于市场价格。当价格足够高时，原本属于需求者的一部分会变成供给者。</p>
+<div align="center">
+<img src="https://raw.githubusercontent.com/industriousonesoft/iSoft_ImageBed/master/blog/xueqiudinglv-01/3.png" width="300" hegiht="200">
+</div>
 
-奢侈品：弹性&amp;gt;1.0，需求量的变化幅度大于价格的变化幅度的物品属于奢侈品必需品：弹性&amp;lt;1.0，需求量的变化幅度小于价格的变化幅度的物品属于必需品
-弹性不等同于斜率，其他条件不变的前提下，需求函数的斜率为1。而弹性是渐变的。
-
-
-
-
-由于需求曲线中，价格是自变量，因此一件商品是奢侈品还是必需品完全取决于价格。
-寻找..</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2018/11/13/%E9%9C%80%E6%B1%82%E7%AC%AC%E4%BA%8C%E5%AE%9A%E5%BE%8B/">Read more</a></section></article><article class="post-item-card"><header class="is-relative is-flex"><div class="post-cover-backdrop is-hidden"><img src="https://raw.githubusercontent.com/industriousonesoft/iSoft_ImageBed/master/blog/xueqiudinglv-01/1.png" alt="loading.."></div><a class="post-cover-link has-text-centered skeleton" href="/2018/11/11/%E9%9C%80%E6%B1%82%E7%AC%AC%E4%B8%80%E5%AE%9A%E5%BE%8B/"><img class="post-cover-img js-img-fadeIn" src="https://raw.githubusercontent.com/industriousonesoft/iSoft_ImageBed/master/blog/xueqiudinglv-01/1.png" alt="loading.." data-backdrop="true"></a></header><section class="content post-card-content p-4 pb-5"><h2 class="mt-4 mb-0 is-family-serif"><a href="/2018/11/11/%E9%9C%80%E6%B1%82%E7%AC%AC%E4%B8%80%E5%AE%9A%E5%BE%8B/">需求第一定律</a></h2><time class="has-text-grey" datetime="2018-11-11T01:18:07.000Z">2018-11-11</time><p class="is-flex-grow-2 mt-2">注：本文属于《薛兆丰经济学讲义》第28讲的读书笔记
-
-人总是善于根据代价的高低而灵活应变–对人性深刻而基本的刻画
-
-需求第一定律的定义是：当其他情况不变时，只要价格提高，商品的需求量就会减少；价格降到一定程度，需求量就会增加。
-需求曲线
-基于其他条件不变的前提，需求曲线是一条斜率不变的减函数，随着价格（自变量）的增大，需求量（因变量）递减。
-
-
-
-
-当存在价格之外的其他任何因素发生变化时，整条需求曲线发生变动和转动，但是仍然是一个减函数。
-
-
-
-
-很多时候我们容易被一些社会想象误导，误以为需求曲线在某些情况下是增函数的。比如股市出现追涨杀跌，其实是因为股票的盈利能力变了。存在这种误解是忽视了需求定律中“其他条件不变”的前提。在人性不变得前提下，价格越高，需求将越低。此外，需求不等同与需求量，一个人对某个商品..</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2018/11/11/%E9%9C%80%E6%B1%82%E7%AC%AC%E4%B8%80%E5%AE%9A%E5%BE%8B/">Read more</a></section></article><article class="post-item-card"><section class="content post-card-content p-4 pb-5"><h2 class="mt-4 mb-0 is-family-serif"><a href="/2018/11/03/%E5%A4%B1%E4%BC%A0%E7%9A%84%E8%89%BA%E6%9C%AF-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/">失传的艺术-计算机科学</a></h2><time class="has-text-grey" datetime="2018-11-03T13:57:07.000Z">2018-11-03</time><p class="is-flex-grow-2 mt-2">
-Don’t learn to build doghouses and call yourself an architect. 不要明明是在搭建狗屋，却自称为建筑师。
-
-今天在阮一峰博客看到一篇名为Computer science as a lost art的英文博客，文章不长，内容也朴实随意，正如作者所言属于即兴发挥。文章阐述的观点让我自感惭愧，也让我意识到自己与真正的计算机从业者之间的差距，遂翻译以自勉。译文如下：
-昨晚我的一位老友问我：“计算机科学是否已经成为了一门失传的艺术？”今早，我给出了即兴想到的答案：
-嗯，这就是我的观点。我拥有计算机本硕学位即六年计算机科学求学历程，与此同时有着30年工作经验。换言之，我有些过时了，且与当下有点格格不入。
-即使我不大愿意相信，但是确实有些事情实实在在的发生了。..</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2018/11/03/%E5%A4%B1%E4%BC%A0%E7%9A%84%E8%89%BA%E6%9C%AF-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/">Read more</a></section></article><article class="post-item-card"><section class="content post-card-content p-4 pb-5"><h2 class="mt-4 mb-0 is-family-serif"><a href="/2018/10/20/%E4%B8%AD%E5%9B%BD%E5%93%B2%E5%AD%A6%E5%8F%B2-%E8%AF%BB%E5%90%8E%E6%84%9F/">《中国哲学史》读后感</a></h2><time class="has-text-grey" datetime="2018-10-20T14:27:07.000Z">2018-10-20</time><p class="is-flex-grow-2 mt-2">《中国哲学史》讲述了中国哲学的发展历史，打通了古今中外的相关知识，在有限的篇幅里融入了冯友兰先生对中国哲学的理解，是史与思的结晶，充满了人生的睿智与哲人的洞见。作者认为，哲学的功能在于提高人的心灵，超越现实世界，体验高于道德的价值。在学习哲学的过程中，人们没有智慧与不智慧之分，而哲学家们研究哲学的目的也从来不是为了提高智慧，仅仅是为了哲学本身。哲学既不是生存的工具或手段，也非我们生活的目的与理想，但它能使我们更清楚地认识到人生的意义。
-在书中冯友兰先生着重于用浅显易懂的言语对哲学家本人思想的重新整理，梳理了中国哲学史上的几个重要的流派：儒家、墨家、道家、名家、阴阳家、法家，及各派在各个时期的发展、演变、更新。冯友兰自己认为，就《中国哲学史》的内容来讲有两点可以引以自豪的: 一是把先秦名家的辩者区分成两派;另..</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2018/10/20/%E4%B8%AD%E5%9B%BD%E5%93%B2%E5%AD%A6%E5%8F%B2-%E8%AF%BB%E5%90%8E%E6%84%9F/">Read more</a></section></article><article class="post-item-card"><section class="content post-card-content p-4 pb-5"><h2 class="mt-4 mb-0 is-family-serif"><a href="/2018/10/05/%E6%A5%9A%E9%97%A8%E7%9A%84%E4%B8%96%E7%95%8C/">《1984》读后感之楚门的世界</a></h2><time class="has-text-grey" datetime="2018-10-05T12:10:07.000Z">2018-10-05</time><p class="is-flex-grow-2 mt-2">我是国庆假期的最后一天，睡了一会懒觉，九点起床。没有像昨天的那样惯性地选择去公司加班，而是约了二三好友去健身房完成了今日的训练，这应该是我多年来第一次选择上午去健身。这种感觉让我想起温斯顿在某一天下班后没有径直回家，而是在一种自己也弄不明白的驱动力下走向了无产者居住的街道。现在看来，温斯顿这个看似不经意的选择加速了他生命结束的进程，但与此同时也是遇见爱情的开始，也许他当时认为只是生命中普通的一天。
-下午没有午睡而是在某巴克点了一杯无糖拿铁，选了一个安静的角落，拿出kindle并尝试着在把《1984》看完。这是一个美妙的下午，感觉自己很久没有像今天这样心无旁骛地阅读一本书，或许这是第一次。不负“众”望，我如愿以偿地的看完了这本书。期间甚至没有去一趟洗手间，也许是我太过认真，也许是因为洗手间的温度比大厅低5°的..</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2018/10/05/%E6%A5%9A%E9%97%A8%E7%9A%84%E4%B8%96%E7%95%8C/">Read more</a></section></article><article class="post-item-card"><section class="content post-card-content p-4 pb-5"><h2 class="mt-4 mb-0 is-family-serif"><a href="/2018/09/03/%E3%80%8A%E6%B0%B8%E8%BF%9C%E7%9A%84%E4%B8%89%E4%B8%81%E7%9B%AE%E7%9A%84%E5%A4%95%E9%98%B3%E3%80%8B%E8%A7%82%E5%90%8E%E6%84%9F/">《永远的三丁目的夕阳》观后感</a></h2><time class="has-text-grey" datetime="2018-09-03T14:34:07.000Z">2018-09-03</time><p class="is-flex-grow-2 mt-2">我想如果不是朋友的推荐，我不大可能会主动接触这部影片。其中一个比较直接原因在于影片的名称挺不起眼的，再者这类题材的电影已经不再是我的首选了。在第一次听到影名的时候感到有点困惑：三丁目是什么意思？为什么是永远的三丁目的夕阳？这里先回答第一个问题：丁目是日语词汇，类似汉语中胡同的意思，日本的地址通常是：区-丁目-番-号组成。因此，片名翻译过来就是：永远的第三胡同的夕阳。接下来是我对于第二个问题的答案。
-故事背景影片故事背景是昭和30年，即公元1956年（昭和元年为公元1926年），日本制定“电力五年计划”，进行以电力工业为中心的建设，并以石油取代煤炭发电。日本经济至此不仅完全从二次大战中复兴，而且进入积极建立独立经济的新阶段。1955至1957年，日本出现了第一次经济发展高潮。日本人把这个神话般的繁荣，称为神武..</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2018/09/03/%E3%80%8A%E6%B0%B8%E8%BF%9C%E7%9A%84%E4%B8%89%E4%B8%81%E7%9B%AE%E7%9A%84%E5%A4%95%E9%98%B3%E3%80%8B%E8%A7%82%E5%90%8E%E6%84%9F/">Read more</a></section></article><article class="post-item-card"><section class="content post-card-content p-4 pb-5"><h2 class="mt-4 mb-0 is-family-serif"><a href="/2018/08/21/%E8%BF%98%E6%88%BF%E8%B4%B7%E6%9C%80%E7%9C%81%E9%92%B1%E7%9A%84%E7%90%86%E8%B4%A2%E6%96%B9%E6%B3%95/">还房贷最省钱的理财方法</a></h2><time class="has-text-grey" datetime="2018-08-21T13:39:07.000Z">2018-08-21</time><p class="is-flex-grow-2 mt-2">最近看了紫竹张先生的一篇名为还贷款最省钱的理财方法的文章，里面讲述的经济学知识与我们日常生活息息相关，却又是最容易被忽视和误解的部分。在一口气看了两遍感觉收获不小之后，觉得很有必要总结一下，作为备忘。
-最省钱的还贷方式在国内最常见的还贷方式有两种，分别是等额本金和等额本息：
-
-等额本金的月供是由每个月固定的还款本金数额加上当前未还款总额的利息组成。这种还款方式的特点是前期月供数额较大，后面随着未还总额的减少，利息也越来越少。
-
-等额本息采用浮动本金还款，结合贷款年限计算出每个月还款的平均数。特点是每个月的还款金额几乎一样，前期月供中利息占的比重较大，后期的月供则主要是本金。
-
-
-结合上述两种还贷方式的特点容易产生一种误解，即大家会认为等额本息前期还的都是利息，有一种被银行剥削的感觉，因此倾向于提前还款，能还..</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2018/08/21/%E8%BF%98%E6%88%BF%E8%B4%B7%E6%9C%80%E7%9C%81%E9%92%B1%E7%9A%84%E7%90%86%E8%B4%A2%E6%96%B9%E6%B3%95/">Read more</a></section></article><section class="paginator is-flex is-justify-content-flex-end is-flex-wrap-wrap mt-5"><span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/"><i class="iconfont icon-next has-text-grey"></i></a></section></section><aside class="column is-hidden-mobile is-4-tablet is-3-widescreen"><style>.search-widget .search-input {
-    border: none;
-    outline: none;
-    background: transparent;
-    color: var(--second-text-color);
-}
-.search-widget .search-content {
-    position: absolute;
-    left: 0;
-    top: calc(100% - 3px);
-    z-index: 2;
-
-    width: 100%;
-    height: 0;
-    max-height: 550px;
-
-    overflow: auto;
-    box-sizing: border-box;
-
-    background: var(--top-bar-bg-color);
-    backdrop-filter: blur(var(--backdropFilter));
-    -webkit-backdrop-filter: blur(var(--backdropFilter));
-
-    border-bottom-left-radius: var(--borderRadius);
-    border-bottom-right-radius: var(--borderRadius);
-    box-shadow: 0 12px 15px rgba(0, 0, 0, 0.08);
-}
-
-.search-widget .search-content a:hover h5 {
-    color: #3273dc!important;
-}
-</style><main class="aside-card-container search-widget is-relative"><label for="searchInput"><div class="is-flex px-4" id="searchButton"><i class="iconfont icon--search1 mr-1"></i><input class="search-input is-flex-grow-1" id="searchInput" placeholder="Search everything.."></div></label><section class="search-content content" id="searchContent"></section></main><script>var searchDatabase = []
-var searchInputEl = document.getElementById('searchInput')
-var searchButtonEl = document.getElementById('searchButton')
-var searchResultEl = document.getElementById('searchContent')
-
-searchInputEl.oninput = function (evt) {
-    var searchValue = evt.srcElement.value
-    var haveSearchValue = Boolean(searchValue.trim())
-    if (!haveSearchValue) {
-        searchResultEl.style.height = 0
-        searchResultEl.innerHTML = null
-        return
-    }
-
-    var searchResults = searching(searchValue)
-
-    if (searchResults.length > 0) {
-        renderSearchResults(searchResults)
-    }
-}
-
-function renderSearchResults(results) {
-    searchResultEl.innerHTML = null
-    var fragment = document.createDocumentFragment()
-
-    results.forEach(function (item) {
-        var link = document.createElement('a')
-        var title = document.createElement('h5')
-        var content = document.createElement('p')
-
-        title.className = 'mb-1'
-        title.innerText = item.title
-        content.innerText = item.content
-
-        link.href = item.link
-        link.appendChild(title)
-        link.appendChild(content)
-        link.className = 'p-4 is-block'
-
-        fragment.appendChild(link)
-    })
-
-    searchResultEl.appendChild(fragment)
-    searchResultEl.style.height = 'auto'
-}
-
-function searching(inputText) {
-    var inputTexts = inputText.split(' ')
-    var searchResults = []
-    inputTexts.forEach(function (searchKey) {
-        var haveSearchValue = Boolean(searchKey.trim())
-        if (!haveSearchValue) return
-
-        var key = searchKey.toLowerCase()
-
-        for (var entry of searchDatabase) {
-            var title = entry.getElementsByTagName('title')[0].textContent
-            var link = entry.getElementsByTagName('link')[0].getAttribute('href')
-            var contentWithTags = entry.getElementsByTagName('content')[0].textContent
-            var rawContent = contentWithTags.trim().replace(/<[^>]+>/g, '').toLowerCase()
-
-            var LENGTH = 80
-            var finalContent = ''
-            var contentLength = rawContent.length
-            var searchResultIdx = rawContent.indexOf(key)
-
-            var startIdx = searchResultIdx - 20,
-                endIdx = startIdx + LENGTH
-
-            if (startIdx < 0) {
-                startIdx = 0
-                endIdx = 100
+<p><strong>交易剩余</strong></p>
+<p>需求曲线上的任何一点都代表一个人对某个商品的在这个单位上的个人估值，即为了获得这个单位的服务愿意付出的最大代价。</p>
+<p>但是，一个人对某个商品的估值与他最终得到这个商品所付出的代价之间往往存在着差距，这个差距就是“剩余”。同理，商品生产者也享受“剩余”，厂商对一个商品的估值与商品的市场价格之间的差距。因此这种剩余更合理的名称应该是“交易剩余”。</p>
+<p><strong>思考题</strong></p>
+<p>我们讲，凡是交易就有剩余，有剩余，买卖双方都皆大欢喜。但如果是这样的话，为什么世界上许多国家都有所谓的价格法，专门打击商人定价过高的行为呢？</p>
+<p>我的理解：虽然存在交易，买卖双方就都能享受剩余。但是卖家和买家享受的剩余来源不同，或者说是相斥的。卖家享受的剩余=商品交易价格-卖家对商品的估值，因此商品的成交价格越高，卖家享受的剩余就越大。反观，买家享受的剩余=买家对商品的估值-商品的交易价格，即商品的成交价越高，买家享受的剩余就越小。根据需求曲线，价格越高，需求量越低。如果卖家对商品的定价过高，需求者可能会转变成供给者，整个市场会出现供大于求的现象。因此，为了保护消费者的权益以及维护市场供需平衡，需要通过法律手段来制衡商家定价过高的行为。</p>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2018-11-03T13:57:07.000Z" title="11/3/2018, 9:57:07 PM">2018-11-03</time></span><span class="level-item"><a class="link-muted" href="/categories/%E9%97%B2%E8%A8%80%E7%A2%8E%E8%AF%AD/">闲言碎语</a></span><span class="level-item">11 minutes read (About 1631 words)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2018/11/03/%E5%A4%B1%E4%BC%A0%E7%9A%84%E8%89%BA%E6%9C%AF-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/">失传的艺术-计算机科学</a></h1><div class="content"><blockquote>
+<p>Don’t learn to build doghouses and call yourself an architect. 不要明明是在搭建狗屋，却自称为建筑师。</p>
+</blockquote>
+<p>今天在阮一峰博客看到一篇名为<a target="_blank" rel="noopener" href="http://rubyhacker.com/blog2/20150917.html">Computer science as a lost art</a>的英文博客，文章不长，内容也朴实随意，正如作者所言属于即兴发挥。文章阐述的观点让我自感惭愧，也让我意识到自己与真正的计算机从业者之间的差距，遂翻译以自勉。译文如下：</p>
+<p>昨晚我的一位老友问我：“计算机科学是否已经成为了一门失传的艺术？”今早，我给出了即兴想到的答案：</p>
+<p>嗯，这就是我的观点。我拥有计算机本硕学位即六年计算机科学求学历程，与此同时有着30年工作经验。换言之，我有些过时了，且与当下有点格格不入。</p>
+<p>即使我不大愿意相信，但是确实有些事情实实在在的发生了。首先，如今电脑已经相当普及，你还能找到一个80岁以下却没有电脑或手机的人吗？其次，万维网（作为互联网最初的模样诞生于1989年）在1995左右便已经开始遍布于公众。随着电脑的使用领域变得越来越广，它也变得越来越重要。第三，那些我们用于创建软件应用的工具在功能上变得更复杂从而更便于使用，就像驾驶汽车这件事来说现在相对于1905年来说要简单的多。</p>
+<p>我想要表达的是现在的电脑使用者比过去任何时候都要多。现在也有很多所谓的程序员没有上过一堂编程课。不过任何事情都要利弊。</p>
+<p>这意味着一个人只需要很少的计算机知识便可以完成一个小项目，但也意味着这样的人很可能不会为了完成大项目而去学习更多的知识。</p>
+<p>老实说，私底下我对于现在存在这样一大群不思进取的伪程序员这个事实感到很沮丧，我也很少对他人提及我的感受。在我看来，他们决定学习他们领域5%的知识是为了完成某个任务，或找点乐子，或谋生而已。</p>
+<p>这些人使用编程工具创建一些日常所用的应用程序，殊不知编程工具本身也是软件。但是编程软件远非一般水平的人所能创建的。即便这些人每天都在使用编程语言，编辑器，编译器和操作系统，但是他们对于如何编写用于编程的软件，以及这些软件的运行原理没有丝毫的头绪。</p>
+<p>20年后，一个赛车手可以把小孩放他的腿上，然后小孩会说：“哈，我也能驾驶这辆车，任何人都可以驾驶它。你只需要按下绿色按钮然后说‘送我去沃尔玛’即可。”这与我对如今学习编程这件事的看法有些类似。</p>
+<p>回到计算机科学的话题。我的朋友有一个七岁的儿子自学了一款很棒的编程工具，然后编写了一款iPhone游戏。尽管，那是一款很简单的游戏。但是他完成了这件事情放在三十年多前差不多需要拥有计算机博士学位的人才能完成，而且还不是移动设备上的软件。</p>
+<p>有时候我与一些人交流计算机知识时，他们的抱怨和疑惑说明他们已经到了自己的知识边界。有时候这让我很震惊，我认为：这些知识点应该是在你第一个学期的第一堂计算机科学课程里面就能学到的。随后我意识到，这些并没有真正意义上学习过计算机科学的课程。</p>
+<p>当然，在我之前的上一代计算机前辈们也是以同样的眼光看待我们这一代人的。在1940年代，你几乎必须有一个电子工程学位才有可能接触到计算机。在上个世纪70年代末到80年代初，你只需主修一门计算机科学或工程就能接触到计算机，在90年代以后，你仅仅需要一张信用卡，或者你父母有一张信用卡。</p>
+<p>我对于硬件很痴迷，顺便说一下，我离不开键盘。每当我拆开一台电脑试图捣腾点某个零件时，我总会把其他零件搞砸。严格意义上说我是一个软件男。因此，我曾经被他人嘲笑过，甚至一些年长的人也会因为我不会使用电焊笔而嘲笑我。</p>
+<p>任何事情都基于你真正想做什么。如何你只是想开一家网店、制作购物车、网页表格、漂亮的图片以及社交媒体软件，那么你根本不需要计算机科学学位，甚至是与之相关联的学位。</p>
+<p>如果你想创造一些尚未存在且很有趣的东西，或是你想在这个产业里面做出一点成绩，或是你仅仅想稍许改变一点这个世界，那么你必须有一个计算机学位。如果你想编写那些给低层次的程序员使用的软件和库，你也必须有一个计算机学位。</p>
+<p>或者你从另外一个角度看待：如果你想搭建一个狗屋，只需要知道使用锤子和钉子，然后动手做即可。如果你想成为一名设计和建造摩天大厦的建筑师时，你首先需要一个建筑业的学位。再次恳请大家要有自知之明，不要明明是在搭建狗屋，却自称为建筑师。</p>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2018-10-20T14:27:07.000Z" title="10/20/2018, 10:27:07 PM">2018-10-20</time></span><span class="level-item"><a class="link-muted" href="/categories/%E4%B9%A6%E8%AF%84/">书评</a></span><span class="level-item">12 minutes read (About 1852 words)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2018/10/20/%E4%B8%AD%E5%9B%BD%E5%93%B2%E5%AD%A6%E5%8F%B2-%E8%AF%BB%E5%90%8E%E6%84%9F/">《中国哲学史》读后感</a></h1><div class="content"><p>《中国哲学史》讲述了中国哲学的发展历史，打通了古今中外的相关知识，在有限的篇幅里融入了冯友兰先生对中国哲学的理解，是史与思的结晶，充满了人生的睿智与哲人的洞见。作者认为，哲学的功能在于提高人的心灵，超越现实世界，体验高于道德的价值。在学习哲学的过程中，人们没有智慧与不智慧之分，而哲学家们研究哲学的目的也从来不是为了提高智慧，仅仅是为了哲学本身。哲学既不是生存的工具或手段，也非我们生活的目的与理想，但它能使我们更清楚地认识到人生的意义。</p>
+<p>在书中冯友兰先生着重于用浅显易懂的言语对哲学家本人思想的重新整理，梳理了中国哲学史上的几个重要的流派：儒家、墨家、道家、名家、阴阳家、法家，及各派在各个时期的发展、演变、更新。冯友兰自己认为，就《中国哲学史》的内容来讲有两点可以引以自豪的: 一是把先秦名家的辩者区分成两派;另一点是分辨出宋代程颢程颐兄弟思想的差异和各自特点。此二点均发前人所未发，为中国哲学史界普遍接受。</p>
+<p>说到哲学，我们一般想到的都是西方的哲学，而并不知道中国也有哲学。其实中国哲学有三类，玄学，道学，义理之学，只是中国哲学并没有冠“哲学”之名。</p>
+<p>中国哲学之所以缺少严谨的系统的体系，可能和中国人思想方式有关。每个民族都会在其文明发展的同时对人和世界的各种本体性问题发问，于是则产生了哲人。不同民族的哲人思考的终极问题往往相同，但思考的方法，思想的表述则大相径庭，是以各民族的哲学之面貌多有不同。区别于西方注重逻辑和思维缜密，中国的哲学更注重于现象而轻规律，逻辑的成分自然较少。如各个名家思想，常常是以其日常的“零碎语录”编辑而成的哲学，因而中国的哲学也就具有直观性、随意性及非专业性。</p>
+<p>但事实上，在中国，哲学如宗教之于西方世界一样深深渗入社会，为常人所持。原因在于中国很多哲人并不以哲人自居，而是在日常行事中表达自己的思想，不求构筑体系，这是以有别于西方的。正如书中所言：“故哲学家之有所蔽，正因其有所见。惟其如此，所以大哲学家之思想，不但皆为整个的，而且各有其特别精神，特别面目”。而此书的作用，便是系统地讲解了中国哲学史从古至今的发展演变，让人充分了解中国的哲学发展。</p>
+<p>一时代有一时代之时代精神，一时代之哲学即其时代精神之结晶也。全书分为两部子学时代和下篇经学时代。冯友兰先生从诸子百家中孔子说起。孔子之前只有鬼神，术数，没有一个鲜明的系统。孔子之后，儒家墨家，道家法家，阴阳家名家，无论是对事物的观察，处世之方，或者政治及社会主张，以及对理想之人格和社会的期望，都各自发展出系统的理论，并且身体力行，自成一派，发扬光大，这就是子学时代。而经学时代，则分为古文及今文。“经”即诸子之文，经学即是以旧瓶装新酒，用前人的经文来阐释自己的理论，生搬硬套自然无可避免。自董仲舒开创独尊儒术之时代始，历数两汉之古今文经学之争，魏晋南北朝之玄学佛学，唐朝之佛学以至宋明理学，最终以康有为等人为中古时代之结束。</p>
+<p>冯友兰认为，中国哲学的精神之一，便是哲学背负着平衡入世与出世，现实与理想的矛盾。入世出世之对立，正如现实与理想主义的对立，而哲学的使命正是要在这两极对立中寻求它们的综合或许我们该在世俗中陶冶我们的性情。中国的哲学，以其所称的“直觉的概念” 出发，所以很多都是既入世又出世的道德。如今的我们似乎忘了原本的性情，在大流中随波逐流，每天除了工作挣钱，就是抱怨生活的不公平，很难静下心来读一本好书。在这样浮躁的状态下我们是不可能做到出世，我们应该明白现实与理想之间的差距是永远不可能消除的。人类一直在追求那能看到却不能到达的彼岸，那是人耐以生活的根本。由此而言，人们把生存看成是一种负担，一种难言的痛苦就可想而知了。</p>
+<p>在中国哲学体系中，各时代的哲学家亦将此思想融入自己的生存之道之中。 儒家推崇“仁义”之道，也表现出神似欧陆浪漫主义诗哲追求的“暮春而游”之境，便是在其现实与抱负无法统一时，用哲学思想在两者之间寻求平衡，在世俗之中修养身心。对于我们而言，又何尝不是这样的情形。冯友兰说，哲学的功能不是为了增进对客观事物的认知，而是为了让人的心灵得到升华，超越现实世界，体验高于道德的价值。其实哲学并不是高高在上，高不可攀的学问，实际上它就深深的蕴涵在我们的日常生活当中，并且与我们的生活密切相关，密不可分。只不过我们缺少是让它们浮出水面，上升到哲学高度的理论思维而已。因此，我们更应该学习哲学，体验超乎现实的道德修养，吸取其精髓。在入世与出世之间修行品性，在喧闹的生活中创造自己的生活，在残酷的现实中建立自己强大的内心世界。</p>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2018-10-05T12:10:07.000Z" title="10/5/2018, 8:10:07 PM">2018-10-05</time></span><span class="level-item"><a class="link-muted" href="/categories/%E4%B9%A6%E8%AF%84/">书评</a></span><span class="level-item">21 minutes read (About 3109 words)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2018/10/05/%E6%A5%9A%E9%97%A8%E7%9A%84%E4%B8%96%E7%95%8C/">《1984》读后感之楚门的世界</a></h1><div class="content"><p>我是国庆假期的最后一天，睡了一会懒觉，九点起床。没有像昨天的那样惯性地选择去公司加班，而是约了二三好友去健身房完成了今日的训练，这应该是我多年来第一次选择上午去健身。这种感觉让我想起温斯顿在某一天下班后没有径直回家，而是在一种自己也弄不明白的驱动力下走向了无产者居住的街道。现在看来，温斯顿这个看似不经意的选择加速了他生命结束的进程，但与此同时也是遇见爱情的开始，也许他当时认为只是生命中普通的一天。</p>
+<p>下午没有午睡而是在某巴克点了一杯无糖拿铁，选了一个安静的角落，拿出kindle并尝试着在把《1984》看完。这是一个美妙的下午，感觉自己很久没有像今天这样心无旁骛地阅读一本书，或许这是第一次。不负“众”望，我如愿以偿地的看完了这本书。期间甚至没有去一趟洗手间，也许是我太过认真，也许是因为洗手间的温度比大厅低5°的原因。看完后，我伸了一个懒腰，环视着周围的这个世界，脑海中闪过一丝疑虑：我当下所处的世界是否是客观真实的，亦或是它只是一个“楚门的世界”。</p>
+<p>王小波杂文中常提到罗素先生的一句话：“须知参差多态，乃是幸福的本源”，这也是我对生活和这个世界的期许与认知。但也会有人觉得单一机械乃是幸福的本源。于我，定是前者。在接触《1984》之前，我坚信周围的世界是客观存在的，而非存在于我的主观意识中，更不愿意相信它是被有意创造出来的假象，并通过教育等多种的方式让我信以为真。但是，现在我会怀疑至少存在部分以前看似合理的真相其实是一种假象，我们也许就像电影《楚门的世界》中的男主角那样，从一出生便生活在已经设计好的剧本里面，而不自知。也许“过去”并不客观的存在，它只存在于记录和人的记忆中。但凡是记录和记忆一致的东西，即是“过去”。我们从小接受的教育大多数都源于课本，视课本中的知识为金科玉律，认同课本中的价值观，认为课本中描述的历史就是历史本身的模样。那是否存在一种可能性，课本中的知识是出于某种政治或其他的目的而被有意编排的，为的是让我们变成被期望的样子，以达到统一思想的目的。书中说谁掌控了过去就掌控了未来，谁掌控了现在就掌控了过去，而教育应该是达成这个目的成本最低也是效果的手段之一，也许没有之一。目前来看，这种教育的非常成功的，我们周围已经培养出相对数量的无产者。这些人崇拜着老大哥，如今老大哥已然是党的化身。大多数时候他们会沉浸于各种综艺娱乐节目或是精心制作的爱国纪录片中安然度日，这就是所谓的奶头乐策略。但倘若出现对民族或国家的批评或诋毁，他们便会发出如同仇恨日那般的怒吼和反击，而非自省，但他们这些过激行为又似乎被上层默许的。在他们眼里非黑即白，似乎没有可用于商榷的中间地带。温斯顿一直将希望寄托于无产者，殊不知无产者本身已经没有了主观思想，他们安逸于目前的生活现状，他们认同资本主义是万恶之源，他们看到的国外局势永远是动荡不安的。即便日子过得艰苦也不会有所察觉或不满，因为没有对比，在他们目光所及之处皆如此，便也心安理得。纵观人类历史，任何一次革命的成功都必须有一只思想先进的先锋队，只有在他们的带领和引导之下群众才有可能觉悟，才有可能拿起武器反抗统治阶级。单纯依赖于愚蠢的无产者是不可能自我觉悟的，可惜温斯顿并没有意识到这一点。而温斯顿作为外围党成员中的觉悟者，本应属于先锋队中一员，但是他已丧失了人身和思想的自由。这也是为什么核心党只对外围党成员进行密切的监视，而放任无产者自生自灭。一直以来我不明白当年毛为什么要发动群众进行一场由下而上的文化大革命，而不是至上而下的整顿。现在我知道了答案，因为当年的先锋队已经变质了，而他们现在就是被革命的对象。文革的初衷是利于无产者的，其最终失败源于毛对权力和人性的过度自信，权利的泛滥和人性的扭曲导致局势失控，酿成了一出人间惨剧。当他意识到这一点的时候，已经油尽灯枯，无能为力。历朝历代得罪过既得利益集团的统治者都会背负骂名，不论是雍正还是毛，都是如此。因为他们得罪的就是书写和掌控历史的人，这也是为什么《毛选》最后一卷成为了禁书。想起书中有一个有意思的细节，通过奥勃良的家是可以知道核心党是享有特权的，他甚至可以关闭电幕。同样，在文革那个“闭关锁国”的时代，特权阶层也从未与外部世界隔绝。</p>
+<p>温斯顿是孤独的，具体来说是思想孤独患者。他不得不小心翼翼地隐藏着自己内心反动的思想，但又极度渴望找到志同道合的同志。当他第一次见到奥勃良便坚信对方是他苦苦找寻的那个人，那个可以带给他希望的人，我当时也深以为然。然而，最后他才知道这一切都是幻想，不过是一场游戏一场梦而已。从最开始他就走进了奥勃良为他精心设计的圈套里，包括却林顿的店铺，与奥勃良的密会，以及那本精神领袖果尔德施坦因的书都是有意的安排。可怜的温斯顿一直认为自己隐藏的很好，没有留下蛛丝马迹，却不知道思想警察其实早已翻阅过他的日记，只是又被原封不动地放回原处，即便是日记本上那颗白色的灰尘都被小心地还原。以奥勃良为代表的思想警察耐心地用来七年时间自导自演这出戏，看着温斯顿做困兽之斗，不断地引诱着他表露自己内心的真实想法。如果非要说有一丝欣慰，那就是温斯顿比《楚门的世界》中的男主角幸运一点，因为至少他与裘莉亚之间的感情是真实存在的，且裘莉亚也是他唯一的战友，他们有过一段快乐的时光。不过温斯顿在这场斗争中注定是要失败的，因为他面对的不是某一个个体，而是一个经验丰富的集团，里面都是身经百战的老戏骨。毋容置疑，类似的戏码他们已经经历过一次又一次，也将一代又一代永远一而再再而三地演下去。人作为个体终究是要死去的，而集团是可以以思想和意志的形式永远存在的。一个统治集团只要能够指定它的接班人就是同一个统治集团。党所操心的不是维系血统相传而是维系党本身的永存。由谁掌握权力并不重要，只要等级结构保持不变。想到这一点，不由得心生寒颤，似乎确实是如此的。</p>
+<p>《V字仇杀队》中的有一句台词：“面具下面不只是血肉之躯，而是一种思想，思想是不怕子弹”。此前我一直认为肉体消灭是对一个人最极端的处决，其实不然，思想改造才是。一个人失去了独立思考的能力，已于行尸走肉无异。温斯顿最开始也不明白为什么自己因为思想罪被捕之后没有立即被处以极刑，而是遭受不断地拷问和折磨。原因正如奥勃良所说，党是不会满足于消极的服从，甚至是最卑躬屈膝的服从都不要。他们不会对异端分子进行简单地肉体毁灭，而是进行改造思想和争取内心，使异端分子在内心真心诚意的屈服。让异端分子带着脱离正轨的思想死去，只会激发更多的异端分子，这是不能被容忍的。在强大的国家机器面前，温斯顿最终被改造成功，他出卖了裘莉亚，背叛了爱，也背叛了原来的自己。他尝试做过抵抗，但最终让他屈服的不是无尽地拷打带来的肉体上的痛楚，而是人的一种无法不服从的本能：对每一个人来说，都各有不能忍受的事情，连想都不能想的事情，这并不牵涉到勇敢与怯懦的问题。对温斯顿来说，老鼠是无法忍受的，对他会产生一种无法抗拒的压力。这也足以说明思想警察对于人性已经有很深刻的研究，从而有了让人闻风丧胆的101号房。想必裘莉亚也是在同样的情况下出卖了他，至少我相信是这样的。所以说，他们没有并出卖彼此，他们只是屈服于人的本能罢了。</p>
+<p>最后，也是我个人觉得是最让感到绝望的一点：人类历史似乎始终都处于不断轮回的过程，那个人人自由平等的天堂永远不会到来，但却一直被作为革命最初的愿景。革命的目的其实是为了建立专政，夺取权利的目的就是为了权利，而所谓“取消私有制”实际上意味着把财产集中到比以前更少得多的一批人手中，不同的是，新主人是一个集团，而不是一批个人。而历史的不断重演，从某种意义上来说是在不断地帮助统治者丰富和优化巩固政权的手段，而无产者则永远是无产者。</p>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2018-09-03T14:34:07.000Z" title="9/3/2018, 10:34:07 PM">2018-09-03</time></span><span class="level-item"><a class="link-muted" href="/categories/%E5%BD%B1%E8%AF%84/">影评</a></span><span class="level-item">16 minutes read (About 2404 words)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2018/09/03/%E3%80%8A%E6%B0%B8%E8%BF%9C%E7%9A%84%E4%B8%89%E4%B8%81%E7%9B%AE%E7%9A%84%E5%A4%95%E9%98%B3%E3%80%8B%E8%A7%82%E5%90%8E%E6%84%9F/">《永远的三丁目的夕阳》观后感</a></h1><div class="content"><p>我想如果不是朋友的推荐，我不大可能会主动接触这部影片。其中一个比较直接原因在于影片的名称挺不起眼的，再者这类题材的电影已经不再是我的首选了。在第一次听到影名的时候感到有点困惑：三丁目是什么意思？为什么是永远的三丁目的夕阳？这里先回答第一个问题：丁目是日语词汇，类似汉语中胡同的意思，日本的地址通常是：区-丁目-番-号组成。因此，片名翻译过来就是：永远的第三胡同的夕阳。接下来是我对于第二个问题的答案。</p>
+<h5 id="故事背景"><a href="#故事背景" class="headerlink" title="故事背景"></a>故事背景</h5><p>影片故事背景是昭和30年，即公元1956年（昭和元年为公元1926年），日本制定“电力五年计划”，进行以电力工业为中心的建设，并以石油取代煤炭发电。日本经济至此不仅完全从二次大战中复兴，而且进入积极建立独立经济的新阶段。1955至1957年，日本出现了第一次经济发展高潮。日本人把这个神话般的繁荣，称为神武景气(Jinmu boom)。</p>
+<p>此时已是战后十多年，百废待兴，全日本上下一副蒸蒸日上的繁荣景象。与此同时，人们也开始慢慢地从战争的阴影中走出来，而东京旧城区夕日町三丁目就是这个时代背景下日本平民生活的缩影。那个时代的日本人不像现在那样拘谨阴郁，有着当今日本人少有的对未来的坚定信念，每个人的努力就如同电影里展现的东京塔的逐渐建成一样，是可以实实在在看到成果的。再加上那时如“夕日町三丁目”一般的平民街巷所充满的人情味，怎能不让如今被沉重且无望的工作以及冷漠的人际关系所压迫的日本人们为之向往呢？</p>
+<h5 id="童年记忆"><a href="#童年记忆" class="headerlink" title="童年记忆"></a>童年记忆</h5><p>影片里面描述的很多细节和画面勾起了我童年的记忆，是那种温馨且快乐的记忆。我觉得铃木一家与我家有一定的重叠。我的父亲同样的是一个脾气暴躁的人，但是有时候也会有一些暖心的举动。就像铃木会特意为六子准备圣诞节回家的车票一样，我的父亲也曾用家里一个星期的伙食费为我买了一款最新上市的MP4播放器。虽然现在这个播放器已经被时代淘汰，但是我一直都留在身边，铭记这份温情。我的母亲也同一平的母亲一样，是一个温柔贤惠的家庭妇女。记得电影中有一个画面：一平不愿意午睡，张开嘴巴对着电风扇发出哇啊哇啊的声音，脑袋也随着风扇来回摇摆，被母亲发现后立刻假装睡着的场景。记得小时候我也常在午睡的时候对着家里的电风扇说话，因为这样会听到被旋转的扇叶反射回来的回声，有种千里传音的感觉。然后每次发现母亲过来时，立即摆出一副假装睡着打呼噜的样子。现在想想母亲那会应该早就看穿了我的演技，我却每次都为此洋洋得意。另外一个让我印象很深的画面是：铃木一家终于盼来三目丁区第一台电视机时，整个街道的居民都前来道贺围观看新鲜。大家都围坐在电视机旁七嘴八舌地议论着，当电视画面出现时全都目不转睛地盯着屏幕。整个屋子里时而安静、时而欢呼，一片其乐融融的景象。巧的是类似的情景也曾发生在我的家里。在我大概小学三年级的时候，我的父亲挣了一点小钱，于是给家里买了一台牡丹牌的彩色电视，那时候也算是村里的一件大事，以至于那会我在街坊邻居面前走路说话都比较嘚瑟。一般邻居们都会在吃过晚饭后陆陆续续来到我家，然后围坐在电视机旁有说有笑地看着电视，各抒己见地讨论着剧情。后来，随着生活水平地提高，越来越多的家里都配备了电视机，慢慢地晚饭后家里也开始变得清静。</p>
+<h5 id="隐形婚戒"><a href="#隐形婚戒" class="headerlink" title="隐形婚戒"></a>隐形婚戒</h5><p>茶川这位以文学家自居的二流作家，在影片的前半部更多地是充当搞笑的配角，给人一种懦弱无能的感觉。然而，广美和淳之介出现彻底地改变了他的生活，也第一次让他有了家的感觉。看到茶川和广美的爱情，让我又理由相信那个是一个即便物质上贫穷匮乏，只要内心善良与真诚，同样有机会能够打动女孩子芳心的年代。当茶川战战兢兢地从口袋里面拿出用所有积蓄买来的盒子时，我以为盒子里至少会是一颗小的钻戒。然而，接下来的对话成为了整部影片最打动我的莫过于茶川向广美表白的镜头。茶川：“对不起，跟我结婚吧。我的钱虽然只够买个盒子，不过很快…盒子里的东西，我的稿费再多一点的话…”。广美：“给我戴上，那个…总有一天能买来的戒指”。虽然这段感情最终因为广美身不由己地离开而告一段落，但是当广美站在歌舞厅的天台，对着夕阳，伸出自己右手无名指，望着那枚隐形的戒指时，我觉得此生能拥有过这样一段爱情本身就是很幸福知足的事情。我们向往那个年代是因为我们内心都渴望得到一份真挚的爱情，是因为对方爱你这个人才选择和你在一起，合于性格，久于善良，忠于人品，亦或是是始于颜值，陷于才华。那个年代时间过得慢，人们对物质的需求也不高，一生也许真的只够爱一个人而已。现如今结婚的高门槛已经成为很多自由恋爱的年轻人以逾越的障碍，在现实面前而被迫选择结束的感情也已屡见不鲜。我想除了外界的因素之外，现在的爱情也许本身就缺乏一些真诚。我并不反对现在的婚姻价值观，作为女性通过自己的自然属性选择社会属性更优的男性，从物种进化的角度来说是完全符合自然法则的，可以让更好的基因得到更佳的资源配置。正因如此，那个更在意个人情感的年代才更让人怀念。</p>
+<h5 id="总体感受"><a href="#总体感受" class="headerlink" title="总体感受"></a>总体感受</h5><p>最后说说我对这部影片的总体感受。东京铁塔作为日本标志性建筑，象征着日本经济腾飞和民族再次崛起。影片的首尾镜头与东京铁塔修建到竣工的时间节点动态呼应。而与之对应的是一种静态的永恒，即第三胡同的居民的淳朴善良，以及街坊邻居之间的真挚情感。这种美好的记忆就如同夕阳一般，很美，但已是近黄昏。不难想象随着城市化建设的推进，三丁目暖黄色基调的原貌必会成为过去，取而代之的定是冷灰色基调的现代建筑，留下的只有三丁目这个地名。电影的最后一个镜头是远方温暖绚丽的夕阳，夕阳下矗立着已经竣工的东京铁塔。铃木一家面向着夕阳，一平说：“明天，后天，就算50年后，夕阳也会一直这么美”。如今已是50多年后的今天，我想关于夕阳是否依旧那么美，大家心里都有自己的答案。虽然我并不认为这是导演的故意隐喻，这也许只是个巧合。当新的时代以一种高姿态来临，那个“大家诚诚恳恳，说一句，是一句”的社会已如夕阳的余晖般慢慢地消逝，如斯人的背影般渐行渐远。不过，这也正是这部影片触动我的地方，它带给我一种翻阅旧相册时的温暖和感动。</p>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2018-08-21T13:39:07.000Z" title="8/21/2018, 9:39:07 PM">2018-08-21</time></span><span class="level-item"><a class="link-muted" href="/categories/%E9%97%B2%E8%A8%80%E7%A2%8E%E8%AF%AD/">闲言碎语</a></span><span class="level-item">14 minutes read (About 2029 words)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2018/08/21/%E8%BF%98%E6%88%BF%E8%B4%B7%E6%9C%80%E7%9C%81%E9%92%B1%E7%9A%84%E7%90%86%E8%B4%A2%E6%96%B9%E6%B3%95/">还房贷最省钱的理财方法</a></h1><div class="content"><p>最近看了紫竹张先生的一篇名为<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzAxNDczNTk5MQ==&amp;mid=2651730253&amp;idx=1&amp;sn=f0d5cacc1d180fdb3407311affbb89f2&amp;chksm=80745e55b703d7430507e78469a2a3f4639ef30f8b43d3d6574d8328ae4869d6be49ea23088b&amp;mpshare=1&amp;scene=1&amp;srcid=0820Xnj0x8xfXItvqdGxpfLR&amp;key=fee773bf85a574f5c9b8985f5c4ee09210d769c87a720f5652cfec05e148fbf688c0964752d7765499411b591f4c39829f44009bd07580279982335beb674ad9481f3fa5b1cee2fc8a241c44bde6b8f9&amp;ascene=0&amp;uin=MjM2ODI5NjEyMA==">还贷款最省钱的理财方法</a>的文章，里面讲述的经济学知识与我们日常生活息息相关，却又是最容易被忽视和误解的部分。在一口气看了两遍感觉收获不小之后，觉得很有必要总结一下，作为备忘。</p>
+<h5 id="最省钱的还贷方式"><a href="#最省钱的还贷方式" class="headerlink" title="最省钱的还贷方式"></a>最省钱的还贷方式</h5><p>在国内最常见的还贷方式有两种，分别是等额本金和等额本息：</p>
+<ol>
+<li><p>等额本金的月供是由每个月固定的还款本金数额加上当前未还款总额的利息组成。这种还款方式的特点是前期月供数额较大，后面随着未还总额的减少，利息也越来越少。</p>
+</li>
+<li><p>等额本息采用浮动本金还款，结合贷款年限计算出每个月还款的平均数。特点是每个月的还款金额几乎一样，前期月供中利息占的比重较大，后期的月供则主要是本金。</p>
+</li>
+</ol>
+<p>结合上述两种还贷方式的特点容易产生一种误解，即大家会认为等额本息前期还的都是利息，有一种被银行剥削的感觉，因此倾向于提前还款，能还多少还多少。假如前面三五年没能提前还款，后面再提前还款就没有意义了，因为该交的利息都已经交了。这种观点表面上很有说服力，但仔细想想是完全错误的。</p>
+<p>记住两个前提，一是等额本金和等额本息使用的利率都是一样的，二是银行房贷的利率较于其他大多数的贷款利率都低且贷款额度更大和年限更长。然后，我们分别从银行和个人的角度来分析。首先，从银行的角度来说，银行借出去多少钱就应该收多少利息，而收取利息的基数就是你尚未还清的贷款总额，也就是说你当前欠银行的钱越多就应该支付越多的利息。因此，从这个角度来说等额本金和等额本息对银行来说没有熟好熟劣的差别。等额本金因为前期还给银行的本金较多导致后期利息减少，但是银行可以用你还的这些本金继续贷款给其他人获取利息甚至是更高的利息。再者，从个人的角度来说，你欠银行多少钱就应该付多少利息。假设在经济能力允许且你口袋里的钱没办法获得一个高于贷款利率的收入，那么选择等额本金还贷从某个角度来说也算是一种理财方式。但是如果你手中的钱能够创造更高的收益，那么使用等额本金的方式就不一定是个好选择了。但是更多的人属于后者，在支付首付之后是储蓄大幅下降，所以会选择等额本息的方法以减缓经济压力。此外如果使用其他的贷款方式所需要支付的利息会更高。既然我们没有足够的钱来偿还贷款也就没有理由抱怨银行收取利息了。因此，在个人经济能力有限的前提下，选择等额本息对个人来说是最划算的。</p>
+<p>此外，我们从银行贷款的利率只是名义上的利率，而非实际利率。原因在于中国未来都将处于不断通货膨胀的趋势，意味着人民币也不断在贬值。因此，你的实际利率等于名义上的履历扣除通货膨胀率，结果是实际利率值变成一个很低的值。接下来解释为什么说未来中国的通货膨胀会一直继续下去。</p>
+<p>众所周知，过去的三十多年，中国通过改革开放实现从计划经济向市场化经济的转变，并且加入了WTO（世界贸易组织）。随着世界各国的经济全球化，中国的经济的决定权已经不在中国政府手上。当前全球经济根基的经济学理论源自于美国，该西方经济理论体系认为：</p>
+<ol>
+<li><p>适当的通货膨胀有助于经济发展，能够刺激生产和增加投资。人民倾向于花出手中的现金购买其他保值资产从而刺激了消费和生产，以及提供了更多的就业岗位。而通货紧缩则恰恰相反，人民倾向于存储现金以便提高未来的购买力。</p>
+</li>
+<li><p>当政府出现财政危机且需要增加财政收入时，一般会采取三种方式：一是增加税收；二是向公众借债；三是增加货币供应。前两种方式在政治上不得人心，所以一般都采取第三种方式。</p>
+</li>
+<li><p>政府不应该任由经济危机发生，政府有义务通过量化宽松（间接增印钞票）的方式来“熨平”经济波动，避免社会出现动荡，即便代价是通货膨胀。</p>
+</li>
+</ol>
+<p>这种理论体系在西方大行其道，直接导致布雷顿森林货币体系的崩溃，美元和黄金脱钩，从此美元不断通货膨胀，全球货币也随之一路贬值，人民币自然不能独善其身。</p>
+<p>有一个典型的通货膨胀的例子是：在1989年北京房价在1600-1900，当时的大学生工资是89元左右，每个月节衣缩食可以攒下50元。假设当时你倾其所有凑够首付，按月供60进行还贷款，等额本息三十年，到了2019年刚好还完。然而，当年你每个月要还的“巨款”60元，现在只能买一个披萨。</p>
+<p>结合上述内容，最划算的贷款方式是使用等额本息的方式贷款最大金额，分三十年（最长还款年限）还款。此外，即便后面有了一定的储蓄也不要提前还款。原因在于流动资金具有一定的溢价效应。虽然某些现金类的理财产品收益率可能不如房地产投资，但是我们在投资房地产之余一定要配置一定比例的现金资产。因为固定资产的流动性很差，变现速度慢，而现金类产品能在你急性用钱的时候快速变现，以解燃眉之急。</p>
+<p>最后一个建议是不要让你的公积金账户有闲置的资金。公积金有一个特性，除了还房贷之外很难提现，而且存款利率极低。如果你的公积金除了还房贷之外还有剩余，那么这些存款就是没有流动性的死款，存款越多亏的越多。结果就是名义上里面的钱是你的钱，实际上你却没有支配权。</p>
+</div></article></div><nav class="pagination" role="navigation" aria-label="pagination"><div class="pagination-previous is-invisible is-hidden-mobile"><a href="/page/0/">Previous</a></div><div class="pagination-next"><a href="/page/2/">Next</a></div><ul class="pagination-list is-hidden-mobile"><li><a class="pagination-link is-current" href="/">1</a></li><li><a class="pagination-link" href="/page/2/">2</a></li><li><span class="pagination-ellipsis">&hellip;</span></li><li><a class="pagination-link" href="/page/5/">5</a></li></ul></nav></div><div class="column column-left is-4-tablet is-4-desktop is-3-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar is-rounded" src="/img/avatar.jpg" alt="Mark Cao"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">Mark Cao</p><p class="is-size-6 is-block">程序的世界让我着迷</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>ChangSha</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">Posts</p><a href="/archives"><p class="title">43</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Categories</p><a href="/categories"><p class="title">12</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Tags</p><a href="/tags"><p class="title">21</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://github.com/industriousonesoft" target="_blank" rel="noopener">Follow</a></div><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/industriousonesoft"><i class="fab fa-github"></i></a></div></div></div><div class="card widget" data-type="archives"><div class="card-content"><div class="menu"><h3 class="menu-label">Archives</h3><ul class="menu-list"><li><a class="level is-mobile" href="/archives/2019/06/"><span class="level-start"><span class="level-item">June 2019</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2018/12/"><span class="level-start"><span class="level-item">December 2018</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2018/11/"><span class="level-start"><span class="level-item">November 2018</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/archives/2018/10/"><span class="level-start"><span class="level-item">October 2018</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/archives/2018/09/"><span class="level-start"><span class="level-item">September 2018</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2018/08/"><span class="level-start"><span class="level-item">August 2018</span></span><span class="level-end"><span class="level-item tag">5</span></span></a></li><li><a class="level is-mobile" href="/archives/2018/07/"><span class="level-start"><span class="level-item">July 2018</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/archives/2018/06/"><span class="level-start"><span class="level-item">June 2018</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2018/05/"><span class="level-start"><span class="level-item">May 2018</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2017/12/"><span class="level-start"><span class="level-item">December 2017</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2017/10/"><span class="level-start"><span class="level-item">October 2017</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2017/08/"><span class="level-start"><span class="level-item">August 2017</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2017/06/"><span class="level-start"><span class="level-item">June 2017</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/archives/2017/05/"><span class="level-start"><span class="level-item">May 2017</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2017/04/"><span class="level-start"><span class="level-item">April 2017</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2017/02/"><span class="level-start"><span class="level-item">February 2017</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/archives/2017/01/"><span class="level-start"><span class="level-item">January 2017</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2016/11/"><span class="level-start"><span class="level-item">November 2016</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2016/10/"><span class="level-start"><span class="level-item">October 2016</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/archives/2016/09/"><span class="level-start"><span class="level-item">September 2016</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2016/08/"><span class="level-start"><span class="level-item">August 2016</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2015/05/"><span class="level-start"><span class="level-item">May 2015</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2015/04/"><span class="level-start"><span class="level-item">April 2015</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2015/03/"><span class="level-start"><span class="level-item">March 2015</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2015/02/"><span class="level-start"><span class="level-item">February 2015</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/archives/2015/01/"><span class="level-start"><span class="level-item">January 2015</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li></ul></div></div></div><div class="column-right-shadow is-hidden-widescreen"></div></div><div class="column column-right is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only order-3"><!--!--><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">Recents</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2019-06-27T13:34:07.000Z">2019-06-27</time></p><p class="title"><a href="/2019/06/27/%E5%88%9D%E8%AF%86%E6%B1%87%E7%BC%96/">初识汇编-知识点摘记</a></p><p class="categories"><a href="/categories/%E6%B1%87%E7%BC%96/">汇编</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2018-12-01T03:33:07.000Z">2018-12-01</time></p><p class="title"><a href="/2018/12/01/%E3%80%8A%E4%B8%89%E4%BD%93%E3%80%8B%E8%AF%BB%E5%90%8E%E6%84%9F%E4%B9%8B%E7%94%9F%E5%AD%98%E8%BF%98%E6%98%AF%E6%AD%BB%E4%BA%A1/">《三体》系列第一部读后感之生存还是死亡？</a></p><p class="categories"><a href="/categories/%E4%B9%A6%E8%AF%84/">书评</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2018-11-14T14:37:07.000Z">2018-11-14</time></p><p class="title"><a href="/2018/11/14/%E9%9C%80%E6%B1%82%E7%AC%AC%E4%B8%89%E5%AE%9A%E5%BE%8B/">需求第三定律</a></p><p class="categories"><a href="/categories/%E9%97%B2%E8%A8%80%E7%A2%8E%E8%AF%AD/">闲言碎语</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2018-11-13T14:13:07.000Z">2018-11-13</time></p><p class="title"><a href="/2018/11/13/%E9%9C%80%E6%B1%82%E7%AC%AC%E4%BA%8C%E5%AE%9A%E5%BE%8B/">需求第二定律</a></p><p class="categories"><a href="/categories/%E9%97%B2%E8%A8%80%E7%A2%8E%E8%AF%AD/">闲言碎语</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2018-11-11T01:18:07.000Z">2018-11-11</time></p><p class="title"><a href="/2018/11/11/%E9%9C%80%E6%B1%82%E7%AC%AC%E4%B8%80%E5%AE%9A%E5%BE%8B/">需求第一定律</a></p><p class="categories"><a href="/categories/%E9%97%B2%E8%A8%80%E7%A2%8E%E8%AF%AD/">闲言碎语</a></p></div></article></div></div><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">Categories</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/Cocoa/"><span class="level-start"><span class="level-item">Cocoa</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/categories/iOS/"><span class="level-start"><span class="level-item">iOS</span></span><span class="level-end"><span class="level-item tag">10</span></span></a><ul><li><a class="level is-mobile" href="/categories/iOS/Cocoa/"><span class="level-start"><span class="level-item">Cocoa</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/iOS/Objective-C/"><span class="level-start"><span class="level-item">Objective-C</span></span><span class="level-end"><span class="level-item tag">5</span></span></a></li></ul></li><li><a class="level is-mobile" href="/categories/%E4%B8%93%E4%B8%9A/"><span class="level-start"><span class="level-item">专业</span></span><span class="level-end"><span class="level-item tag">7</span></span></a><ul><li><a class="level is-mobile" href="/categories/%E4%B8%93%E4%B8%9A/OSX/"><span class="level-start"><span class="level-item">OSX</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E4%B8%93%E4%B8%9A/%E7%BF%BB%E8%AF%91/"><span class="level-start"><span class="level-item">翻译</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></li><li><a class="level is-mobile" href="/categories/%E4%B9%A6%E8%AF%84/"><span class="level-start"><span class="level-item">书评</span></span><span class="level-end"><span class="level-item tag">5</span></span></a></li><li><a class="level is-mobile" href="/categories/%E5%BD%B1%E8%AF%84/"><span class="level-start"><span class="level-item">影评</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%B1%87%E7%BC%96/"><span class="level-start"><span class="level-item">汇编</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%8B%B1%E8%AF%AD/"><span class="level-start"><span class="level-item">英语</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E9%97%B2%E8%A8%80%E7%A2%8E%E8%AF%AD/"><span class="level-start"><span class="level-item">闲言碎语</span></span><span class="level-end"><span class="level-item tag">14</span></span></a></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">Tags</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/ARC/"><span class="tag">ARC</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Category/"><span class="tag">Category</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Cocoa/"><span class="tag">Cocoa</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Coffee/"><span class="tag">Coffee</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/GCD/"><span class="tag">GCD</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/JS/"><span class="tag">JS</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/JavaSctript/"><span class="tag">JavaSctript</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/KVO/"><span class="tag">KVO</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/OSX/"><span class="tag">OSX</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Objective-C/"><span class="tag">Objective-C</span><span class="tag">5</span></a></div><div class="control"><a class="tags has-addons" href="/tags/OpenCV/"><span class="tag">OpenCV</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/PlistBuddy/"><span class="tag">PlistBuddy</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/RunLoop/"><span class="tag">RunLoop</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Runtime/"><span class="tag">Runtime</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Swift/"><span class="tag">Swift</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E4%B8%89%E4%BD%93/"><span class="tag">三体</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E4%BA%BA%E7%89%A9%E4%BC%A0%E8%AE%B0/"><span class="tag">人物传记</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E4%BA%BA%E7%B1%BB%E7%AE%80%E5%8F%B2/"><span class="tag">人类简史</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E7%88%B1/"><span class="tag">爱</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%8B%B1%E8%AF%AD/"><span class="tag">英语</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"><span class="tag">读书笔记</span><span class="tag">1</span></a></div></div></div></div></div></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.svg" alt="MarkCao" height="28"></a><p class="is-size-7"><span>&copy; 2022 Mark Cao</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("en");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
             }
-
-            endIdx > contentLength && (endIdx = contentLength)
-
-            finalContent = rawContent.substring(startIdx, endIdx)
-
-            if (title.indexOf(key) > -1 || searchResultIdx > -1) {
-                searchResults.push({
-                    link: link,
-                    title: title,
-                    content: finalContent
-                })
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="Back to top" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-right",
+        content: {
+          message: "This website uses cookies to improve your experience.",
+          dismiss: "Got it!",
+          allow: "Allow cookies",
+          deny: "Decline",
+          link: "Learn more",
+          policy: "Cookie Policy",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
             }
-        }
-    })
-    return searchResults
-}
-
-searchButtonEl.onclick = function () {
-    if (searchDatabase.length > 0) return;
-
-    fetch(window.location.href + '/search.xml').then(res => res.text()).then(res => {
-        var domparser = new DOMParser
-        var doc = domparser.parseFromString(res, 'application/xml')
-        searchDatabase = doc.getElementsByTagName('search')[0].children
-    })
-}</script><main class="aside-card-container profile-widget"><!-- todo: 使用取色工具动态阴影--><section class="is-flex is-flex-direction-column is-justify-content-center is-align-items-center"><section class="is-flex is-justify-content-center avatar is-clipped skeleton"><!-- debug images "https://api.ixiaowai.cn/gqapi/gqapi.php"--><img class="js-img-fadeIn" src="/images/avatar.jpg" alt="user avatar"></section><h3 class="user-name">MarkCao</h3><blockquote class="has-text-centered is-relative"><span style="margin-bottom: 5px;">程序的世界让我着迷</span></blockquote><address class="has-text-centered has-text-grey"><i class="iconfont icon-location" style="margin-right: 5px;"></i><span class="has-text-grey">ChangSha</span></address></section><section class="sns-container is-flex is-justify-content-center is-align-items-center"><!-- Github--><a title="github" target="_blank" rel="noopener nofollow" href="//github.com/industriousonesoft"><i class="iconfont icon-github"></i></a><!-- Ins--><!-- RSS--><!-- 知乎--><!-- 领英--><!-- 脸书--></section></main><main class="aside-card-container recent-widget"><h3>Recent</h3><ul><li class="is-flex"><!-- change to element replace image placeholder--><img class="js-img-fadeIn" src="https://ui-avatars.com/api/?background=f5f5f5&amp;name=初识" alt="cover"><!--else--><!--    div.post-img-placeholder--><section class="is-flex-grow-2"><p class="has-text-weight-semibold" style="line-height: 20px; font-size: 14px"><a href="/2019/06/27/%E5%88%9D%E8%AF%86%E6%B1%87%E7%BC%96/">初识汇编-知识点摘记</a></p><time class="has-text-weight-semibold has-text-grey" datetime="2019-06-27T13:34:07.000Z">2019-06-27</time></section></li><li class="is-flex"><!-- change to element replace image placeholder--><img class="js-img-fadeIn" src="https://ui-avatars.com/api/?background=f5f5f5&amp;name=《三" alt="cover"><!--else--><!--    div.post-img-placeholder--><section class="is-flex-grow-2"><p class="has-text-weight-semibold" style="line-height: 20px; font-size: 14px"><a href="/2018/12/01/%E3%80%8A%E4%B8%89%E4%BD%93%E3%80%8B%E8%AF%BB%E5%90%8E%E6%84%9F%E4%B9%8B%E7%94%9F%E5%AD%98%E8%BF%98%E6%98%AF%E6%AD%BB%E4%BA%A1/">《三体》系列第一部读后感之生存还是死亡？</a></p><time class="has-text-weight-semibold has-text-grey" datetime="2018-12-01T03:33:07.000Z">2018-12-01</time></section></li><li class="is-flex"><!-- change to element replace image placeholder--><img class="js-img-fadeIn" src="https://ui-avatars.com/api/?background=f5f5f5&amp;name=需求" alt="cover"><!--else--><!--    div.post-img-placeholder--><section class="is-flex-grow-2"><p class="has-text-weight-semibold" style="line-height: 20px; font-size: 14px"><a href="/2018/11/14/%E9%9C%80%E6%B1%82%E7%AC%AC%E4%B8%89%E5%AE%9A%E5%BE%8B/">需求第三定律</a></p><time class="has-text-weight-semibold has-text-grey" datetime="2018-11-14T14:37:07.000Z">2018-11-14</time></section></li><li class="is-flex"><!-- change to element replace image placeholder--><img class="js-img-fadeIn" src="https://raw.githubusercontent.com/industriousonesoft/iSoft_ImageBed/master/blog/xueqiudinglv-02/1.png" alt="cover"><!--else--><!--    div.post-img-placeholder--><section class="is-flex-grow-2"><p class="has-text-weight-semibold" style="line-height: 20px; font-size: 14px"><a href="/2018/11/13/%E9%9C%80%E6%B1%82%E7%AC%AC%E4%BA%8C%E5%AE%9A%E5%BE%8B/">需求第二定律</a></p><time class="has-text-weight-semibold has-text-grey" datetime="2018-11-13T14:13:07.000Z">2018-11-13</time></section></li><li class="is-flex"><!-- change to element replace image placeholder--><img class="js-img-fadeIn" src="https://raw.githubusercontent.com/industriousonesoft/iSoft_ImageBed/master/blog/xueqiudinglv-01/1.png" alt="cover"><!--else--><!--    div.post-img-placeholder--><section class="is-flex-grow-2"><p class="has-text-weight-semibold" style="line-height: 20px; font-size: 14px"><a href="/2018/11/11/%E9%9C%80%E6%B1%82%E7%AC%AC%E4%B8%80%E5%AE%9A%E5%BE%8B/">需求第一定律</a></p><time class="has-text-weight-semibold has-text-grey" datetime="2018-11-11T01:18:07.000Z">2018-11-11</time></section></li><li class="is-flex"><!-- change to element replace image placeholder--><img class="js-img-fadeIn" src="https://ui-avatars.com/api/?background=f5f5f5&amp;name=失传" alt="cover"><!--else--><!--    div.post-img-placeholder--><section class="is-flex-grow-2"><p class="has-text-weight-semibold" style="line-height: 20px; font-size: 14px"><a href="/2018/11/03/%E5%A4%B1%E4%BC%A0%E7%9A%84%E8%89%BA%E6%9C%AF-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/">失传的艺术-计算机科学</a></p><time class="has-text-weight-semibold has-text-grey" datetime="2018-11-03T13:57:07.000Z">2018-11-03</time></section></li></ul></main><main class="aside-card-container categories-widget category-page"><h3>Categories</h3><section><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Cocoa/">Cocoa</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/iOS/">iOS</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%93%E4%B8%9A/">专业</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B9%A6%E8%AF%84/">书评</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BD%B1%E8%AF%84/">影评</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B1%87%E7%BC%96/">汇编</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%8B%B1%E8%AF%AD/">英语</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%97%B2%E8%A8%80%E7%A2%8E%E8%AF%AD/">闲言碎语</a><span class="category-list-count">14</span></li></ul></section></main><main class="aside-card-container archives-widget"><h3>Archives</h3><section><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">May 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">April 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">March 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">February 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">January 2015</a><span class="archive-list-count">3</span></li></ul></section></main><main class="aside-card-container tag-widget"><h3>Tags</h3><section><a href="/tags/RunLoop"><span class="tag post-item-tag" style="margin-bottom: 5px;">RunLoop</span></a><a href="/tags/JS"><span class="tag post-item-tag" style="margin-bottom: 5px;">JS</span></a><a href="/tags/JavaSctript"><span class="tag post-item-tag" style="margin-bottom: 5px;">JavaSctript</span></a><a href="/tags/KVO"><span class="tag post-item-tag" style="margin-bottom: 5px;">KVO</span></a><a href="/tags/OSX"><span class="tag post-item-tag" style="margin-bottom: 5px;">OSX</span></a><a href="/tags/Category"><span class="tag post-item-tag" style="margin-bottom: 5px;">Category</span></a><a href="/tags/Objective-C"><span class="tag post-item-tag" style="margin-bottom: 5px;">Objective-C</span></a><a href="/tags/Coffee"><span class="tag post-item-tag" style="margin-bottom: 5px;">Coffee</span></a><a href="/tags/%E4%B8%89%E4%BD%93"><span class="tag post-item-tag" style="margin-bottom: 5px;">三体</span></a><a href="/tags/Cocoa"><span class="tag post-item-tag" style="margin-bottom: 5px;">Cocoa</span></a><a href="/tags/%E7%88%B1"><span class="tag post-item-tag" style="margin-bottom: 5px;">爱</span></a><a href="/tags/PlistBuddy"><span class="tag post-item-tag" style="margin-bottom: 5px;">PlistBuddy</span></a><a href="/tags/%E8%8B%B1%E8%AF%AD"><span class="tag post-item-tag" style="margin-bottom: 5px;">英语</span></a><a href="/tags/OpenCV"><span class="tag post-item-tag" style="margin-bottom: 5px;">OpenCV</span></a><a href="/tags/ARC"><span class="tag post-item-tag" style="margin-bottom: 5px;">ARC</span></a><a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0"><span class="tag post-item-tag" style="margin-bottom: 5px;">读书笔记</span></a><a href="/tags/Swift"><span class="tag post-item-tag" style="margin-bottom: 5px;">Swift</span></a><a href="/tags/Runtime"><span class="tag post-item-tag" style="margin-bottom: 5px;">Runtime</span></a><a href="/tags/%E4%BA%BA%E7%B1%BB%E7%AE%80%E5%8F%B2"><span class="tag post-item-tag" style="margin-bottom: 5px;">人类简史</span></a><a href="/tags/GCD"><span class="tag post-item-tag" style="margin-bottom: 5px;">GCD</span></a><a href="/tags/%E4%BA%BA%E7%89%A9%E4%BC%A0%E8%AE%B0"><span class="tag post-item-tag" style="margin-bottom: 5px;">人物传记</span></a></section></main></aside></div></article><script>$claudia.fadeInImage(null, $claudia.blurBackdropImg)
-
-window.addEventListener('resize', $claudia.throttle(function () {
-    var images = document.querySelectorAll('.js-img-fadeIn')
-
-    images.forEach($claudia.blurBackdropImg)
-}, 150))</script></main><footer class="is-flex is-flex-direction-column is-align-items-center is-flex-shrink-0 is-family-serif"><section class="sns-container"><!-- Github--><a title="github" target="_blank" rel="noopener nofollow" href="//github.com/industriousonesoft"><i class="iconfont icon-github"></i></a><!-- Ins--><!-- RSS--><!-- 知乎--><!-- 领英--><!-- 脸书--></section><p><span>Copyright ©</span><span> MarkCao 2022</span></p><div class="is-flex is-justify-content-center is-flex-wrap-wrap"><p>Powered by Hexo &verbar;&nbsp;</p><p class="is-flex is-justify-content-center"><a title="Hexo theme author" target="_blank" rel="noopener" href="//github.com/haojen">Theme by Haojen&nbsp;</a></p><div style="margin-top: 2px"><a class="github-button" title="github-button" target="_blank" rel="noopener" href="https://github.com/haojen/hexo-theme-Claudia" data-color-scheme="no-preference: light; light: light; dark: dark;" data-show-count="true"></a></div></div><div><span>There is only one true heroism in the world, to see the world as it is, and to love it.</span></div></footer><script async defer src="https://buttons.github.io/buttons.js"></script><script>$claudia.fadeInImage(null, $claudia.blurBackdropImg)
-
-window.addEventListener('resize', $claudia.throttle(function () {
-    var images = document.querySelectorAll('.js-img-fadeIn')
-
-    images.forEach($claudia.blurBackdropImg)
-}, 150))</script></body></html>
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="Type something..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"Type something...","untitled":"(Untitled)","posts":"Posts","pages":"Pages","categories":"Categories","tags":"Tags"});
+        });</script></body></html>
