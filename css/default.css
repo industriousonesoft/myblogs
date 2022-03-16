@@ -5214,33 +5214,33 @@ fieldset[disabled] .button {
 }
 .container.is-fluid {
   max-width: none;
-  padding-left: 64px;
-  padding-right: 64px;
+  padding-left: 40px;
+  padding-right: 40px;
   width: 100%;
 }
 @media screen and (min-width: 1088px) {
   .container {
-    max-width: 960px;
+    max-width: 1008px;
   }
 }
 @media screen and (max-width: 1279px) {
   .container.is-widescreen {
-    max-width: 1152px;
+    max-width: 1200px;
   }
 }
 @media screen and (max-width: 1471px) {
   .container.is-fullhd {
-    max-width: 1344px;
+    max-width: 1392px;
   }
 }
 @media screen and (min-width: 1280px) {
   .container {
-    max-width: 1152px;
+    max-width: 1200px;
   }
 }
 @media screen and (min-width: 1472px) {
   .container {
-    max-width: 1344px;
+    max-width: 1392px;
   }
 }
 .content li + li {
@@ -10937,6 +10937,9 @@ a.article-nav-next span {
 .navbar-main {
   box-shadow: 0 4px 10px rgba(0,0,0,0.05);
 }
+.navbar-main .navbar-container {
+  overflow-x: auto;
+}
 .navbar-main .navbar-menu,
 .navbar-main .navbar-start,
 .navbar-main .navbar-end {
@@ -10981,6 +10984,12 @@ a.article-nav-next span {
 }
 .navbar-logo img {
   max-height: 1.75rem;
+}
+@media screen and (min-width: 1088px) {
+  .navbar > .container .navbar-menu,
+  .container > .navbar .navbar-menu {
+    margin-right: 0rem;
+  }
 }
 @media screen and (max-width: 768px) {
   footer.footer .level-start {
@@ -11626,20 +11635,28 @@ figure.highlight .section {
   background-color: #276cda;
 }
 @media screen and (min-width: 1280px) {
+  .is-3-column .container {
+    max-width: 1240px;
+    width: 1240px;
+  }
   .is-1-column .container,
   .is-2-column .container {
-    max-width: 960px;
-    width: 960px;
+    max-width: 1048px;
+    width: 1048px;
   }
 }
 @media screen and (min-width: 1472px) {
+  .is-3-column .container {
+    max-width: 1432px;
+    width: 1432px;
+  }
   .is-2-column .container {
-    max-width: 1152px;
-    width: 1152px;
+    max-width: 1240px;
+    width: 1240px;
   }
   .is-1-column .container {
-    max-width: 960px;
-    width: 960px;
+    max-width: 1048px;
+    width: 1048px;
   }
 }
 @media screen and (min-width: 769px), print {
