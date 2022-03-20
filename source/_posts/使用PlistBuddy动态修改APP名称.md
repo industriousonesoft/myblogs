@@ -3,13 +3,16 @@ date: 2016-10-15 12:16:07
 tags: 
 - PlistBuddy
 categories: 
-- 专业
+- 编程
+- Xcode
 keywords: PlistBuddy
 decription: 使用PlistBuddy动态修改APP名称
 
 ---
 
 当一个工程里面包含多个target且每个target都有本地化的名称，一般做法是为每个target配备一个InfoList.strings文件。随着target数量和支持的语种增多，InfoList.strings文件数量也增加，更改和管理target名称也会变得复杂。
+
+<!-- more -->
 
 我们可以在工程里面只保留一个InfoList.strings文件用于显示当前编译的target本地化名称，并且将所有target的本地化名称用一个plist文件统一管理，然后使用shell脚本和PlistBuddy命令在编译阶段动态修改target名称。以下是具体实现：
 

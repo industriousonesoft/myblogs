@@ -3,13 +3,17 @@ date: 2016-10-15 12:16:07
 tags: 
 - Objective-C
 categories: 
-- 专业
-keywords: 布尔类型
+- 编程
+- Objective-C
+keywords: 
+- bool
 decription: 关于Objective-C中布尔类型的知识总结
 
 ---
  
  Objective-C中的BOOL类型在iWatch和64位iOS上的原始类型为bool，而在其它情况下是signed char。
+
+<!-- more -->
  
 用@encode去看看BOOL的类型串：
 

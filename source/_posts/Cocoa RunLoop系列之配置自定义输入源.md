@@ -3,15 +3,21 @@ date: 2015-01-10 11:14:32
 tags:
 - RunLoop
 categories:
+- 编程
 - Cocoa
 keywords: RunLoop
 decription: 配置自定义输入源
 
 ---
 
-在上一篇博客[Cocoa RunLoop 系列之基础知识](http://icebergcwp.com/2015/01/05/Cocoa%20RunLoop%20%E7%B3%BB%E5%88%97%E4%B9%8B%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/)介绍了RunLoop的InpuSource有两种：一种是基于Mach端口且由内核触发的source1，另外一种就是自定义且需要手动触发的source0。
+在上一篇博客[Cocoa RunLoop 系列之基础知识](http://icebergcwp.com/2015/01/05/Cocoa%20RunLoop%20%E7%B3%BB%E5%88%97%E4%B9%8B%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/)介绍了RunLoop的InpuSource有两种，分别是：
+
+- 是基于Mach端口且由内核触发的source1
+- 自定义且需要手动触发的source0。
 
 其中source0包括两种自定义形式：一种是Apple实现的自定义InputSource，提供了一系列接口，直接调用即可；另外一种就是由用户根据开发需要完全自定义实现。本文要介绍的就是后者。
+
+<!-- more -->
 
 自定义InputSource在实际开发过程的中，可用于在子线程实现周期性且长时间的任务，通过自定义InputSource控制任务的执行。
 
@@ -303,7 +309,7 @@ IBRunLoopInputSourceThread类用于配置RunLoop和InputSource。
 ```
 
 添加指令和发送通知
- 
+
  ``` objc
  
 	 - (void)addCommand:(NSInteger)command withData:(id)data

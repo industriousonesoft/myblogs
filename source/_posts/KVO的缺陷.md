@@ -3,15 +3,16 @@ date: 2015-05-10 23:50:07
 tags: 
 - KVO
 categories: 
+- 编程
 - Cocoa
 keywords: 
-- Category
 - KVO
 decription: 翻译大神Mike Ash关于KVO缺陷的一篇博客
-
 ---
 
 > 最近在学习和研究Cocoa库的KVO特性，期间发现大神Mike Ash的一篇关于讲述KVO缺陷的博客，觉得很有学习价值，遂想试着翻译以加深理解。
+
+<!-- more -->
 
 [原文地址](https://www.mikeash.com/pyblog/key-value-observing-done-right.html)
 

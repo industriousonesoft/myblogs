@@ -1,10 +1,10 @@
-title: OSX开发之Safari App Extension初探
+title: macOSX开发之Safari App Extension初探
 date: 2018-08-06 23:04:07
 tags: 
-- OSX
+- macOSX
 categories: 
-- 专业
-- OSX
+- 编程
+- macOSX
 keywords: 
 - Safari
 - Extension
@@ -16,6 +16,8 @@ keywords:
 ##### 什么是Safari App Extension
 	
 Safari App Extension，即Safari浏览器应用拓展。它是苹果新推出的一种Safari扩展开发技术，最低支持Safari10.0，主要由三个部分组成分别是：
+
+<!-- more -->
 	
 - Safari App Axtension: 扩展app本身，使用JS、CSS等前端脚本语言。主要功能是包括两方面：
 	1. 在插件运行之前注入js和css代码到当前的Safari浏览器页面，进而实现对页面的增删改查等功能

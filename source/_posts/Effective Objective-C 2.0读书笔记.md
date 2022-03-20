@@ -1,15 +1,18 @@
-title: Effective Objective-C 2.0读书笔记
+title: Effective Objective-C 2.0 学习笔记
 date: 2017-10-07 23:06:07
 tags: 
 - Objective-C
-- 读书笔记
 categories: 
-- iOS
+- 编程
+- Objective-C
 keywords: 
 - Objective-C
 description: 读书笔记
-
 ---
+
+这篇文章是在阅读《Effective Objective_C》一书时的学习笔记，这本书对Objective-C语言的特性进行有深入浅出的分析和讲解，让我受益匪浅。
+
+<!-- more -->
 
 ### 第1章 熟悉Objective-C
 
@@ -158,7 +161,7 @@ NSString *const ECOStringConstant = @"VALUE";
 	* new
 	* copy
 	* mutableCopy
-否则，返回对象会自动释放，即相当于执行autorelease操作.
+	否则，返回对象会自动释放，即相当于执行autorelease操作.
 * 在编译期和运行期，ARC都把能够相互抵消的retain、release、autorelease操作约简。
 * 运行期，为了优化代码，在方法返回自动释放的对象时，调用objc_autoreleaseReturnValue,此函数会检视当前函数调用的代码是否需要对返回对象执行retain操作，如果是则设置一个全局标志位。而不执行autorelease操作；与只对应的是在调用代码如果要保留对象，则不执行retain操作，而是调用objc_retainAutoreleasedRetuenValue.此函数检测之前设置的全局标志位，如果已经置位，则不执行retain操作。
 * ARC环境优化方式具体实现由编译器决定，比如将全局标志位存储在STL(Thread Local Storage:线程局部存储，以key-value的形式读写)中，STL只适用于调用和被调用方都是ARC模式的情况，使用__builtin_return_address可以在被调用函数中获得调用函数的栈空间，进而可以推算出调用方后续操作是否调用了objc_retainAutoreleasedReturnValue，如果调用则是ARC环境，反之使用没优化的老逻辑。
@@ -408,7 +411,7 @@ _syncQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
 * 无法再编译器设定的全局变量，可以放在+initilize方法中初始化。  
 
 #### 第52条 别忘了NSTimer会保留其目标对象
-     
+
 * NSTimer对象会保留其目标，知道计时器调用invalidate方法后失效为止。另外，一次性的计数器在触发任务后就会立即失效。
 * 反复执行任务的计时器，很容易引入保留环，可通过扩充NSTimer功能，用块来打破保留环。代码如下：
 
@@ -433,7 +436,7 @@ _syncQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
 }
 
 @end
-```                    
+```
 这个方法仍然存在保留环，计时器现在的target是NSTimer类对象，但是因为类对象无需回收，所以不用担心。
 
 * 上述方法本身不能解决问题，但是提供了解决问题的工具。使用分类中的eoc_scheduledTimerWithTimeInterval来创建计时器：

@@ -1,10 +1,10 @@
 title: JavaScript的this关键字
 date: 2017-06-07 23:33:07
 tags: 
-- JavaSctript
+- JS
 categories: 
-- 专业
-- 翻译
+- 编程
+- JS
 keywords: 
 - this
 description: JavaScript的this关键字详解
@@ -16,6 +16,8 @@ description: JavaScript的this关键字详解
 JavaScript中一个常用的语法特征就是this关键字，同时这也是JavaScript最容易被误解和造成困惑的特征。this关键字的含义是什么且决定其含义的依据是什么？
 
 这篇文章试着解开这个的疑惑并给出一个简单清晰的解释。
+
+<!-- more -->
 
 对于有其他语言编程经验的人来说应该也使用过this关键字，且多数情况下this指向的是一个通过构造函数创建的新对象。举例来说，假设有一个Boat类，里面包含一个成员方法moveBoat()，我们可以在moveBoat()方法中通过this关键字访问当前的对象实例。
 

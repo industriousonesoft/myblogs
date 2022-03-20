@@ -3,7 +3,7 @@ date: 2015-02-25 23:45:07
 tags: 
 - ARC
 categories: 
-- iOS
+- 编程
 - Objective-C
 
 keywords: ARC
@@ -14,6 +14,8 @@ decription: 关于揭秘ARC内部实现的译文
 [原文地址](http://www.galloway.me.uk/2012/02/a-look-under-arcs-hood-episode-3/)
 
 “揭开ARC的神秘面纱系列”的这篇续集全都是关于@autoreleasepool这一新指令的。[LLVM提及到](http://clang.llvm.org/docs/AutomaticReferenceCounting.html#autoreleasepool)autorelease pools（自动释放池）的语义已经在LLVM3.0版本中发生变化，尤其是，我觉得探究ARC模式更新之后是如何实现的会很有意思。
+
+<!-- more -->
 
 因此，思考一下下面的函数：
 

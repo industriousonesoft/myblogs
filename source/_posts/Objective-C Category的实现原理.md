@@ -3,14 +3,17 @@ date: 2015-03-25 10:48:07
 tags: 
 - Category
 categories: 
-- 专业
-keywords: Category
+- 编程
+- Objective-C
+keywords: 
+- Category
 decription: 关于揭秘Objective-C Category内部实现原理的探索
 
 ---
 
-
 Objective-C Category（分类）之于我而言有种神秘感，虽然自己已经在实际开发过程中已经多次使用它，且感受到了它带来的便利与高效。但是我却仅仅是停留在对它的基本使用层面，除此之外一无所知。我能感觉它的强大，心中也一直有种对它内部实现一探究竟的冲动，奈何迟迟没有行动。时间愈久，这种情绪愈发浓烈，今天终究是按耐不住了...
+
+<!-- more -->
 
 ### 知其然
  

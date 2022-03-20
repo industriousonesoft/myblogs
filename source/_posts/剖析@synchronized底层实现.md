@@ -3,14 +3,17 @@ date: 2017-06-11 22:28:07
 tags: 
 - Objective-C
 categories: 
-- iOS
+- 编程
 - Objective-C
-keywords: synchronizd
+keywords: 
+- synchronizd
 decription: 剖析@synchronizd底层实现原理
 
 ---
 
 @synchronizd是Objective-C中的一个语法糖，用于给某个对象加锁，因为使用起来简单方便，所以使用频率很高。然而，滥用@synchronizd很容易导致代码效率低下。本篇博客旨在结合@synchronizd底层实现源码并剖析其实现原理，这样可以更好的让我们在适合的情景使用@synchronizd。
+
+<!-- more -->
 
 @synchronizd本质上是一个编译器标识符，在Objective-C层面看不其任何信息。因此可以通过clang -rewrite-objc指令来获得@synchronizd的C++实现代码。示例代码如下：
 

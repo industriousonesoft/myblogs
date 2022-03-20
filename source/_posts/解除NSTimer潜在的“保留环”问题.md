@@ -1,8 +1,9 @@
 title: 解除NSTimer潜在的“保留环”问题
 date: 2017-2-12 22:28:07
 tags: 
-- Objective-C
+- Cocoa
 categories: 
+- 编程
 - Cocoa
 keywords:  NSTimer
 decription:  解除NSTimer潜在的“保留环”问题
@@ -10,6 +11,8 @@ decription:  解除NSTimer潜在的“保留环”问题
 ---
 
 NSTimer是Foundation框架中的一个使用频率很高的类，然而其调用过程中很容易引入潜在的“保留环“问题。可能是因为NSTimer的提供的API足够便利与顺手，以至于这个问题不容易被察觉到。这篇博客旨在阐述这个问题并提供解决方法。
+
+<!-- more -->
 
 以下的NSTimer提供的三个常用的创建或者初始化的API：
 

@@ -3,13 +3,17 @@ date: 2015-01-01 22:46:07
 tags: 
 - Runtime
 categories: 
-- 专业
-keywords: Runtime
+- 编程
+- Objective-C
+keywords: 
+- Runtime
 decription: 关于Objective-C Runtime的译文
 
 ---
 
 这是一篇译文，作为一个英语水平处于半吊子的理科男，因此一定存在不尽原意的地方，翻译此文纯属个人喜好，希望能得到大家的指点和反馈，读者如有兴趣的话可以[查看原文](http://cocoasamurai.blogspot.jp/2010/01/understanding-objective-c-runtime.html)。
+
+<!-- more -->
 
 **以下是正文：**
 

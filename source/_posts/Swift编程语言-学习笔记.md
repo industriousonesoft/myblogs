@@ -3,12 +3,17 @@ date: 2018-6-1 7:00:07
 tags:
 - Swift
 categories:
-- iOS
+- 编程
+- Swift
 keywords:
 - swift
 description: 摘录在Swift学习过程中的一些重要知识点与疑问，以及记录个人的心得领悟
 
 ---
+
+这篇文章是在阅读《swift编程语言中文版》一书时的部分学习笔记，这本书对Swift语言进行详解而全面的讲解，是Swift入门的不二之选。
+
+<!-- more -->
 
 #### 2.9 类和结构体
 
@@ -85,17 +90,30 @@ swift中同样存在指针，比如引用类型，但是其声明方式同值类
 	//结构体类型
 	struct SomeStructure {
 		//static关键字
-		//存储型		static var storedTypeProperty = "Some value."
-		//计算型		static var computedTypeProperty: Int {				//return a int value 
-		}	}
-	//枚举类型	enum SomeEnumeration {
-		//存储型		static var storedTypeProperty = "Some value."
+		//存储型
+		static var storedTypeProperty = "Some value."
 		//计算型
-		static var computedTypeProperty: Int {				//return a int value 		}
+		static var computedTypeProperty: Int {
+				//return a int value 
+		}
 	}
-	//类类型	class SomeClass {
+	//枚举类型
+	enum SomeEnumeration {
+		//存储型
+		static var storedTypeProperty = "Some value."
+		//计算型
+		static var computedTypeProperty: Int {
+				//return a int value 
+		}
+	}
+	//类类型
+	class SomeClass {
 		//class关键字
-		//只能定义计算型属性		class var computedTypeProperty: Int {				//return a int value 		}	}
+		//只能定义计算型属性
+		class var computedTypeProperty: Int {
+				//return a int value 
+		}
+	}
 ```
 #### 2.11 方法
 
@@ -218,8 +236,22 @@ unowned + 隐式展开可选项：对象AB属于一对一关系，且A对象是B
 
 ```objc
 //Country与City属于一对一关系，且City的初始化依赖于Country
-1. class Country {2. 		let name: String3. 		let capitalCity: City! //隐式展开可选项4. 		init(name: String, capitalName: String) {5. 			self.name = name6. 			self.capitalCity = City(name: capitalName, country: self) 7. 		}8. }9.10.class City {11. 	let name: String12. 	unowned let country: Country //unowned指针13. 	init(name: String, country: Country) {14. 		self.name = name15. 		self.country = country 
-16. 	}17. }
+1. class Country {
+2. 		let name: String
+3. 		let capitalCity: City! //隐式展开可选项
+4. 		init(name: String, capitalName: String) {
+5. 			self.name = name
+6. 			self.capitalCity = City(name: capitalName, country: self) 7. 		}
+8. }
+9.
+10.class City {
+11. 	let name: String
+12. 	unowned let country: Country //unowned指针
+13. 	init(name: String, country: Country) {
+14. 		self.name = name
+15. 		self.country = country 
+16. 	}
+17. }
 ```
 
 **闭包产生的循环引用**

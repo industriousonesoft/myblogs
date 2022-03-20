@@ -3,7 +3,8 @@ date: 2015-02-05 23:16:07
 tags: 
 - ARC
 categories: 
-- iOS
+- 编程
+- Objective-C
 
 keywords: ARC
 decription: 关于揭秘ARC内部实现的译文
@@ -16,6 +17,8 @@ decription: 关于揭秘ARC内部实现的译文
 以下是正文：
 
 在Twitter上和[@jacobrelkin](https://twitter.com/jacobrelkin)进行了一次[交流](https://twitter.com/mattjgalloway/status/154478264537194496)之后，我决定写几篇博客关于ARC在神秘的面纱之下是如何运转和如何窥视其内部机制的方法。这篇博客我将解释ARC如何处理retain、release和autorelease这三个关键字对应的内部实现。
+
+<!-- more -->
 
 我们通过定义一个类作为开始，如下：
 

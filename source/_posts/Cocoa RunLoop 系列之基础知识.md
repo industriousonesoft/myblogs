@@ -3,13 +3,15 @@ date: 2015-01-05 10:10:07
 tags:
 - RunLoop
 categories:
+- 编程
 - Cocoa
 keywords: RunLoop
 decription: 探索RunLoop的实现原理
-
 ---
 
 这篇博客主要结合Apple开发者文档和个人的理解，写的一篇关于Cocoa RunLoop基本知识点的文章。在文档的基础上，概况和梳理了RunLoop相关的知识点。
+
+<!-- more -->
 
 ### 一、Event Loop & Cocoa RunLoop
 
@@ -80,14 +82,14 @@ Input Sources通过异步派发的方式将事件转送到目标线程，事件�
  
  ```
  综上，Input Sources包括基于Mach端口的事件源和自定义的事件源，二者的唯一区别在于被触发的方式：前者是由内核自动触发，后者则需要在其他线程中手动触发。
- 
+
 ##### 1.2. Timer Sources 
- 
+
  不同于Input Sources的异步派发，Timer Source是通过同步派发的方式，在预设时间到达时将事件转送到目标线程。这种事件源可用于线程的自我提醒功能，实现周期性的任务。
- 
+
  * 如果RunLoop当前运行模式没有添加Time Sources，则在RunLoop中部署的定时器不会被执行。
  * 设定的间隔时间与真实的触发时间之间没有必然联系，定时器会根据设定的间隔时间周期性的派发消息到RunLoop，但是真实的触发时间由RunLoop决定，假设RunLoop当前正在处理其一个长时间的任务，则触发时间会被延迟，如果在最终触发之前Timer已经派发了N个消息，RunLoop也只会当做一次派发对待，触发一次对应的处理函数。
- 
+
 #### 2. 运行模式
 
 运行模式类似于一个过滤器，用于屏蔽那些不关心的事件源，让RunLoop专注于监听和处理指定的事件源和RunLoop Observer。
@@ -124,7 +126,7 @@ CFRunLoopMode 和 CFRunLoop 的数据结构大致如下：
 * CFRunLoop结构中的commonModeItems则是共用源的集合，包括事件源和执行反馈。这些共用源会被自动添加到具有“common”属性的Mode中。
 
 ** Note ** : 不同的运行模式区别在于事件源的不同，比如来源于不同端口的事件和端口事件与Timer事件。不能用于区分不同的事件类型，比如鼠标消息事件和键盘消息事件，因为这两种事件都属于基于端口的事件源。
- 
+
 以下是苹果预定义好的一些运行模式：
 	
 * NSDefaultRunLoopMode //默认的运行模式，适用于大部分情况

@@ -3,15 +3,18 @@ date: 2016-08-08 22:25:07
 tags:
 - GCD
 categories:
-- iOS
+- 编程
 - Objective-C
-keywords: dispatch_once
+keywords: 
+- dispatch_once
 comments: true
 decription: 一篇剖析dispatch_once实现原理的译文
 
 ---
 
 这是一篇译文，原文[Secrets of dispatch](https://www.mikeash.com/pyblog/friday-qa-2014-06-06-secrets-of-dispatch_once.html)的作者是Mike Ash大神。在拜读这篇文章之后，颇有收获，不得不感叹Mike Ash专业知识的深度与广度。因此，我想试着进行翻译以加深理解。
+
+<!-- more -->
 
 **以下是原文**
 

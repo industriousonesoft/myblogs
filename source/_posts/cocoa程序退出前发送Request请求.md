@@ -3,16 +3,16 @@ date: 2017-05-05 17:06:07
 tags: 
 - Cocoa
 categories: 
-- iOS
+- 编程
 - Cocoa
-keywords: HttpRequest
 decription: Cocoa程序退出前发送HttpRequest请求
-
 ---
 
 最近在视频投送项目中遇到一个奇葩问题，花费了一整天时间才得以解决。这个问题比较隐晦，值得记录一下。
 
 根据功能需要，需要在cocoa程序退出前，发送一个关闭设备的指令，本质上就是post一个Http请求，用于中止当前出于投送状态的设备。
+
+<!-- more -->
 
 具体代码如下：
 
