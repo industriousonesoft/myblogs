@@ -89,7 +89,7 @@ f(expr);  // expr表示调用时传入的实参
             ```cpp
             // 以编译器常量形式返回数组的大小
             template<typename T, std::size_t N>
-            constexpr std::size_t array_t arraySize(T (&)[]) noexcept {
+            constexpr std::size_t array_t arraySize(T (&)[N]) noexcept {
             	return N;  // 返回数组大小
             }
             
