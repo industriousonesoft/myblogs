@@ -1,12 +1,12 @@
 title: 在一台电脑搭建多个不同的hexo+github博客
 date: 2018-02-03 21:55:07
 tags: 
-- hexo
-- github
+- Hexo
 categories: 
 - 编程
-- hexo
-keywords: hexo
+- Hexo
+keywords: 
+- Hexo
 decription: 在一台电脑搭建多个不同的hexo+github博客
 
 ---
