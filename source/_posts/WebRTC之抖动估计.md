@@ -12,25 +12,27 @@ keywords:
 
 ---
 
-### 延时和抖动
+### 时延和抖动
 
-抖动和延时是两个不同但又相互关联的概念。延时是网路中的一个重要指标，用于衡量数据包从一个端点传输到另外一个端点的时间。在网路上连续传输的数据包即便使用相同的路径也会产生不同的延时。一般而言，数据包在发送时的时间间隔是相等的，但是抵达接收端时的时间间隔很可能不再相等。
+时延和抖动是两个不同但又相互关联的概念。时延是网络通信中的一个重要指标，用于衡量数据包从一个端点传送到另外一个端点所需的时间。在网络通信中，连续发送的数据包即便使用相同的路径也会产生不同的时延。一般而言，数据包在发送时的时间间隔是相等的，但是抵达接收端时的时间间隔很可能是不相等的。
 
-抖动就是指数据包之间的传输延时的不一致，换言之，抖动用于衡量数据包传输延时的变化程度。抖动产生的原因有很多，比如网路拥塞，网路错误，丢包等。
+抖动就是用于表示数据包之间传输时延的不一致性，即用来衡量数据包传输时延的变化程度。
+
+导致抖动产生的原因有很多，比如网路拥塞，网路错误，丢包等。
 
 <!-- more -->
 
 ### 抖动缓冲区
 
-抖动的出现会影响用户体验，比如抖动会使帧率变低，进而导致视频播放卡顿。因此，一般都会在接收端引入抖动缓冲区，用于收集并处理数据包，然后再把数据包以均匀的间隔分配给后续操作。
+抖动的幅度过大和过于频繁会影响用户体验，比如抖动会使接收端接受到的帧率变低，进而导致后续的解码和播放出现卡顿。因此，常用的作法是在接收端引入抖动缓冲区，用于缓存并处理一段时间内的数据包，然后再把累积的数据包以均匀的间隔传送给后续操作。
 
-使用抖动缓冲区的一个问题在于会增加播放延时。所谓播放延时是指数据包抵达接收端的时间到播放时间之间的延时。播放延时过长也会影响用户体验，因此抖动缓冲区采用的设计和策略非常重要。WebRTC中分别使用NetEQ和JitterBuffer处理音频和视频的抖动，以消减抖动造成的影响，尽可能地降低播放延时。
+使用抖动缓冲区会引入一个新的问题，即增加播放时延。所谓播放时延是指数据包抵达接收端的时间到最终播放之间的时延。播放时延过长会影响用户体验，因此，抖动缓冲区设计和采用的缓存策略很重要。在WebRTC中，分别使用NetEQ和JitterBuffer处理音频和视频的抖动，以消减抖动造成的影响，尽可能地降低播放时延。
 
 ### 抖动估计
 
 *RFC3550* 中给出的计算公式：
 
-首先，使用$S_i,R_i$分别表示第$i$个数据包发送和接收的时间，使用$S_i,R_i$分别表示第$j$个数据包发送和接收的时间，那么这两个数据包传输延时的差异值为：
+首先，使用$S_i,R_i$分别表示第$i$个数据包发送和接收的时间，使用$S_i,R_i$分别表示第$j$个数据包发送和接收的时间，那么这两个数据包传输时延时延的差异值为：
 
 <div>
 $$
@@ -62,7 +64,7 @@ $$
     
     本文介绍的是用作统计参数的抖动估计算法。由于这个抖动估计值只是作为统计参数以提供感观参考，所以使用的估计算法相对比较简单：使用一次指数平滑过滤噪音。
     
-    ![statistics_jitter](/imgs/webrtc/statistics_jitter.png)
+    <div align="center"><img src="/imgs/webrtc/statistics_jitter.png"></div>
     
     这个抖动估计值对应于RTCP Report block包的interarrival jitter字段：
     
@@ -100,7 +102,7 @@ WebRTC中统计参数jitter的估算代码位于文件/src/modules/rtp_rtcp/sour
       incoming_bitrate_.Update(packet.size(), now_ms);
       // 最近一个RTP包的抵达时间
       receive_counters_.last_packet_received_timestamp_ms = now_ms;
-    	// 统计所有接收到的RTP包，包括重发包
+      // 统计所有接收到的RTP包，包括重发包
       receive_counters_.transmitted.AddPacket(packet);
       --cumulative_loss_;
     
@@ -149,24 +151,24 @@ WebRTC中统计参数jitter的估算代码位于文件/src/modules/rtp_rtcp/sour
     ```cpp
     void StreamStatisticianImpl::UpdateJitter(const RtpPacketReceived& packet,
                                               int64_t receive_time_ms) {
-      // 接收端延时，单位为毫秒
+      // 接收端时延，单位为毫秒
       int64_t receive_diff_ms = receive_time_ms - last_receive_time_ms_;
       RTC_DCHECK_GE(receive_diff_ms, 0);
-    	// 计算接收端延时，并将单位转换成采样时间戳单位
+    	// 计算接收端时延，并将单位转换成采样时间戳单位
       uint32_t receive_diff_rtp = static_cast<uint32_t>(
           (receive_diff_ms * packet.payload_type_frequency()) / 1000);
-    	// 计算发送端延时，此处未考虑时间回绕问题，我认为原因有两个：
+    	// 计算发送端时延，此处未考虑时间回绕问题，我认为原因有两个：
     	// 1、简化计算，毕竟只是一个统计参数
     	// 2、出现时间回绕时，|send_diff_rtp|会是一个负数，使用uint32_t表示则会是极大值。
     	//    导致接下来计算的|time_diff_samples|也会是极大值，在更新时被视为突发数据而被过滤掉。
     	uint32_t send_diff_rtp = packet.Timestamp() - last_received_timestamp_;
-      // 计算接收延时与发送延时的差值，单位为采样时间戳
+      // 计算接收时延与发送时延的差值，单位为采样时间戳
       int32_t time_diff_samples = receive_diff_rtp - send_diff_rtp;
     
-      // 延时差值取绝对值以方便计算
+      // 取时延差值的绝对值以方便计算
       time_diff_samples = std::abs(time_diff_samples);
     
-      // 过滤因为突发数据导致的剧烈抖动，对应的延时差值为5秒
+      // 过滤因为突发数据导致的剧烈抖动，对应的时延差值为5秒
       // lib_jingle sometimes deliver crazy jumps in TS for the same stream.
       // If this happens, don't update jitter value. Use 5 secs video frequency
       // as the threshold.
