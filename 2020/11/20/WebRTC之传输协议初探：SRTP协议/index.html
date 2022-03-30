@@ -1,0 +1,369 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>WebRTC之传输协议初探：SRTP协议 - MarkCao</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="MarkCao&#039;s blog"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="MarkCao&#039;s blog"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="简述SRTP协议，全称Secure Real-time Transport Protocol。顾名思义，SRTP就是在RTP协议的基础上提供了安全保障，主要包括数据加密、消息认证和重放保护。 SRTP提供了一套框架用于加密和认证RTP和RTCP数据流，且内置一系列预定义的加密套件。当然也可以使用自定义加密套件。 SRTP协议建立于在RTP协议之上，在RTP&amp;#x2F;RTCP包的基础上通过增加额外的空间和计"><meta property="og:type" content="blog"><meta property="og:title" content="WebRTC之传输协议初探：SRTP协议"><meta property="og:url" content="http://naivertc.top/2020/11/20/WebRTC%E4%B9%8B%E4%BC%A0%E8%BE%93%E5%8D%8F%E8%AE%AE%E5%88%9D%E6%8E%A2%EF%BC%9ASRTP%E5%8D%8F%E8%AE%AE/"><meta property="og:site_name" content="MarkCao"><meta property="og:description" content="简述SRTP协议，全称Secure Real-time Transport Protocol。顾名思义，SRTP就是在RTP协议的基础上提供了安全保障，主要包括数据加密、消息认证和重放保护。 SRTP提供了一套框架用于加密和认证RTP和RTCP数据流，且内置一系列预定义的加密套件。当然也可以使用自定义加密套件。 SRTP协议建立于在RTP协议之上，在RTP&amp;#x2F;RTCP包的基础上通过增加额外的空间和计"><meta property="og:locale" content="en_US"><meta property="og:image" content="http://naivertc.top/img/og_image.png"><meta property="article:published_time" content="2020-11-20T15:10:07.000Z"><meta property="article:modified_time" content="2022-03-30T12:18:32.220Z"><meta property="article:author" content="Mark Cao"><meta property="article:tag" content="传输协议"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://naivertc.top/2020/11/20/WebRTC%E4%B9%8B%E4%BC%A0%E8%BE%93%E5%8D%8F%E8%AE%AE%E5%88%9D%E6%8E%A2%EF%BC%9ASRTP%E5%8D%8F%E8%AE%AE/"},"headline":"WebRTC之传输协议初探：SRTP协议","image":["http://naivertc.top/img/og_image.png"],"datePublished":"2020-11-20T15:10:07.000Z","dateModified":"2022-03-30T12:18:32.220Z","author":{"@type":"Person","name":"Mark Cao"},"publisher":{"@type":"Organization","name":"MarkCao","logo":{"@type":"ImageObject","url":"http://naivertc.top/img/logo.svg"}},"description":"简述SRTP协议，全称Secure Real-time Transport Protocol。顾名思义，SRTP就是在RTP协议的基础上提供了安全保障，主要包括数据加密、消息认证和重放保护。 SRTP提供了一套框架用于加密和认证RTP和RTCP数据流，且内置一系列预定义的加密套件。当然也可以使用自定义加密套件。 SRTP协议建立于在RTP协议之上，在RTP&#x2F;RTCP包的基础上通过增加额外的空间和计"}</script><link rel="canonical" href="http://naivertc.top/2020/11/20/WebRTC%E4%B9%8B%E4%BC%A0%E8%BE%93%E5%8D%8F%E8%AE%AE%E5%88%9D%E6%8E%A2%EF%BC%9ASRTP%E5%8D%8F%E8%AE%AE/"><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+          Array
+              .from(document.querySelectorAll('.tab-content'))
+              .forEach($tab => {
+                  $tab.classList.add('is-hidden');
+              });
+          Array
+              .from(document.querySelectorAll('.tabs li'))
+              .forEach($tab => {
+                  $tab.classList.remove('is-active');
+              });
+          const $activeTab = document.querySelector(location.hash);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+          const $tabMenu = document.querySelector(`a[href="${location.hash}"]`);
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.1.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style><link rel="alternate" href="/atom.xml" title="MarkCao" type="application/atom+xml">
+</head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.svg" alt="MarkCao" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item search" title="Search" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2020-11-20T15:10:07.000Z" title="11/20/2020, 11:10:07 PM">2020-11-20</time></span><span class="level-item"><a class="link-muted" href="/categories/%E7%BC%96%E7%A8%8B/">编程</a><span> / </span><a class="link-muted" href="/categories/%E7%BC%96%E7%A8%8B/WebRTC/">WebRTC</a></span><span class="level-item">21 minutes read (About 3114 words)</span></div></div><h1 class="title is-3 is-size-4-mobile">WebRTC之传输协议初探：SRTP协议</h1><div class="content"><h3 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h3><p>SRTP协议，全称Secure Real-time Transport Protocol。顾名思义，SRTP就是在RTP协议的基础上提供了安全保障，主要包括数据加密、消息认证和重放保护。</p>
+<p>SRTP提供了一套框架用于加密和认证RTP和RTCP数据流，且内置一系列预定义的加密套件。当然也可以使用自定义加密套件。</p>
+<p>SRTP协议建立于在RTP协议之上，在RTP/RTCP包的基础上通过增加额外的空间和计算量来实现安全保障。因此SRTP增加的额外开销越小，对RTP传输影响也越小。而SRTP额外开销的大小主要取决于加密套件的选择，SRTP中预定义的加密套件是一个不错的选择，详见 <a target="_blank" rel="noopener" href="https://datatracker.ietf.org/doc/html/rfc3711#section-2">RFC 3711</a>。</p>
+<span id="more"></span>
+
+<h3 id="实现细节"><a href="#实现细节" class="headerlink" title="实现细节"></a>实现细节</h3><p>由于RTP和RTCP包在结构、功能以及传输上都存在差异，因此SRTP对二者的具体实现也存在差异。以下是SRTP基于预定义的加密套件的实现细节。</p>
+<h4 id="密钥上下文"><a href="#密钥上下文" class="headerlink" title="密钥上下文"></a>密钥上下文</h4><p>在RTP/RTCP协议中将通信参与者称之为一个RTP session，常见的会话类型有video RTP session、audio RTP session和text RTP session。</p>
+<p>每一个RTP session可以包含多个stream，每个stream通过SSRC标识。RTP session对其中的每个stream的处理过程都是对等的，即发送或接收每个stream中的RTP/RTCP包。因此RTP session用使用一个二元组&lt;destination network address, destination transport port number&gt;来标识即可。</p>
+<p>SRTP/SRTCP协议中新增了SRTP stream，一个三元组&lt;SSRC, destination network address, destination transport port number&gt;，用于标识RTP session下的每个stream。这样可以给每个SRTP stream提供不同的加密处理，具体实现原理是基于每个stream的SSRC生成不同的初始化向量（IV）：</p>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">IV = (k_s * <span class="number">2</span>^<span class="number">16</span>) <span class="built_in">XOR</span> (SSRC * <span class="number">2</span>^<span class="number">64</span>) <span class="built_in">XOR</span> (i * <span class="number">2</span>^<span class="number">16</span>)</span><br></pre></td></tr></tbody></table></figure>
+
+<ul>
+<li><p>两种密钥类型</p>
+<p>  SRTP中有两类密钥，分别是：</p>
+<ul>
+<li><p>master key</p>
+<p>  master key是一串随机生产的字符串，一般由密钥协商协议提供，比如TLS。</p>
+</li>
+<li><p>session keys</p>
+<p>  session keys中包含加密密钥、签名密钥和盐值，用于数据加密和消息认证。</p>
+<p>  SRTP和SRTCP共用一个master key和各自的KDF（Key Derivation Function）生成对应的session keys，如下图所示：</p>
+  <figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">				  packet index ---+</span><br><span class="line">                          |</span><br><span class="line">                          v</span><br><span class="line">+-----------+ master  +--------+ session encr_key</span><br><span class="line">| ext       | key     |        |----------&gt;</span><br><span class="line">| key mgmt  |--------&gt;|  key   | session auth_key</span><br><span class="line">| (optional |         | deriv  |----------&gt;</span><br><span class="line">| rekey)    |--------&gt;|        | session salt_key</span><br><span class="line">|           | master  |        |----------&gt;</span><br><span class="line">+-----------+ salt    +--------+</span><br></pre></td></tr></tbody></table></figure>
+<p>  Session keys的导出函数除了master key和master salt之外还需要以下参数：</p>
+<ul>
+<li><p>key_label</p>
+<p>  用于标识key的类型，取值范围为0x00~0x05的含义如下：</p>
+  <figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">enum</span> <span class="title class_">KeyLabel</span> : <span class="type">int</span> {</span><br><span class="line">	label_rtp_encryption = <span class="number">0x00</span>,  <span class="comment">// 导出RTP加密密钥</span></span><br><span class="line">	label_rtp_msg_auth = <span class="number">0x01</span>,    <span class="comment">// 导出RTP校验密钥</span></span><br><span class="line">	label_rtp_salt = <span class="number">0x02</span>,        <span class="comment">// 导出RTP盐值</span></span><br><span class="line">  label_rtcp_encryption = <span class="number">0x03</span>, <span class="comment">// 导出RTCP加密密钥</span></span><br><span class="line">  label_rtcp_msg_auth = <span class="number">0x04</span>,   <span class="comment">// 导出RTCP校验密钥</span></span><br><span class="line">	label_rtcp_salt = <span class="number">0x05</span>,       <span class="comment">// 导出RTCP盐值</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+</li>
+<li><p>packet_index</p>
+<p>  SRTP/SRTCP的包序号，注意不是RTP/RTCP包的序号。为了防止重放攻击，SRTP和SRTCP都有一套自己的包管理方式，详见下文。</p>
+</li>
+<li><p>key_derivation_rate</p>
+<p>  表示key的导出速率，取值范围是{1,2,4,…,2^24}。除了初始时导出一次，之后的导出条件需要同时满足r &gt; 0，且packet_index mod r = 0，其中r的计算方式如下：</p>
+  <figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">r = packet_index / key_derivation_rate;</span><br></pre></td></tr></tbody></table></figure>
+<p>  新导出的key值会替换原有的session keys用于数据加密和签名。</p>
+</li>
+</ul>
+<p>  Session keys导出函数调用过程的伪代码如下：</p>
+  <figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 计算r值</span></span><br><span class="line">let r = packet_index / key_derivation_rate</span><br><span class="line"><span class="comment">// 计算key_id，由lable和r值组成，label位于高字节，r位于低字节</span></span><br><span class="line">let key_id = &lt;label&gt; || r</span><br><span class="line"><span class="comment">// 计算x</span></span><br><span class="line">let x = key_id XOR master_salt</span><br><span class="line"><span class="comment">// 调用导出函数kDF生成不同的key值</span></span><br><span class="line">let key = <span class="built_in">KDF</span>(master_key, x)</span><br></pre></td></tr></tbody></table></figure></li>
+</ul>
+</li>
+<li><p>预定义加密套件</p>
+<p>  SRTP协议中预定义了一些加密套件，包括加密和校验算法以及密钥导出函数等，这些加密套件所需的额外空间和计算都比较小，因此推荐使用。此外也可以自定义加密套件。</p>
+<p>  其中优先预定义的加密套件必须在SRTP协议的实现中强制实现，如下所示：</p>
+  <figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">										必须实现            可选            默认</span><br><span class="line">								mandatory-to-impl.   optional       <span class="keyword">default</span></span><br><span class="line">    </span><br><span class="line">encryption            AES-CM, <span class="literal">NULL</span>         AES-f8       AES-CM</span><br><span class="line">message integrity     HMAC-SHA1              -          HMAC-<span class="function">SHA1</span></span><br><span class="line"><span class="function">key <span class="title">derivation</span> <span class="params">(PRF)</span>  AES-CM                 -          AES-CM</span></span><br></pre></td></tr></tbody></table></figure></li>
+</ul>
+<h4 id="SRTP包"><a href="#SRTP包" class="headerlink" title="SRTP包"></a>SRTP包</h4><ul>
+<li>包结构</li>
+</ul>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">   <span class="number">0</span>                   <span class="number">1</span>                   <span class="number">2</span>                   <span class="number">3</span></span><br><span class="line">   <span class="number">0</span> <span class="number">1</span> <span class="number">2</span> <span class="number">3</span> <span class="number">4</span> <span class="number">5</span> <span class="number">6</span> <span class="number">7</span> <span class="number">8</span> <span class="number">9</span> <span class="number">0</span> <span class="number">1</span> <span class="number">2</span> <span class="number">3</span> <span class="number">4</span> <span class="number">5</span> <span class="number">6</span> <span class="number">7</span> <span class="number">8</span> <span class="number">9</span> <span class="number">0</span> <span class="number">1</span> <span class="number">2</span> <span class="number">3</span> <span class="number">4</span> <span class="number">5</span> <span class="number">6</span> <span class="number">7</span> <span class="number">8</span> <span class="number">9</span> <span class="number">0</span> <span class="number">1</span></span><br><span class="line">  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+&lt;+</span><br><span class="line">  |V=<span class="number">2</span>|P|X|  CC   |M|     PT      |       sequence number         | |</span><br><span class="line">  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ |</span><br><span class="line">  |                           timestamp                           | |</span><br><span class="line">  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ |</span><br><span class="line">  |           synchronization <span class="built_in">source</span> (SSRC) identifier            | |</span><br><span class="line">  +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+ |</span><br><span class="line">  |            contributing <span class="built_in">source</span> (CSRC) identifiers             | |</span><br><span class="line">  |                               ....                            | |</span><br><span class="line">  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ |</span><br><span class="line">  |                   RTP <span class="built_in">extension</span> (OPTIONAL)                    | |</span><br><span class="line">+&gt;+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ |</span><br><span class="line">| |                          payload  ...                         | |</span><br><span class="line">| |                               +-------------------------------+ |</span><br><span class="line">| |                               | RTP padding   | RTP pad count | |</span><br><span class="line">+&gt;+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+&lt;+</span><br><span class="line">| ~                     SRTP <span class="built_in">MKI</span> (OPTIONAL)                       ~ |</span><br><span class="line">| +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ |</span><br><span class="line">| :                 authentication <span class="built_in">tag</span> (RECOMMENDED)              : |</span><br><span class="line">| +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ |</span><br><span class="line">|                                                                   |</span><br><span class="line">+- Encrypted Portion*                      Authenticated Portion ---+</span><br></pre></td></tr></tbody></table></figure>
+
+<p>SRTP包主要包括两个部分，分别是：</p>
+<ul>
+<li><p>加密部分：Encrypted Portion</p>
+<p>  该部分在RTP包负载（payload + padding）的基础上新增了MKI字段和authentication tag字段：</p>
+<ul>
+<li><p>MKI (Master Key Identifier)：可变长度，可选字段</p>
+<p>  该字段最大长度为32比特。该字段表示一个master key，可用于后续生产加密和认证的密钥。</p>
+</li>
+<li><p>Authentication tag：可变长度，推荐使用</p>
+<p>  该字段用于存储校验值，其最大长度为32比特。</p>
+</li>
+</ul>
+<p>  通常情况下SRTP只需要对RTP负载进行加密，但是也可以对RTP header extensions进行加密，详见 RFC 6904。
+  </p>
+</li>
+<li><p>校验部分：Authenticated Portion</p>
+<p>  该部分由RTP的header和Encrypted Portion组成，即RTP包和SRTP新增的字段。值得注意的是完整性校验只针对RTP包本身（header、payload和padding），不包括MKI字段。</p>
+</li>
+<li><p>SRTP包序号管理</p>
+<p>  RTP包使用一个16bit的字段来表示序号，其最大值为2^16(65535)，能表达范围很有限，一旦超过最大值便会循环使用之前的序号。因此当收到一个与之前的包列号相同的包时，RTP协议没有办法判断其是一个新包还是之前的包重放了一次，这也是重放攻击的依据所在。</p>
+<p>  鉴于RTP包序号的局限性，SRTP包序号在RTP包序号的基础上引入回绕技术以表示每个SRTP包的绝对下标。所谓回绕就是RTP包的序号超过最大值65535后重置为0继续使用，SRTP使用ROC来记录RTP包序号的回绕次数，发送端和接收端的具体实现有差异，如下所示：</p>
+<ul>
+<li><p>发送端</p>
+<p>  由于发送端不存在乱序和丢包的问题，因此只需维护ROC即可，即当RTP包的序号出现回绕时ROC加1：</p>
+  <figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ROC：32-bit unsigned，初用于表示RTP包的回绕次数，初始值为0</span></span><br><span class="line"><span class="comment">// SEQ：16-bit unsigned，RTP包的序号，初始值任意</span></span><br><span class="line"><span class="comment">// i：48-bit unsigned，高32位为ROC，低16位为SEQ，表示SRTP包的序号</span></span><br><span class="line">i = <span class="number">2</span>^<span class="number">16</span> * ROC + SEQ</span><br></pre></td></tr></tbody></table></figure>
+</li>
+<li><p>接收端</p>
+<p>  对于接收端，考虑到丢包和乱序的因素，除了维护ROC，还需记录当前已收到的最大的RTP包序号，记为s_l，初始值为第一个RTP包序号。当收到一个新包时，接收端需要推算出当前包所对应的SRTP的序号，具体实现如下：</p>
+  <figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// v：表示当前包可能的回绕次数，取值范围{ ROC-1, ROC, ROC+1 }</span></span><br><span class="line">i = <span class="number">2</span>^<span class="number">16</span> * v + SEQ</span><br><span class="line"><span class="comment">// s：表示当前已收到的最大的SRTP包序号</span></span><br><span class="line">s = <span class="number">2</span>^<span class="number">16</span>*ROC + s_l</span><br></pre></td></tr></tbody></table></figure>
+<p>  v分别取ROC-1、ROC和ROC+1计算出i值，再与s进行比较，假定最接近s的值为新包的SRTP序号。具体分三种情况：</p>
+<ol>
+<li>v = ROC - 1，表示乱序包，ROC和s_l都不更新</li>
+<li>v = ROC，表示正常包，s_l = max(SEQ, s_l)</li>
+<li>v = ROC + 1，表示正常包但出现回绕，ROC += 1，s_l = SEQ</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p>防重放攻击</p>
+<p>  所谓重复攻击是攻击者将截获的SRTP/SRTCP包保存下来，然后再重新发送出去，使接收端就会大量出现重复的包，以达到攻击的效果。而防重发攻击的目的就是用最高效的方式识别出重复包并将其丢弃，只处理为接收过的包。</p>
+<p>  此外，防重放攻击的有效性是基于包的完整性，即提供SRTP协议提供了消息认证，否则攻击者可以任意修改SRTP包的内容，包括序号，导致接收端无法判断被修改过的包是否为重发包。</p>
+<p>  具体实现方式：在每个SRTP包的接收端会维护一个重发列表replay list，用于存储已收到并校验的SRTP包序号。出于性能考虑不会将所有已接收的SRTP包序号（48bits）都存储起来，而是引入一个滑动窗口SRTP_WINDOW_SIZE来推断新收到的包是否为重发包。SRTP_WINDOW_SIZE是一个定值，最小值要求为64，用户可根据需求自定义，比如WebRTC中SRTP_WINDOW_SIZE的默认值为1024。</p>
+<p>  SRTP_WINDOW_SIZE将replay list划分为了三个区域，分别表示重发区，待定区和新包区：</p>
+  <figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">    重发区        |        待定区            |   新包区</span><br><span class="line">--replay packet--|---check replay failed---|--<span class="keyword">new</span> packet--</span><br><span class="line">                 |-----SRTP_WINDOW_SIZE----|</span><br></pre></td></tr></tbody></table></figure>
+<p>  此外，接收端还需要记录当前接收的最大的SRTP包序号，记为last_packet_index。当接收到新的SRTP包时先推算出其序号，记为packet_index，用于确定新包在replay list中的位置，具体过程如下：</p>
+<ol>
+<li><p>计算差值delta</p>
+<p> delta = packet_index - last_packet_index</p>
+</li>
+<li><p>如果delta &gt; 0，表示收到了新包，并更新last_packet_index和replay list。</p>
+</li>
+<li><p>如果delta &lt; -SRTP_WINDOW_SIZE，表示收到重发包，丢弃。</p>
+</li>
+<li><p>如果-SRTP_WINDOW_SIZE &lt; delta &lt; 0，表示收到重发窗口之内的包，如果能在replay list中找到相同序号的包则表示收到重发包，否则视为乱序包并接收。</p>
+</li>
+</ol>
+</li>
+</ul>
+<h4 id="SRTCP包"><a href="#SRTCP包" class="headerlink" title="SRTCP包"></a>SRTCP包</h4><ul>
+<li><p>包结构</p>
+  <figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0</span>                   <span class="number">1</span>                   <span class="number">2</span>                   <span class="number">3</span></span><br><span class="line">   <span class="number">0</span> <span class="number">1</span> <span class="number">2</span> <span class="number">3</span> <span class="number">4</span> <span class="number">5</span> <span class="number">6</span> <span class="number">7</span> <span class="number">8</span> <span class="number">9</span> <span class="number">0</span> <span class="number">1</span> <span class="number">2</span> <span class="number">3</span> <span class="number">4</span> <span class="number">5</span> <span class="number">6</span> <span class="number">7</span> <span class="number">8</span> <span class="number">9</span> <span class="number">0</span> <span class="number">1</span> <span class="number">2</span> <span class="number">3</span> <span class="number">4</span> <span class="number">5</span> <span class="number">6</span> <span class="number">7</span> <span class="number">8</span> <span class="number">9</span> <span class="number">0</span> <span class="number">1</span></span><br><span class="line">  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+&lt;+</span><br><span class="line">  |V=<span class="number">2</span>|P|    RC   |   PT=SR <span class="keyword">or</span> RR   |             length          | |</span><br><span class="line">  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ |</span><br><span class="line">  |                         SSRC of sender                        | |</span><br><span class="line">+&gt;+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+ |</span><br><span class="line">| ~                          sender info                          ~ |</span><br><span class="line">| +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ |</span><br><span class="line">| ~                         report block <span class="number">1</span>                        ~ |</span><br><span class="line">| +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ |</span><br><span class="line">| ~                         report block <span class="number">2</span>                        ~ |</span><br><span class="line">| +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ |</span><br><span class="line">| ~                              ...                              ~ |</span><br><span class="line">| +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ |</span><br><span class="line">| |V=<span class="number">2</span>|P|    SC   |  PT=SDES=<span class="number">202</span>  |             length            | |</span><br><span class="line">| +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+ |</span><br><span class="line">| |                          SSRC/CSRC_1                          | |</span><br><span class="line">| +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ |</span><br><span class="line">| ~                           SDES items                          ~ |</span><br><span class="line">| +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+ |</span><br><span class="line">| ~                              ...                              ~ |</span><br><span class="line">+&gt;+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+ |</span><br><span class="line">| |E|                         SRTCP index                         | |</span><br><span class="line">| +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+&lt;+</span><br><span class="line">| ~                     SRTCP <span class="built_in">MKI</span> (OPTIONAL)                      ~ |</span><br><span class="line">| +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ |</span><br><span class="line">| :                     authentication tag                        : |</span><br><span class="line">| +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ |</span><br><span class="line">|                                                                   |</span><br><span class="line">+-- Encrypted Portion                    Authenticated Portion -----+</span><br></pre></td></tr></tbody></table></figure>
+<p>  SRTCP包主要包括两大部分，分别是：</p>
+<ul>
+<li><p>加密部分：Encrypted Portion</p>
+<p>  该部分在RTCP包负载的基础上新增了四个字段，分别是：</p>
+<ul>
+<li><p>E-flag：1 bits，必需值。</p>
+<p>  该字段用于标识SRTCP包是否加密。</p>
+</li>
+<li><p>SRTCP index：31 bits，必需值。</p>
+<p>  该字段表示SRTCP包的序号。不同于SRTP包序号使用回绕技术的处理方式，SRTCP包序号只是简单的将RTCP包序号的长度从16比特扩展为32比特，即同样会出现序号回绕的情况，只是间隔时间更长。</p>
+</li>
+<li><p>MKI：可变长度，可选值。</p>
+<p>  该字段的作用同SRTP中的MKI字段一样。</p>
+</li>
+<li><p>authentication tag：可变长度，必须值。</p>
+<p>  该字段的作用同SRTP中的MKI字段一样，只是在SRTCP包要求必须支持完整性校验。原因在于SRTCP包中携带的是控制RTP包发送和接收端反馈等重要信息，决定着整个传输的效果，所以需要确保其数据是完整的。</p>
+</li>
+</ul>
+</li>
+<li><p>校验部分：Authenticated Portion</p>
+<p>  该部分由RTCP的header和Encrypted Portion组成，即RTCP包和SRTCP新增的字段。值得注意的是完整性校验只针对RTCP包本身（header、payload），不包括MKI字段。</p>
+</li>
+</ul>
+</li>
+<li><p>防重放攻击</p>
+<p>  SRTCP防重放攻击的实现方式与SRTP基本相同，不同的地方在于SRTCP使用的滑动窗口大小更小，比如在libsrtp库中的值为128。</p>
+</li>
+</ul>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>SRTP/SRTCP协议主要是为RTP/RTCP协议提供数据安全保障，即数据加密、数据校验和防重放攻击。从其实现细节可知SRTP/SRTCP并不保证数据的有序性和可靠性，即不提供丢包和乱序包的保障。</p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><p><a target="_blank" rel="noopener" href="https://datatracker.ietf.org/doc/html/rfc3711">RFC 3711 - The Secure Real-time Transport Protocol (SRTP)</a></p>
+<p><a target="_blank" rel="noopener" href="https://datatracker.ietf.org/doc/html/rfc5764">RFC 5764 - Datagram Transport Layer Security (DTLS) Extension to Establish Keys for the Secure Real-time Transport Protocol (SRTP)</a></p>
+<p><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000040211375">WebRTC 传输安全机制：深入显出 SRTP 协议</a></p>
+</div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/%E4%BC%A0%E8%BE%93%E5%8D%8F%E8%AE%AE/">传输协议</a></div><!--!--></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2020/11/27/%E3%80%8A%E5%88%BB%E6%84%8F%E7%BB%83%E4%B9%A0%E3%80%8B%E8%AF%BB%E5%90%8E%E6%84%9F/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">《刻意练习》读书笔记</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2020/11/16/WebRTC%E4%BC%A0%E8%BE%93%E5%8D%8F%E8%AE%AE%E4%B9%8BDTLS%E5%8D%8F%E8%AE%AE%E5%9C%A8WebRTC%E4%B8%AD%E5%BA%94%E7%94%A8/"><span class="level-item">WebRTC之传输协议初探：DTLS协议在WebRTC中应用</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">Comments</h3><div id="comment-container"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script>var gitalk = new Gitalk({
+            id: "0199a06a360129dab4c3384162f66f32",
+            repo: "https://github.com/industriousonesoft/myblogs",
+            owner: "industriousonesoft",
+            clientID: "72166614883c67c948a9",
+            clientSecret: "4ffcafe5e15ed3056e1d35e84dd6f45619d6a606",
+            admin: ["industriousonesoft"],
+            createIssueManually: false,
+            distractionFreeMode: false,
+            perPage: 20,
+            pagerDirection: "last",
+            
+            
+            enableHotKey: true,
+            language: "zh-CN",
+        })
+        gitalk.render('comment-container')</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar is-rounded" src="/img/avatar.jpg" alt="Mark Cao"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">Mark Cao</p><p class="is-size-6 is-block">程序的世界让我着迷</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>ChangSha</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">Posts</p><a href="/archives"><p class="title">97</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Categories</p><a href="/categories"><p class="title">20</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Tags</p><a href="/tags"><p class="title">30</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://github.com/industriousonesoft" target="_blank" rel="noopener">Follow</a></div><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/industriousonesoft"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Facebook" href="https://facebook.com"><i class="fab fa-facebook"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Twitter" href="https://twitter.com"><i class="fab fa-twitter"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Dribbble" href="https://dribbble.com"><i class="fab fa-dribbble"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="RSS" href="/"><i class="fas fa-rss"></i></a></div></div></div><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">Recents</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-04-25T15:10:07.000Z">2021-04-25</time></p><p class="title"><a href="/2021/04/25/WebRTC%E4%B9%8BTrendline%E6%BB%A4%E6%B3%A2%E5%99%A8/">WebRTC之Trendline滤波器</a></p><p class="categories"><a href="/categories/%E7%BC%96%E7%A8%8B/">编程</a> / <a href="/categories/%E7%BC%96%E7%A8%8B/WebRTC/">WebRTC</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-04-20T15:10:07.000Z">2021-04-20</time></p><p class="title"><a href="/2021/04/20/WebRTC%E4%B9%8B%E5%8C%85%E7%BB%84%E7%9A%84%E6%97%B6%E9%97%B4%E9%97%B4%E9%9A%94%E8%AE%A1%E7%AE%97/">WebRTC之包组的时间间隔计算</a></p><p class="categories"><a href="/categories/%E7%BC%96%E7%A8%8B/">编程</a> / <a href="/categories/%E7%BC%96%E7%A8%8B/WebRTC/">WebRTC</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-04-10T15:10:07.000Z">2021-04-10</time></p><p class="title"><a href="/2021/04/10/WebRTC%E4%B9%8BRTT%E7%9A%84%E4%B8%A4%E7%A7%8D%E8%AE%A1%E7%AE%97%E6%96%B9%E5%BC%8F/">WebRTC之RTT的两种计算方式</a></p><p class="categories"><a href="/categories/%E7%BC%96%E7%A8%8B/">编程</a> / <a href="/categories/%E7%BC%96%E7%A8%8B/WebRTC/">WebRTC</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-04-05T15:10:07.000Z">2021-04-05</time></p><p class="title"><a href="/2021/04/05/WebRTC%E4%B9%8B%E6%8A%96%E5%8A%A8%E4%BC%B0%E8%AE%A1/">WebRTC之抖动估计</a></p><p class="categories"><a href="/categories/%E7%BC%96%E7%A8%8B/">编程</a> / <a href="/categories/%E7%BC%96%E7%A8%8B/WebRTC/">WebRTC</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-11-27T05:13:07.000Z">2020-11-27</time></p><p class="title"><a href="/2020/11/27/%E3%80%8A%E5%88%BB%E6%84%8F%E7%BB%83%E4%B9%A0%E3%80%8B%E8%AF%BB%E5%90%8E%E6%84%9F/">《刻意练习》读书笔记</a></p><p class="categories"><a href="/categories/%E4%B9%A6%E8%AF%84/">书评</a></p></div></article></div></div><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">Categories</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/%E4%B9%A6%E8%AF%84/"><span class="level-start"><span class="level-item">书评</span></span><span class="level-end"><span class="level-item tag">9</span></span></a></li><li><a class="level is-mobile" href="/categories/%E5%BD%B1%E8%AF%84/"><span class="level-start"><span class="level-item">影评</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/%E7%BC%96%E7%A8%8B/"><span class="level-start"><span class="level-item">编程</span></span><span class="level-end"><span class="level-item tag">58</span></span></a><ul><li><a class="level is-mobile" href="/categories/%E7%BC%96%E7%A8%8B/C/"><span class="level-start"><span class="level-item">C++</span></span><span class="level-end"><span class="level-item tag">15</span></span></a></li><li><a class="level is-mobile" href="/categories/%E7%BC%96%E7%A8%8B/Cocoa/"><span class="level-start"><span class="level-item">Cocoa</span></span><span class="level-end"><span class="level-item tag">5</span></span></a></li><li><a class="level is-mobile" href="/categories/%E7%BC%96%E7%A8%8B/Hexo/"><span class="level-start"><span class="level-item">Hexo</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E7%BC%96%E7%A8%8B/JS/"><span class="level-start"><span class="level-item">JS</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/%E7%BC%96%E7%A8%8B/Objective-C/"><span class="level-start"><span class="level-item">Objective-C</span></span><span class="level-end"><span class="level-item tag">10</span></span></a></li><li><a class="level is-mobile" href="/categories/%E7%BC%96%E7%A8%8B/OpevCV/"><span class="level-start"><span class="level-item">OpevCV</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E7%BC%96%E7%A8%8B/Swift/"><span class="level-start"><span class="level-item">Swift</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E7%BC%96%E7%A8%8B/WebRTC/"><span class="level-start"><span class="level-item">WebRTC</span></span><span class="level-end"><span class="level-item tag">9</span></span></a></li><li><a class="level is-mobile" href="/categories/%E7%BC%96%E7%A8%8B/Xcode/"><span class="level-start"><span class="level-item">Xcode</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E7%BC%96%E7%A8%8B/iOS/"><span class="level-start"><span class="level-item">iOS</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/%E7%BC%96%E7%A8%8B/macOSX/"><span class="level-start"><span class="level-item">macOSX</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E7%BC%96%E7%A8%8B/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"><span class="level-start"><span class="level-item">数据结构</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/categories/%E7%BC%96%E7%A8%8B/%E6%B1%87%E7%BC%96/"><span class="level-start"><span class="level-item">汇编</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E7%BC%96%E7%A8%8B/%E7%AE%97%E6%B3%95/"><span class="level-start"><span class="level-item">算法</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/%E7%BC%96%E7%A8%8B/%E9%9F%B3%E8%A7%86%E9%A2%91/"><span class="level-start"><span class="level-item">音视频</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li></ul></li><li><a class="level is-mobile" href="/categories/%E8%8B%B1%E8%AF%AD/"><span class="level-start"><span class="level-item">英语</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/%E9%9A%8F%E6%83%B3/"><span class="level-start"><span class="level-item">随想</span></span><span class="level-end"><span class="level-item tag">24</span></span></a></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">Tags</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/ARC/"><span class="tag">ARC</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/C/"><span class="tag">C++</span><span class="tag">15</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Category/"><span class="tag">Category</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Cocoa/"><span class="tag">Cocoa</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Coffee/"><span class="tag">Coffee</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/GCD/"><span class="tag">GCD</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Hexo/"><span class="tag">Hexo</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/JS/"><span class="tag">JS</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/KVO/"><span class="tag">KVO</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Objective-C/"><span class="tag">Objective-C</span><span class="tag">4</span></a></div><div class="control"><a class="tags has-addons" href="/tags/OpenCV/"><span class="tag">OpenCV</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/PlistBuddy/"><span class="tag">PlistBuddy</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/RunLoop/"><span class="tag">RunLoop</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Runtime/"><span class="tag">Runtime</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Swift/"><span class="tag">Swift</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/UTC/"><span class="tag">UTC</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/iOS/"><span class="tag">iOS</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/macOSX/"><span class="tag">macOSX</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E4%B8%89%E4%BD%93/"><span class="tag">三体</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E4%BA%BA%E7%B1%BB%E7%AE%80%E5%8F%B2/"><span class="tag">人类简史</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E4%BC%A0%E8%AE%B0/"><span class="tag">传记</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E4%BC%A0%E8%BE%93%E5%8D%8F%E8%AE%AE/"><span class="tag">传输协议</span><span class="tag">4</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%93%B2%E5%AD%A6/"><span class="tag">哲学</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%8B%A5%E5%A1%9E%E6%8E%A7%E5%88%B6/"><span class="tag">拥塞控制</span><span class="tag">4</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"><span class="tag">数据结构</span><span class="tag">4</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%97%B6%E5%BA%8F%E6%A8%A1%E5%9E%8B/"><span class="tag">时序模型</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E7%AE%97%E6%B3%95/"><span class="tag">算法</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E7%BB%8F%E6%B5%8E/"><span class="tag">经济</span><span class="tag">8</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%8B%B1%E8%AF%AD/"><span class="tag">英语</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E9%9F%B3%E8%A7%86%E9%A2%91/"><span class="tag">音视频</span><span class="tag">2</span></a></div></div></div></div></div><div class="card widget" data-type="archives"><div class="card-content"><div class="menu"><h3 class="menu-label">Archives</h3><ul class="menu-list"><li><a class="level is-mobile" href="/archives/2021/04/"><span class="level-start"><span class="level-item">April 2021</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/archives/2020/11/"><span class="level-start"><span class="level-item">November 2020</span></span><span class="level-end"><span class="level-item tag">5</span></span></a></li><li><a class="level is-mobile" href="/archives/2020/08/"><span class="level-start"><span class="level-item">August 2020</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/archives/2020/04/"><span class="level-start"><span class="level-item">April 2020</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2020/03/"><span class="level-start"><span class="level-item">March 2020</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/archives/2020/02/"><span class="level-start"><span class="level-item">February 2020</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2020/01/"><span class="level-start"><span class="level-item">January 2020</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/archives/2019/09/"><span class="level-start"><span class="level-item">September 2019</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2019/08/"><span class="level-start"><span class="level-item">August 2019</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/archives/2019/07/"><span class="level-start"><span class="level-item">July 2019</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2019/06/"><span class="level-start"><span class="level-item">June 2019</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/archives/2019/05/"><span class="level-start"><span class="level-item">May 2019</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/archives/2019/04/"><span class="level-start"><span class="level-item">April 2019</span></span><span class="level-end"><span class="level-item tag">7</span></span></a></li><li><a class="level is-mobile" href="/archives/2019/03/"><span class="level-start"><span class="level-item">March 2019</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/archives/2018/12/"><span class="level-start"><span class="level-item">December 2018</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/archives/2018/11/"><span class="level-start"><span class="level-item">November 2018</span></span><span class="level-end"><span class="level-item tag">7</span></span></a></li><li><a class="level is-mobile" href="/archives/2018/10/"><span class="level-start"><span class="level-item">October 2018</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/archives/2018/09/"><span class="level-start"><span class="level-item">September 2018</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2018/08/"><span class="level-start"><span class="level-item">August 2018</span></span><span class="level-end"><span class="level-item tag">5</span></span></a></li><li><a class="level is-mobile" href="/archives/2018/07/"><span class="level-start"><span class="level-item">July 2018</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/archives/2018/06/"><span class="level-start"><span class="level-item">June 2018</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2018/05/"><span class="level-start"><span class="level-item">May 2018</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2018/02/"><span class="level-start"><span class="level-item">February 2018</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2017/12/"><span class="level-start"><span class="level-item">December 2017</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2017/10/"><span class="level-start"><span class="level-item">October 2017</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2017/08/"><span class="level-start"><span class="level-item">August 2017</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2017/07/"><span class="level-start"><span class="level-item">July 2017</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2017/06/"><span class="level-start"><span class="level-item">June 2017</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/archives/2017/05/"><span class="level-start"><span class="level-item">May 2017</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/archives/2017/04/"><span class="level-start"><span class="level-item">April 2017</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2017/02/"><span class="level-start"><span class="level-item">February 2017</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/archives/2017/01/"><span class="level-start"><span class="level-item">January 2017</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2016/12/"><span class="level-start"><span class="level-item">December 2016</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2016/11/"><span class="level-start"><span class="level-item">November 2016</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/archives/2016/10/"><span class="level-start"><span class="level-item">October 2016</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/archives/2016/09/"><span class="level-start"><span class="level-item">September 2016</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2016/08/"><span class="level-start"><span class="level-item">August 2016</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/archives/2015/07/"><span class="level-start"><span class="level-item">July 2015</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2015/06/"><span class="level-start"><span class="level-item">June 2015</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2015/05/"><span class="level-start"><span class="level-item">May 2015</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2015/04/"><span class="level-start"><span class="level-item">April 2015</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2015/03/"><span class="level-start"><span class="level-item">March 2015</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2015/02/"><span class="level-start"><span class="level-item">February 2015</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/archives/2015/01/"><span class="level-start"><span class="level-item">January 2015</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li></ul></div></div></div></div><div class="column column-right is-4-tablet is-4-desktop is-4-widescreen  order-3"><!--!--></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.svg" alt="MarkCao" height="28"></a><p class="is-size-7"><span>&copy; 2022 Mark Cao</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("en");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="Back to top" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-center",
+        content: {
+          message: "This website uses cookies to improve your experience.",
+          dismiss: "Got it!",
+          allow: "Allow cookies",
+          deny: "Decline",
+          link: "Learn more",
+          policy: "Cookie Policy",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/contrib/auto-render.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/contrib/mhchem.min.js" defer></script><script>window.addEventListener("load", function() {
+            document.querySelectorAll('[role="article"] > .content').forEach(function(element) {
+                renderMathInElement(element);
+            });
+        });</script><script type="text/x-mathjax-config">MathJax.Hub.Config({
+            'HTML-CSS': {
+                matchFontHeight: false
+            },
+            SVG: {
+                matchFontHeight: false
+            },
+            CommonHTML: {
+                matchFontHeight: false
+            },
+            tex2jax: {
+                inlineMath: [
+                    ['$','$'],
+                    ['\\(','\\)']
+                ]
+            }
+        });</script><script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="Type something..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"Type something...","untitled":"(Untitled)","posts":"Posts","pages":"Pages","categories":"Categories","tags":"Tags"});
+        });</script></body></html>

@@ -1,0 +1,436 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>WebRTC之传输协议初探：TLS协议 - MarkCao</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="MarkCao&#039;s blog"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="MarkCao&#039;s blog"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="简述TLS(Transport Layer Security)协议，其前身为SSL(Secure Socket Layer)，是1994年由Netscape公司设计的一套协议，并于1995年发布了3.0版本，而TLS是IETF基于SSL3.0设计的协议，相当于SSL的后续版本。 TLS建立在传输层之上，服务于应用层，旨在于为通信双方提供一条安全通道，主要提供一下三重保障：  身份认证：认证通信双方"><meta property="og:type" content="blog"><meta property="og:title" content="WebRTC之传输协议初探：TLS协议"><meta property="og:url" content="http://naivertc.top/2020/11/03/WebRTC%E4%B9%8B%E4%BC%A0%E8%BE%93%E5%8D%8F%E8%AE%AE%EF%BC%9ATLS%E5%8D%8F%E8%AE%AE/"><meta property="og:site_name" content="MarkCao"><meta property="og:description" content="简述TLS(Transport Layer Security)协议，其前身为SSL(Secure Socket Layer)，是1994年由Netscape公司设计的一套协议，并于1995年发布了3.0版本，而TLS是IETF基于SSL3.0设计的协议，相当于SSL的后续版本。 TLS建立在传输层之上，服务于应用层，旨在于为通信双方提供一条安全通道，主要提供一下三重保障：  身份认证：认证通信双方"><meta property="og:locale" content="en_US"><meta property="og:image" content="http://naivertc.top/img/og_image.png"><meta property="article:published_time" content="2020-11-03T15:10:07.000Z"><meta property="article:modified_time" content="2022-03-30T12:09:24.342Z"><meta property="article:author" content="Mark Cao"><meta property="article:tag" content="传输协议"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://naivertc.top/2020/11/03/WebRTC%E4%B9%8B%E4%BC%A0%E8%BE%93%E5%8D%8F%E8%AE%AE%EF%BC%9ATLS%E5%8D%8F%E8%AE%AE/"},"headline":"WebRTC之传输协议初探：TLS协议","image":["http://naivertc.top/img/og_image.png"],"datePublished":"2020-11-03T15:10:07.000Z","dateModified":"2022-03-30T12:09:24.342Z","author":{"@type":"Person","name":"Mark Cao"},"publisher":{"@type":"Organization","name":"MarkCao","logo":{"@type":"ImageObject","url":"http://naivertc.top/img/logo.svg"}},"description":"简述TLS(Transport Layer Security)协议，其前身为SSL(Secure Socket Layer)，是1994年由Netscape公司设计的一套协议，并于1995年发布了3.0版本，而TLS是IETF基于SSL3.0设计的协议，相当于SSL的后续版本。 TLS建立在传输层之上，服务于应用层，旨在于为通信双方提供一条安全通道，主要提供一下三重保障：  身份认证：认证通信双方"}</script><link rel="canonical" href="http://naivertc.top/2020/11/03/WebRTC%E4%B9%8B%E4%BC%A0%E8%BE%93%E5%8D%8F%E8%AE%AE%EF%BC%9ATLS%E5%8D%8F%E8%AE%AE/"><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+          Array
+              .from(document.querySelectorAll('.tab-content'))
+              .forEach($tab => {
+                  $tab.classList.add('is-hidden');
+              });
+          Array
+              .from(document.querySelectorAll('.tabs li'))
+              .forEach($tab => {
+                  $tab.classList.remove('is-active');
+              });
+          const $activeTab = document.querySelector(location.hash);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+          const $tabMenu = document.querySelector(`a[href="${location.hash}"]`);
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.1.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style><link rel="alternate" href="/atom.xml" title="MarkCao" type="application/atom+xml">
+</head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.svg" alt="MarkCao" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item search" title="Search" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2020-11-03T15:10:07.000Z" title="11/3/2020, 11:10:07 PM">2020-11-03</time></span><span class="level-item"><a class="link-muted" href="/categories/%E7%BC%96%E7%A8%8B/">编程</a><span> / </span><a class="link-muted" href="/categories/%E7%BC%96%E7%A8%8B/WebRTC/">WebRTC</a></span><span class="level-item">23 minutes read (About 3411 words)</span></div></div><h1 class="title is-3 is-size-4-mobile">WebRTC之传输协议初探：TLS协议</h1><div class="content"><h3 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h3><p>TLS(Transport Layer Security)协议，其前身为SSL(Secure Socket Layer)，是1994年由Netscape公司设计的一套协议，并于1995年发布了3.0版本，而TLS是IETF基于SSL3.0设计的协议，相当于SSL的后续版本。</p>
+<p>TLS建立在传输层之上，服务于应用层，旨在于为通信双方提供一条安全通道，主要提供一下三重保障：</p>
+<ul>
+<li>身份认证：认证通信双方的身份，防止第三方冒充身份参与通信。</li>
+<li>数据安全：加密通道数据且只有通信双方可以解密，以防窃听。</li>
+<li>数据完整：提供数据签名和校验机制，一旦数据被篡改，通信双方可立刻发现。</li>
+</ul>
+<span id="more"></span>
+
+<h3 id="实现细节"><a href="#实现细节" class="headerlink" title="实现细节"></a>实现细节</h3><p>TLS协议分为两层，分别是握手协议层和记录层，且Handshake协议层位于Record协议层之上：</p>
+<ul>
+<li><p>握手协议层（Handshake Protocol Layer）</p>
+<p>  主要用于通信双方的身份认证，以及使用非对称的加密算法协商Record协议中使用的对称密钥。</p>
+<p>  握手协议层有三个协议，分别是：</p>
+<ul>
+<li>握手协议（Handshake Protocol）</li>
+<li>更换加密规约协议（Change Cipher Spec Protocol）</li>
+<li>告警协议（Alert Protocol）</li>
+</ul>
+<p>  鉴于非对称加密算法的优缺点：</p>
+<ul>
+<li>优势：在于加解密过程需要分别依赖公钥和私钥，使用公钥加密的数据只有私钥才能解密，所以即使公钥公开或泄漏也能保证加密数据的安全性。</li>
+<li>劣势：加解密耗时长、速度慢、效率低，只适合对少量数据进行加密。</li>
+</ul>
+<p>  非对称加密算法用于握手协议实现对称密钥的分发。
+  </p>
+</li>
+<li><p>记录层（Record Layer）</p>
+<p>  通过握手协议获得对称密钥，使用对称加密算法对应用数据进行加密，并提供数据签名和校验机制，以实现数据的安全传输。</p>
+<p>  鉴于对称加密算法的特点：</p>
+<ul>
+<li>优势：加解密耗时短、速度快、效率高，适合对大量数据进行加密。</li>
+<li>劣势：加密和解密使用同一个秘钥，秘钥的管理和分发非常困难，难以保障安全。</li>
+</ul>
+<p>  对称加密算法用于记录层实现应用数据的加解密。</p>
+</li>
+</ul>
+<h3 id="握手过程"><a href="#握手过程" class="headerlink" title="握手过程"></a>握手过程</h3><p>该过程的实现基于Handshake协议，共分两个阶段，分别是明文通信阶段、非对称加密通信阶段。</p>
+<p>以下为TLS1.2版本的握手过程。</p>
+<ol>
+<li><p>客户端发送Hello消息：</p>
+<ul>
+<li><p><code>Client Hello</code></p>
+<p>  客户端的Hello消息，包括以下参数：</p>
+<ul>
+<li><p>client_version： 客户端支持的TLS版本，客户端会从高到低去尝试填入自己支持的SSL版本。</p>
+</li>
+<li><p>random：客户端生成的随机数A， 用于后续的密钥协商。</p>
+</li>
+<li><p>session_id：本次会话ID。可用于恢复会话，为空则表示没有会话ID。</p>
+</li>
+<li><p>cipher_suites：客户端支持的加密套件列表，其中的加密套接字使用IANA中注册的名称，根据优先级从高到低排列，优先级越高表示客户端越倾向选择该加密套件。</p>
+<p>  关于加密套接字：使用的是IANA中注册的名称，可在<a target="_blank" rel="noopener" href="https://ciphersuite.info/cs/">https://ciphersuite.info/cs/</a>中查询，IANA 名称由 Protocol，Key Exchange Algorithm，Authentication Algorithm，Encryption Algorithm ，Hash Algorithm 的描述组成。例如，TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 的含义如下：</p>
+<ul>
+<li>Protocol: 安全传输协议，即TLS协议。</li>
+<li>Key Exchange: 密钥交换算法，即Elliptic Curve Diffie-Hellman Ephemeral (ECDHE)</li>
+<li>Authentication: 非对称加密算法，即Rivest Shamir Adleman algorithm (RSA)</li>
+<li>Encryption: 对称加密算法，即Advanced Encryption Standard with 128bit key in Galois/Counter mode (AES 128 GCM)</li>
+<li>Hash: 摘要算法，即Secure Hash Algorithm 256 (SHA256)</li>
+</ul>
+</li>
+<li><p>compression_methods：客户端支持的压缩算法列表，根据优先级从高到低排列，优先级越高表示客户端越倾向选择该压缩算法。可为空，表示不支持压缩。在TLS1.3版本中已弃用。</p>
+</li>
+<li><p>extensions：客户端所支持的扩展协议簇，如果服务端未回应某个扩展协议表示不使用该扩展协议。</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>服务端响应客户端的Hello消息（以下消息是通过一次传输传递给客户端）：</p>
+<ul>
+<li><p><code>Server Hello</code></p>
+<p>  服务端的Hello消息，包括以下参数：</p>
+<ul>
+<li>server_version：服务端支持的TLS版本。</li>
+<li>random：服务端生成的随机数B，用于后续的密钥协商。</li>
+<li>session_id：本次会话ID。如果服务端同意客户端重用上次会话则返回与客户端相同的ID，否则返回新的会话ID。</li>
+<li>cipher_suite：服务端支持的加密套件，且必须选于客户端支持的加密套件列表。</li>
+<li>compression_method：服务端支持的加密算法，且必须选于客户端支持的压缩算法列表。在TLS1.3版本中已弃用。</li>
+<li>extensions：服务端支持的扩展协议簇，且必须选于客户端支持的扩展协议簇。</li>
+</ul>
+</li>
+<li><p><code>Server Certificate</code></p>
+<p>  服务端证书，一般是X.509证书，用于客户端验证服务端身份和交换密钥，其中的密钥交换算法与ServerHello消息中所选加密算法一致。</p>
+</li>
+<li><p><code>Server Key Exchange</code></p>
+<p>  该消息用于将服务端的公钥发送给客户端，常用的密钥协商算法有：</p>
+<ul>
+<li>RSA算法：如果采用该算法，可以不发送该消息，因为RSA算法使用的公钥以包含在Server Certificate中。</li>
+<li>EC Diffie-Hellman算法：可根据对方的公钥和自己的私钥计算共享密钥。</li>
+</ul>
+</li>
+<li><p><code>Certificate Request</code></p>
+<p>  在某些安全性要求高的场景，例如银行支付等，不仅需要验证服务端的身份，还需要验证客户端的身份，这时候服务端就会要求客户端提供客户端的身份证书。</p>
+</li>
+<li><p><code>Server Hello Done</code></p>
+<p>  服务端Hello阶段结束信息。</p>
+</li>
+</ul>
+</li>
+<li><p>客户端校验服务端身份：</p>
+<p> 客户端会校验服务端发过来的证书的合法性，包括：</p>
+<ul>
+<li>证书链是否可信</li>
+<li>证书是否被吊销</li>
+<li>证书是否处于有效期</li>
+<li>证书的域名是否和当前访问的域名匹配</li>
+</ul>
+<p> 如果发现服务端的证书不合法，客户端可以向服务端发起告警信息。
+ </p>
+</li>
+<li><p>客户端回应服务端：</p>
+<ul>
+<li><p><code>Certificate</code></p>
+<p>  可选。如果服务端发送了“Certificate Request”，要求校验客户端身份，那么客户端需要回应自己的证书，一般是X.509证书。如果客户端没有合适的证书，直接抛出告警信息让服务端处理（服务端的处理方式通常就是断开TCP连接）。其中的密钥交换算法与ServerHello消息中所选加密算法一致，用于服务端验证客户端身份。</p>
+</li>
+<li><p><code>Client Key Exchange</code></p>
+<p>  该消息用于将客户端的公钥发送给服务端，其中的信息用于生成最终的对称加密密钥。常用的密钥协商算法有：</p>
+<ul>
+<li>RSA算法</li>
+<li>EC Diffie-Hellman算法</li>
+</ul>
+</li>
+<li><p><code>Certificate Verify</code></p>
+<p>  可选。如果服务端要求客户端要求客户端提供证书，那么在客户端在发送ClientKeyExchange消息后紧接着发送该消息。消息内容是使用客户端的私钥加密的一段基于已经协商的通信信息，服务端可以用客户端的公钥解密验证。</p>
+</li>
+<li><p><code>Change Cipher Spec</code></p>
+<p>  用于提示服务端在随后的连接中都使用当前已协商好的加密方式和主密钥进行通信。</p>
+</li>
+<li><p><code>Client Handshake Finished</code></p>
+<p>  表示客户端的握手流程结束。当所有的操作完成后，客户端发送Finish消息。该消息包含了Handshake信息和证书信息的哈希值，用于验证身份校验和密钥交换过程都完成。</p>
+<p>  Finish消息不要求服务端回复，发送该消息后可立刻对应用数据的加密并传输。</p>
+</li>
+</ul>
+</li>
+<li><p>服务端回应客户端：</p>
+<ul>
+<li><p><code>Server Change Cipher Spec</code></p>
+<p>  用于提示客户端在随后的连接中都使用当前当前已协商好的加密方式和主密钥进行通信。</p>
+</li>
+<li><p><code>Server Handshake Finished</code></p>
+<p>  同客户端的Server Handshake Finished消息类似，表示服务端的握手流程结束。</p>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="Record层传输过程"><a href="#Record层传输过程" class="headerlink" title="Record层传输过程"></a>Record层传输过程</h3><p>该过程为应用数据传输过程，基于Record协议实现，采样握手过程中已协商好的对称加密算法和对称密钥对数据进行加密和传输。具体过程有待深入研究。</p>
+<h3 id="密钥协商"><a href="#密钥协商" class="headerlink" title="密钥协商"></a>密钥协商</h3><p>握手过程最重要的任务之一就是密钥协商，下面详述密钥协商的过程。</p>
+<ol>
+<li><p>计算Pre-Master Secret</p>
+<p> 不同的密钥交换算法生成pre-master secret的方式也不同：</p>
+<ul>
+<li><p>RSA算法：</p>
+<p>  当客户端在验证服务端的身份证书后，取出包含在其中的服务端公钥，然后产生一个随机数C作为pre-master secret，并使用服务端的公钥对其进行加密，最后通过该消息发送给服务端。当服务端收到该消息后，使用私钥解密出其中的pre-master secret。</p>
+</li>
+<li><p>EC-DH 算法：</p>
+<p>  服务端和客户端通过KeyExchange获得对方用于DH算法的公钥，然后双方使用对方的公钥和自己的私钥，根据特殊的数学特性，计算出一个相同的结果作为共享密钥，即pre-master secret。</p>
+<p>  在KeyExchange中包含EC-DH具体采用的椭圆曲线算法，以secp256r1为例：</p>
+<p>  椭圆曲线算法需要一下几个参数：</p>
+<ul>
+<li>素数p，用于确定有限域的范围</li>
+<li>椭圆曲线方程中的a，b参数</li>
+<li>用于生成子群的基点G</li>
+<li>子群的阶n</li>
+<li>子群的辅助因子h</li>
+</ul>
+<p>  可定义为一个六元组（p,a,b,G,n,h），在<a target="_blank" rel="noopener" href="https://www.secg.org/sec2-v2.pdf">https://www.secg.org/sec2-v2.pdf</a>中可查到secp256r1使用的参数。</p>
+<p>  假设私钥是D，那么公钥 H = DG，G即子群的基点G</p>
+<p>  服务端和客户端使用椭圆曲线算法分别计算出自己的密钥对（公钥+私钥），假设私钥分别是：{Ds, Hs} 和  {Dc, Hc}，且满足下面的等式：</p>
+  <figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">S = Ds * Hc = <span class="built_in">Ds</span>(DcG) = <span class="built_in">Dc</span>(DsG) = Dc * Hs</span><br></pre></td></tr></tbody></table></figure></li>
+</ul>
+</li>
+<li><p>计算 Master Secret</p>
+<p>此时，客户端和服务端都拥有相同三个随机数：random_A，random_B和pre-master secret，使用伪随机函数PRF（pseudo random function）生成一串随机数，截取48位作为主密钥Master secret。比如：</p>
+<figure class="highlight jsx"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">master_secret = <span class="title function_">PRF</span>(pre_master_secret, <span class="string">"master secret"</span>, <span class="title class_">Random</span>_A + <span class="title class_">Random</span>_B)[<span class="number">0.</span><span class="number">.47</span>]</span><br></pre></td></tr></tbody></table></figure>
+
+<p>注：TLS中PRF本质上的一个扩展后的Hash函数，具体使用的Hash算法取决于协商的密钥套件和TLS版本，对于关系如下：</p>
+<ul>
+<li>prf_tls10：TLS 1.0 和 TLS 1.1 协议，PRF 算法是结合 MD5 和 SHA_1 算法</li>
+<li>prf_tls12_sha256：TLS 1.2 协议，默认是 SHA_\256 算法(这是能满足最低安全的算法)</li>
+<li>prf_tls12_sha384：TLS 1.2 协议，如果加密套件指定的 HMAC 算法安全级别高于 SHA_256，则采用SHA_384 算法</li>
+</ul>
+</li>
+<li><p>导出Record层的对称密钥</p>
+<p> 根据握手过程中协商好的加密套件，从中可知具体的对称加密算法和校验算法，使用对应的PRF和Master Secret导出对应的密钥。</p>
+<p> 以TLS_ECDHE_RSA_WITH_AES\128_GCM_SHA256为例：</p>
+<ul>
+<li>对称加密算法：AES-128-GCM</li>
+<li>校验算法：SHA256</li>
+</ul>
+<p> 使用PRF和Master Secret生成密钥块key block：</p>
+ <figure class="highlight jsx"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">key_block = <span class="title function_">PRF</span>(master_secret, <span class="string">"EXTRACTOR"</span>, client_random + server_random)[length]</span><br></pre></td></tr></tbody></table></figure>
+<p> 截取出6个参数作为通信密钥，分别是：</p>
+<ul>
+<li>客户端写MAC密钥</li>
+<li>服务端写MAC密钥</li>
+<li>客户端写密钥</li>
+<li>服务端写密钥</li>
+<li>客户端IV</li>
+<li>服务端IV</li>
+</ul>
+<p> 其中，客户端写、服务端读用客户端写密钥；服务端写、客户端读用服务端写密钥。另外对称加密算法是AES-GCM（AES算法除ECB模式外都需要IV），所以需要客户端IV和服务端IV。</p>
+</li>
+</ol>
+<h3 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h3><p>由于TLS协议主要是提供加密功能以保障通道数据的安全性，因此要求底层协议提供一个可靠且有序的通信过程，这也是TLS常与TCP协议组合使用的原因。如果需要为UDP协议提供安全保障，则可以使用DTLS协议。</p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><p><a target="_blank" rel="noopener" href="https://datatracker.ietf.org/doc/html/rfc8446">rfc8446</a></p>
+<p><a target="_blank" rel="noopener" href="https://datatracker.ietf.org/doc/html/rfc5705#section-4">https://datatracker.ietf.org/doc/html/rfc5705#section-4</a></p>
+<p><a target="_blank" rel="noopener" href="http://www.bewindoweb.com/271.html">SSL/TLS发展历史和SSLv3.0协议详解 | 文章 | BEWINDOWEB</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/66794410">ECC椭圆曲线加密算法：ECDH 和 ECDSA</a></p>
+<p><a target="_blank" rel="noopener" href="https://laoqingcai.com/tls1.2-premasterkey/">TLS1.2 PreMasterSecret And MasterSecret | 老青菜</a></p>
+<p><a target="_blank" rel="noopener" href="https://halfrost.com/https-key-cipher/">HTTPS 温故知新（五） – TLS 中的密钥计算</a></p>
+</div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/%E4%BC%A0%E8%BE%93%E5%8D%8F%E8%AE%AE/">传输协议</a></div><!--!--></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2020/11/10/WebRTC%E4%B9%8B%E4%BC%A0%E8%BE%93%E5%8D%8F%E8%AE%AE%EF%BC%9ADTLS%E5%8D%8F%E8%AE%AE/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">WebRTC之传输协议初探：DTLS协议</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2020/08/11/%E6%97%B6%E5%BA%8F%E6%A8%A1%E5%9E%8B%E5%88%9D%E6%8E%A2%E4%B9%8B%E4%B8%89%EF%BC%9A%E6%8C%87%E6%95%B0%E5%B9%B3%E6%BB%91%E6%B3%95/"><span class="level-item">时序模型初探之三：指数平均法</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">Comments</h3><div id="comment-container"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script>var gitalk = new Gitalk({
+            id: "4d7e2abe7c2143ee9c5e9cd7a0941d8c",
+            repo: "https://github.com/industriousonesoft/myblogs",
+            owner: "industriousonesoft",
+            clientID: "72166614883c67c948a9",
+            clientSecret: "4ffcafe5e15ed3056e1d35e84dd6f45619d6a606",
+            admin: ["industriousonesoft"],
+            createIssueManually: false,
+            distractionFreeMode: false,
+            perPage: 20,
+            pagerDirection: "last",
+            
+            
+            enableHotKey: true,
+            language: "zh-CN",
+        })
+        gitalk.render('comment-container')</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar is-rounded" src="/img/avatar.jpg" alt="Mark Cao"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">Mark Cao</p><p class="is-size-6 is-block">程序的世界让我着迷</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>ChangSha</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">Posts</p><a href="/archives"><p class="title">97</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Categories</p><a href="/categories"><p class="title">20</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Tags</p><a href="/tags"><p class="title">30</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://github.com/industriousonesoft" target="_blank" rel="noopener">Follow</a></div><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/industriousonesoft"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Facebook" href="https://facebook.com"><i class="fab fa-facebook"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Twitter" href="https://twitter.com"><i class="fab fa-twitter"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Dribbble" href="https://dribbble.com"><i class="fab fa-dribbble"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="RSS" href="/"><i class="fas fa-rss"></i></a></div></div></div><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">Recents</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-04-25T15:10:07.000Z">2021-04-25</time></p><p class="title"><a href="/2021/04/25/WebRTC%E4%B9%8BTrendline%E6%BB%A4%E6%B3%A2%E5%99%A8/">WebRTC之Trendline滤波器</a></p><p class="categories"><a href="/categories/%E7%BC%96%E7%A8%8B/">编程</a> / <a href="/categories/%E7%BC%96%E7%A8%8B/WebRTC/">WebRTC</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-04-20T15:10:07.000Z">2021-04-20</time></p><p class="title"><a href="/2021/04/20/WebRTC%E4%B9%8B%E5%8C%85%E7%BB%84%E7%9A%84%E6%97%B6%E9%97%B4%E9%97%B4%E9%9A%94%E8%AE%A1%E7%AE%97/">WebRTC之包组的时间间隔计算</a></p><p class="categories"><a href="/categories/%E7%BC%96%E7%A8%8B/">编程</a> / <a href="/categories/%E7%BC%96%E7%A8%8B/WebRTC/">WebRTC</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-04-10T15:10:07.000Z">2021-04-10</time></p><p class="title"><a href="/2021/04/10/WebRTC%E4%B9%8BRTT%E7%9A%84%E4%B8%A4%E7%A7%8D%E8%AE%A1%E7%AE%97%E6%96%B9%E5%BC%8F/">WebRTC之RTT的两种计算方式</a></p><p class="categories"><a href="/categories/%E7%BC%96%E7%A8%8B/">编程</a> / <a href="/categories/%E7%BC%96%E7%A8%8B/WebRTC/">WebRTC</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-04-05T15:10:07.000Z">2021-04-05</time></p><p class="title"><a href="/2021/04/05/WebRTC%E4%B9%8B%E6%8A%96%E5%8A%A8%E4%BC%B0%E8%AE%A1/">WebRTC之抖动估计</a></p><p class="categories"><a href="/categories/%E7%BC%96%E7%A8%8B/">编程</a> / <a href="/categories/%E7%BC%96%E7%A8%8B/WebRTC/">WebRTC</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-11-27T05:13:07.000Z">2020-11-27</time></p><p class="title"><a href="/2020/11/27/%E3%80%8A%E5%88%BB%E6%84%8F%E7%BB%83%E4%B9%A0%E3%80%8B%E8%AF%BB%E5%90%8E%E6%84%9F/">《刻意练习》读书笔记</a></p><p class="categories"><a href="/categories/%E4%B9%A6%E8%AF%84/">书评</a></p></div></article></div></div><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">Categories</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/%E4%B9%A6%E8%AF%84/"><span class="level-start"><span class="level-item">书评</span></span><span class="level-end"><span class="level-item tag">9</span></span></a></li><li><a class="level is-mobile" href="/categories/%E5%BD%B1%E8%AF%84/"><span class="level-start"><span class="level-item">影评</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/%E7%BC%96%E7%A8%8B/"><span class="level-start"><span class="level-item">编程</span></span><span class="level-end"><span class="level-item tag">58</span></span></a><ul><li><a class="level is-mobile" href="/categories/%E7%BC%96%E7%A8%8B/C/"><span class="level-start"><span class="level-item">C++</span></span><span class="level-end"><span class="level-item tag">15</span></span></a></li><li><a class="level is-mobile" href="/categories/%E7%BC%96%E7%A8%8B/Cocoa/"><span class="level-start"><span class="level-item">Cocoa</span></span><span class="level-end"><span class="level-item tag">5</span></span></a></li><li><a class="level is-mobile" href="/categories/%E7%BC%96%E7%A8%8B/Hexo/"><span class="level-start"><span class="level-item">Hexo</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E7%BC%96%E7%A8%8B/JS/"><span class="level-start"><span class="level-item">JS</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/%E7%BC%96%E7%A8%8B/Objective-C/"><span class="level-start"><span class="level-item">Objective-C</span></span><span class="level-end"><span class="level-item tag">10</span></span></a></li><li><a class="level is-mobile" href="/categories/%E7%BC%96%E7%A8%8B/OpevCV/"><span class="level-start"><span class="level-item">OpevCV</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E7%BC%96%E7%A8%8B/Swift/"><span class="level-start"><span class="level-item">Swift</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E7%BC%96%E7%A8%8B/WebRTC/"><span class="level-start"><span class="level-item">WebRTC</span></span><span class="level-end"><span class="level-item tag">9</span></span></a></li><li><a class="level is-mobile" href="/categories/%E7%BC%96%E7%A8%8B/Xcode/"><span class="level-start"><span class="level-item">Xcode</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E7%BC%96%E7%A8%8B/iOS/"><span class="level-start"><span class="level-item">iOS</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/%E7%BC%96%E7%A8%8B/macOSX/"><span class="level-start"><span class="level-item">macOSX</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E7%BC%96%E7%A8%8B/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"><span class="level-start"><span class="level-item">数据结构</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/categories/%E7%BC%96%E7%A8%8B/%E6%B1%87%E7%BC%96/"><span class="level-start"><span class="level-item">汇编</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E7%BC%96%E7%A8%8B/%E7%AE%97%E6%B3%95/"><span class="level-start"><span class="level-item">算法</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/%E7%BC%96%E7%A8%8B/%E9%9F%B3%E8%A7%86%E9%A2%91/"><span class="level-start"><span class="level-item">音视频</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li></ul></li><li><a class="level is-mobile" href="/categories/%E8%8B%B1%E8%AF%AD/"><span class="level-start"><span class="level-item">英语</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/%E9%9A%8F%E6%83%B3/"><span class="level-start"><span class="level-item">随想</span></span><span class="level-end"><span class="level-item tag">24</span></span></a></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">Tags</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/ARC/"><span class="tag">ARC</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/C/"><span class="tag">C++</span><span class="tag">15</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Category/"><span class="tag">Category</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Cocoa/"><span class="tag">Cocoa</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Coffee/"><span class="tag">Coffee</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/GCD/"><span class="tag">GCD</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Hexo/"><span class="tag">Hexo</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/JS/"><span class="tag">JS</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/KVO/"><span class="tag">KVO</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Objective-C/"><span class="tag">Objective-C</span><span class="tag">4</span></a></div><div class="control"><a class="tags has-addons" href="/tags/OpenCV/"><span class="tag">OpenCV</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/PlistBuddy/"><span class="tag">PlistBuddy</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/RunLoop/"><span class="tag">RunLoop</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Runtime/"><span class="tag">Runtime</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Swift/"><span class="tag">Swift</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/UTC/"><span class="tag">UTC</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/iOS/"><span class="tag">iOS</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/macOSX/"><span class="tag">macOSX</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E4%B8%89%E4%BD%93/"><span class="tag">三体</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E4%BA%BA%E7%B1%BB%E7%AE%80%E5%8F%B2/"><span class="tag">人类简史</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E4%BC%A0%E8%AE%B0/"><span class="tag">传记</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E4%BC%A0%E8%BE%93%E5%8D%8F%E8%AE%AE/"><span class="tag">传输协议</span><span class="tag">4</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%93%B2%E5%AD%A6/"><span class="tag">哲学</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%8B%A5%E5%A1%9E%E6%8E%A7%E5%88%B6/"><span class="tag">拥塞控制</span><span class="tag">4</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"><span class="tag">数据结构</span><span class="tag">4</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%97%B6%E5%BA%8F%E6%A8%A1%E5%9E%8B/"><span class="tag">时序模型</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E7%AE%97%E6%B3%95/"><span class="tag">算法</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E7%BB%8F%E6%B5%8E/"><span class="tag">经济</span><span class="tag">8</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%8B%B1%E8%AF%AD/"><span class="tag">英语</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E9%9F%B3%E8%A7%86%E9%A2%91/"><span class="tag">音视频</span><span class="tag">2</span></a></div></div></div></div></div><div class="card widget" data-type="archives"><div class="card-content"><div class="menu"><h3 class="menu-label">Archives</h3><ul class="menu-list"><li><a class="level is-mobile" href="/archives/2021/04/"><span class="level-start"><span class="level-item">April 2021</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/archives/2020/11/"><span class="level-start"><span class="level-item">November 2020</span></span><span class="level-end"><span class="level-item tag">5</span></span></a></li><li><a class="level is-mobile" href="/archives/2020/08/"><span class="level-start"><span class="level-item">August 2020</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/archives/2020/04/"><span class="level-start"><span class="level-item">April 2020</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2020/03/"><span class="level-start"><span class="level-item">March 2020</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/archives/2020/02/"><span class="level-start"><span class="level-item">February 2020</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2020/01/"><span class="level-start"><span class="level-item">January 2020</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/archives/2019/09/"><span class="level-start"><span class="level-item">September 2019</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2019/08/"><span class="level-start"><span class="level-item">August 2019</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/archives/2019/07/"><span class="level-start"><span class="level-item">July 2019</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2019/06/"><span class="level-start"><span class="level-item">June 2019</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/archives/2019/05/"><span class="level-start"><span class="level-item">May 2019</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/archives/2019/04/"><span class="level-start"><span class="level-item">April 2019</span></span><span class="level-end"><span class="level-item tag">7</span></span></a></li><li><a class="level is-mobile" href="/archives/2019/03/"><span class="level-start"><span class="level-item">March 2019</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/archives/2018/12/"><span class="level-start"><span class="level-item">December 2018</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/archives/2018/11/"><span class="level-start"><span class="level-item">November 2018</span></span><span class="level-end"><span class="level-item tag">7</span></span></a></li><li><a class="level is-mobile" href="/archives/2018/10/"><span class="level-start"><span class="level-item">October 2018</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/archives/2018/09/"><span class="level-start"><span class="level-item">September 2018</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2018/08/"><span class="level-start"><span class="level-item">August 2018</span></span><span class="level-end"><span class="level-item tag">5</span></span></a></li><li><a class="level is-mobile" href="/archives/2018/07/"><span class="level-start"><span class="level-item">July 2018</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/archives/2018/06/"><span class="level-start"><span class="level-item">June 2018</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2018/05/"><span class="level-start"><span class="level-item">May 2018</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2018/02/"><span class="level-start"><span class="level-item">February 2018</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2017/12/"><span class="level-start"><span class="level-item">December 2017</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2017/10/"><span class="level-start"><span class="level-item">October 2017</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2017/08/"><span class="level-start"><span class="level-item">August 2017</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2017/07/"><span class="level-start"><span class="level-item">July 2017</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2017/06/"><span class="level-start"><span class="level-item">June 2017</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/archives/2017/05/"><span class="level-start"><span class="level-item">May 2017</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/archives/2017/04/"><span class="level-start"><span class="level-item">April 2017</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2017/02/"><span class="level-start"><span class="level-item">February 2017</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/archives/2017/01/"><span class="level-start"><span class="level-item">January 2017</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2016/12/"><span class="level-start"><span class="level-item">December 2016</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2016/11/"><span class="level-start"><span class="level-item">November 2016</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/archives/2016/10/"><span class="level-start"><span class="level-item">October 2016</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/archives/2016/09/"><span class="level-start"><span class="level-item">September 2016</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2016/08/"><span class="level-start"><span class="level-item">August 2016</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/archives/2015/07/"><span class="level-start"><span class="level-item">July 2015</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2015/06/"><span class="level-start"><span class="level-item">June 2015</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2015/05/"><span class="level-start"><span class="level-item">May 2015</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2015/04/"><span class="level-start"><span class="level-item">April 2015</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2015/03/"><span class="level-start"><span class="level-item">March 2015</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2015/02/"><span class="level-start"><span class="level-item">February 2015</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/archives/2015/01/"><span class="level-start"><span class="level-item">January 2015</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li></ul></div></div></div></div><div class="column column-right is-4-tablet is-4-desktop is-4-widescreen  order-3"><!--!--></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.svg" alt="MarkCao" height="28"></a><p class="is-size-7"><span>&copy; 2022 Mark Cao</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("en");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="Back to top" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-center",
+        content: {
+          message: "This website uses cookies to improve your experience.",
+          dismiss: "Got it!",
+          allow: "Allow cookies",
+          deny: "Decline",
+          link: "Learn more",
+          policy: "Cookie Policy",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/contrib/auto-render.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/contrib/mhchem.min.js" defer></script><script>window.addEventListener("load", function() {
+            document.querySelectorAll('[role="article"] > .content').forEach(function(element) {
+                renderMathInElement(element);
+            });
+        });</script><script type="text/x-mathjax-config">MathJax.Hub.Config({
+            'HTML-CSS': {
+                matchFontHeight: false
+            },
+            SVG: {
+                matchFontHeight: false
+            },
+            CommonHTML: {
+                matchFontHeight: false
+            },
+            tex2jax: {
+                inlineMath: [
+                    ['$','$'],
+                    ['\\(','\\)']
+                ]
+            }
+        });</script><script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="Type something..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"Type something...","untitled":"(Untitled)","posts":"Posts","pages":"Pages","categories":"Categories","tags":"Tags"});
+        });</script></body></html>
