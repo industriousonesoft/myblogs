@@ -290,7 +290,7 @@ widgets:
     # Recent posts widget configurations
     -
         # Where should the widget be placed, left sidebar or right sidebar
-        position: left
+        position: right
         type: recent_posts
     # Categories widget configurations
     -
@@ -305,7 +305,7 @@ widgets:
     # Archives widget configurations
     -
         # Where should the widget be placed, left sidebar or right sidebar
-        position: left
+        position: right
         type: archives
     # Google FeedBurner email subscription widget configurations
     # -
