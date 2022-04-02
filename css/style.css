@@ -11636,27 +11636,39 @@ figure.highlight .section {
 }
 @media screen and (min-width: 1280px) {
   .is-3-column .container {
-    max-width: 1260px;
-    width: 1260px;
+    max-width: 1442px;
+    width: 1442px;
   }
   .is-1-column .container,
   .is-2-column .container {
-    max-width: 1068px;
-    width: 1068px;
+    max-width: 1048px;
+    width: 1048px;
+  }
+  .column.is-3-widescreen {
+    width: 22%;
+  }
+  .column.is-6-widescreen {
+    width: 56%;
   }
 }
 @media screen and (min-width: 1472px) {
   .is-3-column .container {
-    max-width: 1452px;
-    width: 1452px;
+    max-width: 1442px;
+    width: 1442px;
   }
   .is-2-column .container {
-    max-width: 1260px;
-    width: 1260px;
+    max-width: 1240px;
+    width: 1240px;
   }
   .is-1-column .container {
-    max-width: 1068px;
-    width: 1068px;
+    max-width: 1048px;
+    width: 1048px;
+  }
+  .column.is-3-widescreen {
+    width: 22%;
+  }
+  .column.is-6-widescreen {
+    width: 56%;
   }
 }
 @media screen and (min-width: 769px), print {
