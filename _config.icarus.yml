@@ -163,8 +163,8 @@ search:
 comment:
     type: gitalk
     client_id: 72166614883c67c948a9
-    client_secret: 4ffcafe5e15ed3056e1d35e84dd6f45619d6a606
-    repo: https://github.com/industriousonesoft/myblogs
+    client_secret: 51027bf28a64f1413b39c27e43632e20a645b78b
+    repo: myblogs
     owner: industriousonesoft
     admin:
         - industriousonesoft
