@@ -1,3 +1,6 @@
 [submodule "themes/icarus"]
 	path = themes/icarus
 	url = git@github.com:industriousonesoft/hexo-theme-icarus.git
+[submodule "source/resume"]
+	path = source/resume
+	url = git@github.com:industriousonesoft/resume.git
