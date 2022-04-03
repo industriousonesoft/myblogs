@@ -3,7 +3,7 @@
  * 公共部分
  * ------------------------------------------------- */
 body {
-  background: #e5e5e5 url(../../assets/images/background.png);
+  background: #e5e5e5 #383838;
   width: 100%;
   overflow-x: hidden;
   padding: 1rem 10%;
@@ -33,7 +33,7 @@ body {
   width: 20rem;
   background: #fff;
   border-radius: 5px;
-  box-shadow: 0 5px 20px #bbb;
+  border: solid #bbb 1px;
   box-sizing: border-box;
   padding: 1rem; }
   .container .side .me {
@@ -98,12 +98,15 @@ body {
     display: inline-block;
     vertical-align: top;
     width: 60%; }
+  .container .side .contact ul li label {
+    display: inline-block;
+    width: 28%; }
 .container .main {
   position: relative;
   margin-left: 22rem;
   background: #fff;
   border-radius: 5px;
-  box-shadow: 0 5px 20px #bbb;
+  border: solid #bbb 1px;
   box-sizing: border-box;
   padding: 1rem; }
   .container .main .info-unit ul {
@@ -128,6 +131,10 @@ body {
         margin: 0; }
       .container .main .info-unit ul li .info-content .fa {
         font-size: 1em; }
+  .container .main .info-unit .app-icon {
+    width: 20px;
+    height: 20px;
+    border-radius: 2px; }
 
 /* -------------------------------------------------
  * 文档底部
@@ -219,7 +226,7 @@ mark {
 @media screen and (max-width: 1034px) {
   body {
     padding: 1rem 3%; } }
-@media screen and (max-width: 	750px) {
+@media screen and (max-width: 750px) {
   .container .side {
     position: static;
     width: 95%;
