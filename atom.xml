@@ -103,6 +103,34 @@
   </entry>
   
   <entry>
+    <title>WebRTC之关键帧请求</title>
+    <link href="http://naivertc.top/2021/04/22/WebRTC%E4%B9%8B%E5%85%B3%E9%94%AE%E5%B8%A7%E8%AF%B7%E6%B1%82/"/>
+    <id>http://naivertc.top/2021/04/22/WebRTC%E4%B9%8B%E5%85%B3%E9%94%AE%E5%B8%A7%E8%AF%B7%E6%B1%82/</id>
+    <published>2021-04-22T14:10:07.000Z</published>
+    <updated>2022-04-21T07:57:26.492Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h3><p>所谓关键帧，就是不需要参考其他视频帧，可单独解码的帧。比如H264中的I帧。在WebRTC中有两种关键帧请求方式，分别是：</p><ul><li>PLI：Picture Loss Indication</li><li>FIR：Full Intra Request</li></ul><p>二者的主要区别在于报文结构和使用场景不同，但实际上在发送端处理两种请求的逻辑很可能是一样的，比如，WebRTC中的实现就是如此。</p><span id="more"></span><h3 id="报文结构"><a href="#报文结构" class="headerlink" title="报文结构"></a>报文结构</h3><p>在WebRTC中，PLI和FIR均被封装在RTCP反馈消息包中，详解<a href="https://datatracker.ietf.org/doc/html/rfc4585#section-6.1">RFC4585</a>，其报文格式如下：</p><figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// RFC 4585: Feedback format.</span></span><br><span class="line"><span class="comment">// Common packet format:</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//   0                   1                   2                   3</span></span><br><span class="line"><span class="comment">//   0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1</span></span><br><span class="line"><span class="comment">//  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span></span><br><span class="line"><span class="comment">//  |V=2|P|   FMT   |       PT      |          length               |</span></span><br><span class="line"><span class="comment">//  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span></span><br><span class="line"><span class="comment">//  |                  SSRC of packet sender                        |</span></span><br><span class="line"><span class="comment">//  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span></span><br><span class="line"><span class="comment">//  |             SSRC of media source (unused) = 0                 |</span></span><br><span class="line"><span class="comment">//  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span></span><br><span class="line"><span class="comment">//  :            Feedback Control Information (FCI)                 :</span></span><br><span class="line"><span class="comment">//  :                                                               :</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">// FMT: Feedback message type, 5 bits</span></span><br><span class="line"><span class="comment">// PT: Payload type, 8 bits</span></span><br></pre></td></tr></tbody></table></figure><p>RTCP反馈消息包根据PT可分为两类：</p><ul><li>RTPFB：Transport layer FB message, PT=205</li><li>PSFB：Payload-specific FB message, PT=206</li></ul><p>PLI和FIR均属于PSFB，且根据FMT字段进行区分：</p><ul><li><p>PLI：FMT=1</p><p>  在PLI报文中，FCI部分为空，故其报文结构就是RTCP反馈消息的报文。</p></li><li><p>FIR：FMT=4</p><p>  在FIR报文中，可能会包含多个FCI，且FCI包括两个字段，其结构如下：</p>  <figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// FCI:</span></span><br><span class="line"><span class="comment">//   0                   1                   2                   3</span></span><br><span class="line"><span class="comment">//   0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1</span></span><br><span class="line"><span class="comment">//  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span></span><br><span class="line"><span class="comment">//  |                              SSRC                             |</span></span><br><span class="line"><span class="comment">//  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span></span><br><span class="line"><span class="comment">//  | Seq nr.       |    Reserved = 0                               |</span></span><br><span class="line"><span class="comment">//  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">// SSRC：指定发送端响应该关键帧请求的媒体流</span></span><br><span class="line"><span class="comment">// Seq nr：当前关键字请求对应的序列号</span></span><br></pre></td></tr></tbody></table></figure></li></ul><p>NOTE：由PLI和FIR报文结构的差异可知，通过PLI发送的关键帧请求会作用于发送端所有的媒体流，而通过FIR发送的关键帧请求可指定发送端响应该请求的媒体流。</p><h3 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h3><p>PLI和FIR设计初衷就是为了应对不同的使用场景，尽管二者发送的关键帧请求在发送端有可能被一视同仁。</p><ul><li><p>丢包场景</p><p>  PLI，Picture Loss Indication，即丢包标识，顾名思义就是用于丢包场景请求关键帧。常见的丢包场景如下：</p><ul><li><p>接收端检测到丢包过多</p><p>  当丢包率过高时，重传会导致延时过大，此时可通过关键帧及时刷新画面。由于关键字可单独解码，故解码时不会出现花屏，但由于之前的视频帧都被丢弃，如果该关键帧前后的画面变化过大，渲染时会出现卡顿或跳帧的情况。</p></li><li><p>发送端无丢失包的缓存</p><p>  发送端会以滑动窗口的方式缓存近期发送的包，如果某个丢失包过旧，即不在滑动窗口范围内，会导致发送端无法重传该包。</p></li><li><p>H264解码时无SPS和PPS信息</p><p>  当H264解码端收到的IDR帧包未包含SPS或PPS信息，会导致解码失败，此时可发送PLI请求。</p></li><li><p>解码器获取帧数超时</p></li><li><p>解码器请求关键帧或解码失败</p></li></ul></li><li><p>非丢包场景</p><p>  FIR请求常用于非丢包的场景，编码端在收到FIR的关键帧请求时，通常会发送一个IDR帧用于解码端的及时刷新，故FIR请求又被称为“即时解码刷新请求（Instantaneous Decoder Refresh Request）”或“视频快速刷新请求（Video Fast Update Request）”。</p><p>  FIR请求常见的使用场景如下：</p><ul><li><p>视频流切换</p><p>  当解码器需要切换到其它的视频流时，可通过FIR请求从编码端获取一个IDR帧，及时刷新解码器。</p></li><li><p>新参与者入会</p><p>  在视频会议中，当某个新用户加入时，接收端收到的不一定是关键帧，这会导致新用户不能及时解码。此时可通过发送FIR请求从编码端获取一个IDR帧，及时刷新解码器。</p></li></ul></li></ul><h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><p><a href="https://webrtcforthecurious.com/docs/06-media-communication/#full-intra-frame-request-fir-and-picture-loss-indication-pli">Media Communication</a></p><p><a href="https://datatracker.ietf.org/doc/html/rfc5104#section-3.5.1">RFC 5104 - Codec Control Messages in the RTP Audio-Visual Profile with Feedback (AVPF)</a></p><p><a href="https://datatracker.ietf.org/doc/html/rfc4585#section-6.3.1">RFC 4585 - Extended RTP Profile for Real-time Transport Control Protocol (RTCP)-Based Feedback (RTP/AVPF)</a></p>]]></content>
+    
+    
+    <summary type="html">&lt;h3 id=&quot;简述&quot;&gt;&lt;a href=&quot;#简述&quot; class=&quot;headerlink&quot; title=&quot;简述&quot;&gt;&lt;/a&gt;简述&lt;/h3&gt;&lt;p&gt;所谓关键帧，就是不需要参考其他视频帧，可单独解码的帧。比如H264中的I帧。在WebRTC中有两种关键帧请求方式，分别是：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;PLI：Picture Loss Indication&lt;/li&gt;
+&lt;li&gt;FIR：Full Intra Request&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;二者的主要区别在于报文结构和使用场景不同，但实际上在发送端处理两种请求的逻辑很可能是一样的，比如，WebRTC中的实现就是如此。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="编程" scheme="http://naivertc.top/categories/%E7%BC%96%E7%A8%8B/"/>
+    
+    <category term="WebRTC" scheme="http://naivertc.top/categories/%E7%BC%96%E7%A8%8B/WebRTC/"/>
+    
+    
+    <category term="拥塞控制" scheme="http://naivertc.top/tags/%E6%8B%A5%E5%A1%9E%E6%8E%A7%E5%88%B6/"/>
+    
+  </entry>
+  
+  <entry>
     <title>WebRTC之包组的时间间隔计算</title>
     <link href="http://naivertc.top/2021/04/20/WebRTC%E4%B9%8B%E5%8C%85%E7%BB%84%E7%9A%84%E6%97%B6%E9%97%B4%E9%97%B4%E9%9A%94%E8%AE%A1%E7%AE%97/"/>
     <id>http://naivertc.top/2021/04/20/WebRTC%E4%B9%8B%E5%8C%85%E7%BB%84%E7%9A%84%E6%97%B6%E9%97%B4%E9%97%B4%E9%9A%94%E8%AE%A1%E7%AE%97/</id>
@@ -521,25 +549,6 @@
     
     
     <summary type="html">&lt;p&gt;如果只是提出一个问题不难，但是要提出一个正确的问题很难。任何问题的提出都依托于上下文，在提出一个正确问题之前我们需要对上下文有一个尽可能客观且全面的认识，而完成这一过程的关键在于学会使用批判性思维方式。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="书评" scheme="http://naivertc.top/categories/%E4%B9%A6%E8%AF%84/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>《曼巴精神：科比自传》读后感</title>
-    <link href="http://naivertc.top/2020/01/30/%E3%80%8A%E6%9B%BC%E5%B7%B4%E7%B2%BE%E7%A5%9E%EF%BC%9A%E7%A7%91%E6%AF%94%E8%87%AA%E4%BC%A0%E3%80%8B%E8%AF%BB%E5%90%8E%E6%84%9F/"/>
-    <id>http://naivertc.top/2020/01/30/%E3%80%8A%E6%9B%BC%E5%B7%B4%E7%B2%BE%E7%A5%9E%EF%BC%9A%E7%A7%91%E6%AF%94%E8%87%AA%E4%BC%A0%E3%80%8B%E8%AF%BB%E5%90%8E%E6%84%9F/</id>
-    <published>2020-01-30T05:54:07.000Z</published>
-    <updated>2022-03-21T14:36:36.170Z</updated>
-    
-    <content type="html"><![CDATA[<p>何为曼巴精神？</p><span id="more"></span><p>曼巴精神是对自己的热爱的事物付诸持之以恒的热情，探索其中的奥秘，注意每一个细节，不厌其烦地重复着那些枯燥无味但又异常重要的基本功。此外在巨大的荣誉和财富面前时刻保持清醒，不忘初心。</p><p>曼巴精神是认真研究对手的每个细节，并制定对策，将全力以赴地投入视为对对手最大的尊重，并以此获得对手的尊重。正如勒布朗•詹姆斯对德怀恩•韦德说的那样：Everyone wants to put us against him,but we were just trying to make him proud of us.(所有人都想要我们和科比处于对立面，但是我们只是想要让他为我们感到自豪)。</p><p>曼巴精神是不断地自我反省，认识自己，了解自己，倾听自己的内心，顺应身体的反馈，追求身心合一的境界，时刻保持最好的竞技状态。</p><p>R.I.P 致敬我心目中最完美最励志的篮球运动员—科比•布莱恩特</p>]]></content>
-    
-    
-    <summary type="html">&lt;p&gt;何为曼巴精神？&lt;/p&gt;</summary>
     
     
     
