@@ -122,6 +122,7 @@ body {
         padding: 1px 3px;
         -webkit-border-radius: 5px;
         border-radius: 5px;
+        vertical-align: middle;
         margin-left: .5rem; }
       .container .main .info-unit ul li h3 time {
         text-align: right;
@@ -134,7 +135,9 @@ body {
   .container .main .info-unit .app-icon {
     width: 20px;
     height: 20px;
-    border-radius: 2px; }
+    border-radius: 2px; 
+    vertical-align: middle;
+    text-align: center; }
 
 /* -------------------------------------------------
  * 文档底部
@@ -211,7 +214,7 @@ mark {
   .container .info-unit h3 span {
     display: block; }
 
-  .container .info-unit h3 span.link {
+  .container .info-unit h3 .link {
     display: inline; }
 
   .container .project h3 span {
