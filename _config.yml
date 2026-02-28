@@ -3,17 +3,17 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: MarkCao
+title: NativeAI
 subtitle: ''
 description: ''
-keywords: WebRTC, C++, iOS
+keywords: LLM, AI, Agent
 author: Mark Cao
 language: en
 timezone: ''
 
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
-url: http://naivertc.top
+url: http://nativeai.top
 permalink: :year/:month/:day/:title/
 permalink_defaults:
 pretty_urls:
